@@ -11,7 +11,6 @@ import Music from './components/Music/Music';
 import state from "./redux/state";
 
 
-
 const App = (props: any) => {
 
   return (
@@ -27,11 +26,12 @@ const App = (props: any) => {
                  render={ () =>
                    <Profile state={props.state.profilePage}/>}/>
           <Route path='/news' render={ () => <News/>}/>
-          <Route path='/Music' render={ () => <Music/>}/>
+          <Route path='/music' render={ () => <Music/>}/>
           <Route path='/settings' render={ () => <Settings/>}/>
         </div>
       </div>
-    </BrowserRouter>)
+    </BrowserRouter>
+  )
 }
 
 export default App;

@@ -1,5 +1,4 @@
 import s from './Dialogs.module.scss';
-import {NavLink} from "react-router-dom";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
