@@ -1,9 +1,9 @@
-type MessageType = {
-  id: number,
+export type MessageType = {
+  id?: number, // TODO: This correct  decision?
   message: string,
 }
 
-type DialogType = {
+export type DialogType = {
   id: number,
   name: string,
 }
@@ -18,7 +18,7 @@ type ProfilePageType = {
   posts: Array<PostType>
 }
 
-type DialogPageType = {
+export type DialogPageType = {
   dialogs: Array<DialogType>
   messages: Array<MessageType>
 }
@@ -43,7 +43,7 @@ let state: RootStateType = {
 
   dialogsPage: {
     dialogs: [
-      {id: 1, name: 'Dmitry'},
+      {id: 1, name: 'Dima'},
       {id: 2, name: 'Andrew'},
       {id: 3, name: 'Sveta'},
       {id: 4, name: 'Sasha'},

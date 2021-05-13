@@ -2,6 +2,8 @@ import s from './Dialogs.module.scss';
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
+
+
 const Dialogs = (props: any) => {
 
   let dialogsElements =
