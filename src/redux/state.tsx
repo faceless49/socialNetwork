@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from '../render';
+
 export type MessageType = {
   id?: number, // TODO: This correct  decision?
   message: string,
@@ -25,7 +27,7 @@ export type DialogPageType = {
 
 type SidebarType = {}
 
-type RootStateType = {
+export type RootStateType = {
   profilePage: ProfilePageType,
   dialogsPage: DialogPageType,
   // sidebar: SidebarType,
@@ -67,6 +69,7 @@ export let addPost = (postMessage: any) => {
     likesCount: 0
   };
   state.profilePage.posts.push(newPost);
+  rerenderEntireTree(state)
 }
 
 

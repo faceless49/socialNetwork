@@ -27,11 +27,16 @@ const Dialogs = (props: any) => {
         {messagesElements}
         <form>
           <textarea ref={newMessageElement}/>
-          <button onClick={addMessage}>Send message</button>
+          <button onClick={addMessage} type={'button'}>Send message</button>
         </form>
       </div>
     </div>
   )
 }
-// * TODO: why clicked button page reload in form? but without its okay?
+// * TODO: why clicked button page reload in form?
+// * 1. Убрать форму?
+// * 2. button type= button?
+// * 3. onSubmit = e.preventDefault()?
+// * 4. e.preventDefault()?
+
 export default Dialogs;
