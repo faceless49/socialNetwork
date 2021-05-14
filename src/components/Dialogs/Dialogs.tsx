@@ -1,7 +1,6 @@
 import s from './Dialogs.module.scss';
-import DialogItem from "./DialogItem/DialogItem";
-import Message from "./Message/Message";
-
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message';
 
 
 const Dialogs = (props: any) => {
@@ -9,7 +8,7 @@ const Dialogs = (props: any) => {
   let dialogsElements =
     props.state.dialogs.map((d: any) => <DialogItem name={d.name} id={d.id}/>);
   let messagesElements =
-    props.state.messages.map((m: any) => <Message message={m.message}/>);
+    props.state.messages.map((m: any) => <Message message={m.message} id={m.id}/>);
 
   return (
     <div className={s.dialogs}>
