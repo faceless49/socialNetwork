@@ -1,9 +1,17 @@
 import React from 'react';
 import s from './MyPosts.module.scss';
 import Post from './Post/Post';
+import {PostType} from '../../../redux/state';
 
-const MyPosts = (props: any) => {
+type MyPostsType = {
+  posts: Array<PostType>
+  addPost: () => void
+  newPostText: string
+  updateNewPostText: (newText: string) => void
+}
 
+
+const MyPosts = (props: MyPostsType) => {
 
   let postElements =
     props.posts.map((p: any) => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>);

@@ -1,5 +1,7 @@
 import {rerenderEntireTree} from '../render';
 
+
+
 export type MessageType = {
   id?: number, // TODO: This correct  decision?
   message: string,
@@ -37,6 +39,7 @@ export type RootStateType = {
 }
 
 
+
 const state: RootStateType = {
   profilePage: {
     posts: [
@@ -68,7 +71,9 @@ const state: RootStateType = {
 };
 
 
-export const addPost = (postMessage: any) => {
+
+
+export const addPost = () => {
   const newPost = {
     id: 5,
     message: state.profilePage.newPostText,
@@ -84,6 +89,13 @@ export const updateNewPostText = (newText: string) => {
   rerenderEntireTree(state)
 }
 
+// export type AddPostType = {
+//   addPost: () => void
+// }
+//
+// export type UpdateNewPostTextType = {
+//   updateNewPostText: (newText: string) => void
+// }
 
 export default state;
 
