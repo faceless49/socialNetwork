@@ -10,7 +10,6 @@ type PropsType = {
   state:  DialogPageType
 }
 const Dialogs = (props: PropsType) => {
-debugger
   let dialogsElements =
     props.state.dialogs.map((d: DialogType) => <DialogItem name={d.name} id={d.id}/>);
   let messagesElements =

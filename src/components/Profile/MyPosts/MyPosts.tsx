@@ -14,16 +14,20 @@ type MyPostsType = {
 const MyPosts = (props: MyPostsType) => {
 
   let postElements =
-    props.posts.map((p: any) => <Post id={p.id} message={p.message} likesCount={p.likesCount}/>);
+    props.posts.map((p:PostType)  =>
+      <Post id={p.id}
+            message={p.message}
+            likesCount={p.likesCount}/>);
 
-  let newPostElement: any = React.createRef();
+  let newPostElement: any = React.createRef(); // * TODO type of?
 
   let addPost = () => {
     props.addPost();
   }
+
   let onPostChange = () => {
     let text = newPostElement.current.value;
-    props.updateNewPostText(text)
+    props.updateNewPostText(text);
   }
 
   return (

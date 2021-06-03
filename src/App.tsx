@@ -32,10 +32,7 @@ const App = (props: AppPropsType) => {
                    profilePage={props.state.profilePage}
                    addPost={props.addPost}
                    updateNewPostText={props.updateNewPostText}/>}/>
-        {/*props = {profilePage:props.state.profilePage}
-                   addPost={props.addPost}
-                   updateNewPostText={props.updateNewPostText}
-        */}
+
         <Route path="/news" render={() => <News/>}/>
         <Route path="/music" render={() => <Music/>}/>
         <Route path="/settings" render={() => <Settings/>}/>
