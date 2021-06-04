@@ -27,16 +27,15 @@ export type DialogPageType = {
 export type RootStateType = {
   profilePage: ProfilePageType,
   dialogsPage: DialogPageType,
-  // sidebar: SidebarType,
 }
 
 export type StoreType = {
   _state: RootStateType
   getState: () => RootStateType
-  _rerenderEntireTree: (store: StoreType) => void
+  _callSubscriber: (store: StoreType) => void
   addPost: () => void
   updateNewPostText: (newText: string) => void
-  subscribe: (observer: (store: StoreType) => void) => void
+  subscribe: (observer: (state: StoreType) => void) => void // * TODO Не уверен
 }
 
 
@@ -73,7 +72,7 @@ let store: StoreType = {
   getState() {
     return this._state
   },
-  _rerenderEntireTree(store: StoreType) {
+  _callSubscriber(store) {
     console.log('state is changed')
   },
   addPost() {
@@ -84,14 +83,14 @@ let store: StoreType = {
     };
     this._state.profilePage.posts.push(newPost);
     this._state.profilePage.newPostText = '';
-    this._rerenderEntireTree(this);
+    this._callSubscriber(this);
   },
   updateNewPostText(newText) {
     this._state.profilePage.newPostText = newText
-    this._rerenderEntireTree(this);
+    this._callSubscriber(this);
   },
   subscribe(observer) {
-    this._rerenderEntireTree = observer;
+    this._callSubscriber = observer;
   },
 }
 

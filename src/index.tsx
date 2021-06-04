@@ -1,4 +1,4 @@
-import store, {StoreType} from './redux/state'
+import store, {RootStateType, StoreType} from './redux/state'
 
 
 import React from 'react';
@@ -12,9 +12,9 @@ let rerenderEntireTree = (store: StoreType) => {
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
-        <App state={store.getState()}
-             addPost={store.addPost}
-             updateNewPostText={store.updateNewPostText}/>
+        <App state={store._state}
+             addPost={store.addPost.bind(store)}
+             updateNewPostText={store.updateNewPostText.bind(store)}/>
       </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
@@ -25,6 +25,6 @@ let rerenderEntireTree = (store: StoreType) => {
 
 
 rerenderEntireTree(store);
-store.subscribe(rerenderEntireTree)
+store.subscribe(rerenderEntireTree) // У димыча в видео 37
 
 
