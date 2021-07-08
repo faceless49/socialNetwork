@@ -1,13 +1,12 @@
 import React from 'react';
 import s from './MyPosts.module.scss';
 import Post from './Post/Post';
-import {ActionsTypes, PostType} from '../../../redux/state';
+import {ActionsTypes, AddPostActionType, ChangeNewTextActionType, PostType} from '../../../redux/state';
 
 type MyPostsType = {
   posts: Array<PostType>
   dispatch: (action: ActionsTypes) => void
   newPostText: string
-  // updateNewPostText: (newText: string) => void
 }
 
 
@@ -17,19 +16,19 @@ const MyPosts = (props: MyPostsType) => {
     props.posts.map((p: PostType) =>
       <Post id={p.id}
             message={p.message}
-            likesCount={p.likesCount}/>);
+            likesCount={p.likesCount}/>).reverse();
 
-  let newPostElement = React.createRef<HTMLTextAreaElement>(); // * TODO type of?
+  let postMessageRef = React.createRef<HTMLTextAreaElement>();
 
   const addPost = () => {
-    props.dispatch({type: 'ADD-POST'});
+    props.dispatch({type: 'ADD-POST', postText: props.newPostText});
   }
 
   const onPostChange = () => {
-    if (newPostElement.current) {
-      let text = newPostElement.current.value;
-      let action = {type: 'UPDATE-NEW-POST-TEXT', newText: text};
-      props.dispatch(action.newText);
+    if (postMessageRef.current) {
+      let text = postMessageRef.current.value;
+      let action = {type: 'UPDATE-NEW-POST-TEXT', newText: text}; // * TODO: Why not working action in dispatch?
+      props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: text});
     }
   }
 
@@ -40,7 +39,7 @@ const MyPosts = (props: MyPostsType) => {
         <div>
           <textarea
             onChange={onPostChange}
-            ref={newPostElement}
+            ref={postMessageRef}
             value={props.newPostText}/>
         </div>
         <div>
