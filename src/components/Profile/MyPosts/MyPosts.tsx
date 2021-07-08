@@ -1,14 +1,7 @@
 import React from 'react';
 import s from './MyPosts.module.scss';
 import Post from './Post/Post';
-import {
-  ActionsTypes,
-  addPostAC,
-  AddPostActionType,
-  changeNewTextAC,
-  ChangeNewTextActionType,
-  PostType
-} from '../../../redux/state';
+import {ActionsTypes, addPostAC, PostType} from '../../../redux/state';
 
 type MyPostsType = {
   posts: Array<PostType>
@@ -16,6 +9,12 @@ type MyPostsType = {
   newPostText: string
 }
 
+
+let addPostActionCreator = () => {
+  return {
+    type: 'ADD-POST'
+  }
+}
 
 const MyPosts = (props: MyPostsType) => {
 
@@ -36,7 +35,7 @@ const MyPosts = (props: MyPostsType) => {
       let text = postMessageRef.current.value;
       let action = {type: 'UPDATE-NEW-POST-TEXT', newText: text}; // * TODO: Why not working action in dispatch?
       props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: text});
-      // ? add this string after SUPPORT with QUESTION 37 STRING 
+      // ? add this string after SUPPORT with QUESTION 37 STRING
       // props.dispatch(changeNewTextAC(text));
     }
   }
