@@ -13,8 +13,8 @@ let rerenderEntireTree = (store: StoreType) => {
     <React.StrictMode>
       <BrowserRouter>
         <App state={store._state}
-             dispatch={store.dispatch.bind(store)}
-             // store={store} 40 lesson?
+             /*dispatch={store.dispatch.bind(store)}*/
+             store={store} /*40 lesson?*/
         />
       </BrowserRouter>
     </React.StrictMode>,

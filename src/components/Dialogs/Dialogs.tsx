@@ -4,34 +4,42 @@ import Message from './Message/Message';
 import React, {ChangeEvent} from 'react';
 
 import {
-  AddMessageActionType, ChangeNewMessageBodyActionType,
-  DialogPageType,
   DialogType,
   MessageType,
-  sendMessageCreator,
+  sendMessageCreator, StoreType,
   updateNewMessageBodyCreator
 } from '../../redux/state';
 
 
 type PropsType = {
-  state: DialogPageType
-  dispatch: (action: ChangeNewMessageBodyActionType | AddMessageActionType) => void
-}
-const Dialogs = (props: PropsType) => {
-  let dialogsElements =
-    props.state.dialogs.map((d: DialogType) => <DialogItem key={d.id} name={d.name} id={d.id}/>);
-  let messagesElements =
-    props.state.messages.map((m: MessageType) => <Message key={m.id} message={m.message} id={m.id}/>);
+  //*state: DialogPageType 40 lesson
+  //* dispatch: (action: ChangeNewMessageBodyActionType | AddMessageActionType) => void 40 lesson
+  store: StoreType
+};
 
-  let newMessageBody = props.state.newMessageBody
+
+const Dialogs = (props: PropsType) => {
+
+  let state = props.store.getState().dialogsPage
+
+  //* 40lesson let dialogsElements =
+  //   props.state.dialogs.map((d: DialogType) => <DialogItem key={d.id} name={d.name} id={d.id}/>);
+  // let messagesElements =
+  //   props.state.messages.map((m: MessageType) => <Message key={m.id} message={m.message} id={m.id}/>);
+  let dialogsElements =
+    state.dialogs.map((d: DialogType) => <DialogItem key={d.id} name={d.name} id={d.id}/>);
+  let messagesElements =
+    state.messages.map((m: MessageType) => <Message key={m.id} message={m.message} id={m.id}/>);
+
+  let newMessageBody = state.newMessageBody
 
   let onSendMessageClick = () => {
-    props.dispatch(sendMessageCreator())
+    props.store.dispatch(sendMessageCreator())
   }
 
   let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     let newMessageBody = e.currentTarget.value;
-    props.dispatch(updateNewMessageBodyCreator(newMessageBody))
+    props.store.dispatch(updateNewMessageBodyCreator(newMessageBody))
   }
 
 

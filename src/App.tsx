@@ -13,11 +13,13 @@ import {ActionsTypes, RootStateType, StoreType} from './redux/state';
 type AppPropsType = {
   state: RootStateType
   dispatch: (action: ActionsTypes) => void
+
 }
 type AppPropsStateType = {
+  state: RootStateType
   store: StoreType
 }
-const App = (props: AppPropsType) => {
+const App = (props: AppPropsStateType) => {
   return (
     <div className="app-wrapper">
       <Header/>
@@ -26,14 +28,16 @@ const App = (props: AppPropsType) => {
         <Route path="/dialogs"
                render={() =>
                  <Dialogs
-                   state={props.state.dialogsPage}
-                   dispatch={props.dispatch}
+                   /*state={props.state.dialogsPage}*/
+                   /*dispatch={props.dispatch}*/
+                   store={props.store}
                  />}/>
         <Route path="/profile"
                render={() =>
                  <Profile
-                   profilePage={props.state.profilePage}
-                   dispatch={props.dispatch}
+                   /*        profilePage={props.state.profilePage}
+                           dispatch={props.dispatch}*/
+                   store={props.store}
                  />}/>
 
         <Route path="/news" render={() => <News/>}/>

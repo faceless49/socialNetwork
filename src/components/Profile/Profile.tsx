@@ -2,21 +2,25 @@ import React from 'react';
 import s from './Profile.module.scss';
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {ActionsTypes, ProfilePageType} from '../../redux/state';
+import {ActionsTypes, ProfilePageType, StoreType} from '../../redux/state';
 
 type ProfileType = {
-  profilePage: ProfilePageType
-  dispatch: (action: ActionsTypes) => void
-}
+  // * 40 lesson profilePage: ProfilePageType
+  // * 40 lesson dispatch: (action: ActionsTypes) => void
+  store: StoreType
+
+};
 
 const Profile = (props: ProfileType) => {
+  let state = props.store.getState().profilePage
+
   return (
     <div>
       <ProfileInfo/>
       <MyPosts
-        posts={props.profilePage.posts}
-        dispatch={props.dispatch}
-        newPostText={props.profilePage.newPostText}
+        posts={state.posts}
+        dispatch={props.store.dispatch}
+        newPostText={state.newPostText}
       />
     </div>
   )
