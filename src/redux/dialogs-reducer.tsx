@@ -1,9 +1,12 @@
-import {ActionsTypes, DialogPageType} from './state';
+import {ActionsTypes, DialogPageType, RootStateType} from './state';
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
-export const dialogsReducer = (state: DialogPageType, action: ActionsTypes) => {
+
+
+
+export const dialogsReducer = (state: DialogPageType, action: ActionsTypes): DialogPageType => {
 
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_BODY:
@@ -17,4 +20,16 @@ export const dialogsReducer = (state: DialogPageType, action: ActionsTypes) => {
     default:
       return state
   }
+}
+
+export const sendMessageCreator = () => {
+  return {
+    type: SEND_MESSAGE
+  } as const
+}
+export const updateNewMessageBodyCreator = (messageBody: string) => {
+  return {
+    type: UPDATE_NEW_MESSAGE_BODY,
+    messageBody: messageBody
+  } as const
 }

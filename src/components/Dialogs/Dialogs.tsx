@@ -6,10 +6,10 @@ import React, {ChangeEvent} from 'react';
 import {
   DialogType,
   MessageType,
-  sendMessageCreator, StoreType,
-  updateNewMessageBodyCreator
-} from '../../redux/state';
+  StoreType,
 
+} from '../../redux/state';
+import {updateNewMessageBodyCreator, sendMessageCreator} from '../../redux/dialogs-reducer'
 
 type PropsType = {
   //*state: DialogPageType 40 lesson
