@@ -1,12 +1,9 @@
 import React from 'react';
-import s from './Profile.module.scss';
 import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
-import {ActionsTypes, ProfilePageType, StoreType} from '../../redux/store';
+import {ActionsTypes, StoreType} from '../../redux/store';
 
 type ProfileType = {
-  // * 40 lesson profilePage: ProfilePageType
-  // * 40 lesson dispatch: (action: ActionsTypes) => void
   store: StoreType
   dispatch: (action: ActionsTypes) => void
 };

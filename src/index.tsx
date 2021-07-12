@@ -9,11 +9,11 @@ import App from './App';
 import {BrowserRouter} from 'react-router-dom';
 
 
-let rerenderEntireTree = (state: RootStateType) => {
+let rerenderEntireTree = (store: StoreType) => {
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
-        <App state={state}
+        <App state={store._state}
              dispatch={store.dispatch.bind(store)}
              store={store} /*40 lesson?*/
         />
@@ -24,10 +24,10 @@ let rerenderEntireTree = (state: RootStateType) => {
 }
 
 
-rerenderEntireTree(store.getState());
+rerenderEntireTree(store);
 store.subscribe = (() => {
   debugger
-  let state = store.getState()
+  let state = store
   rerenderEntireTree(state)
 }) // У димыча в видео 37, 42
 
