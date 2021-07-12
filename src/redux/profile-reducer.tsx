@@ -1,11 +1,11 @@
-import {ActionsTypes, PostType, ProfilePageType, StoreType} from './state';
+import {ActionsTypes, PostType, ProfilePageType} from './store';
 
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
 
-export const profileReducer = (state: ProfilePageType, action: ActionsTypes): ProfilePageType => { // * TODO SUpp what a type
+export const profileReducer = (state: ProfilePageType, action: ActionsTypes): ProfilePageType => {
 
   switch (action.type) {
     case ADD_POST:
@@ -25,10 +25,10 @@ export const profileReducer = (state: ProfilePageType, action: ActionsTypes): Pr
   }
 }
 
-export const addPostAC = (postText: string) => {
+// export const addPostAC = (postText: string) => {
+export const addPostAC = () => {
   return {
     type: ADD_POST,
-    postText: postText
   } as const
 }
 export const changeNewTextAC = (newText: string) => {

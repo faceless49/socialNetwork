@@ -26,7 +26,6 @@ export type DialogPageType = {
   dialogs: Array<DialogType>,
   messages: Array<MessageType>
   newMessageBody: string
-  // dispatch: (action: ChangeNewMessageBodyActionType | AddMessageActionType) => void
 }
 
 export type RootStateType = {
@@ -39,7 +38,7 @@ export type StoreType = {
   getState: () => RootStateType
   _callSubscriber: (store: StoreType) => void
 
-  subscribe: (observer: (state: StoreType) => void) => void // * TODO Не уверен
+  subscribe: (observer: (state: StoreType) => void) => void
   dispatch: (action: ActionsTypes) => void
 }
 
@@ -105,9 +104,7 @@ let store: StoreType = {
   },
 
   dispatch(action) {
-
     this._state.profilePage = profileReducer(this._state.profilePage, action)
-
     this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
 
 
@@ -116,4 +113,3 @@ let store: StoreType = {
 }
 
 export default store;
-

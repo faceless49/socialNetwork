@@ -8,7 +8,7 @@ import {
   MessageType,
   StoreType,
 
-} from '../../redux/state';
+} from '../../redux/store';
 import {updateNewMessageBodyCreator, sendMessageCreator} from '../../redux/dialogs-reducer'
 
 type PropsType = {
@@ -69,10 +69,5 @@ const Dialogs = (props: PropsType) => {
     </div>
   )
 }
-// * TODO: why clicked button page reload in form?
-// * 1. Убрать форму?
-// * 2. button type= button?
-// * 3. onSubmit = e.preventDefault()?
-// * 4. e.preventDefault()?
 
 export default Dialogs;

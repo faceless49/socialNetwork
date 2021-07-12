@@ -1,4 +1,4 @@
-import store, {RootStateType, StoreType} from './redux/state'
+import store, {RootStateType, StoreType} from './redux/store'
 
 
 import React from 'react';
@@ -13,7 +13,7 @@ let rerenderEntireTree = (store: StoreType) => {
     <React.StrictMode>
       <BrowserRouter>
         <App state={store._state}
-             /*dispatch={store.dispatch.bind(store)}*/
+             dispatch={store.dispatch.bind(store)}
              store={store} /*40 lesson?*/
         />
       </BrowserRouter>

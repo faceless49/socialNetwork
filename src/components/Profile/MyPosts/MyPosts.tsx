@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './MyPosts.module.scss';
 import Post from './Post/Post';
-import {ActionsTypes, PostType} from '../../../redux/state';
+import {ActionsTypes, PostType} from '../../../redux/store';
 import {addPostAC, changeNewTextAC} from '../../../redux/profile-reducer'
 
 type MyPostsType = {
@@ -11,11 +11,11 @@ type MyPostsType = {
 }
 
 
-let addPostActionCreator = () => {
-  return {
-    type: 'ADD-POST'
-  }
-}
+// let addPostActionCreator = () => {
+//   return {
+//     type: 'ADD-POST'
+//   }
+// }
 
 const MyPosts = (props: MyPostsType) => {
 
@@ -28,18 +28,14 @@ const MyPosts = (props: MyPostsType) => {
   let postMessageRef = React.createRef<HTMLTextAreaElement>();
 
   const addPost = () => {
-    props.dispatch(addPostAC(props.newPostText));
+    props.dispatch(addPostAC());
   }
 
   const onPostChange = () => {
     if (postMessageRef.current) {
       let text = postMessageRef.current.value;
-      let action = {type: 'UPDATE-NEW-POST-TEXT', newText: text}; // * TODO: Why not working action in dispatch?
-      props.dispatch(changeNewTextAC(text))
-
-      // props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: text});
-      // ? add this string after SUPPORT with QUESTION 37 STRING
-      // props.dispatch(changeNewTextAC(text));
+      let action = changeNewTextAC(text)
+      props.dispatch(action)
     }
   }
 
