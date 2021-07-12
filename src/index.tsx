@@ -1,4 +1,5 @@
-import store, {RootStateType, StoreType} from './redux/store'
+import {RootStateType, StoreType} from './redux/store'
+import store from './redux/redux-store'
 
 
 import React from 'react';
@@ -8,11 +9,11 @@ import App from './App';
 import {BrowserRouter} from 'react-router-dom';
 
 
-let rerenderEntireTree = (store: StoreType) => {
+let rerenderEntireTree = (state: RootStateType) => {
   ReactDOM.render(
     <React.StrictMode>
       <BrowserRouter>
-        <App state={store._state}
+        <App state={state}
              dispatch={store.dispatch.bind(store)}
              store={store} /*40 lesson?*/
         />
@@ -23,7 +24,11 @@ let rerenderEntireTree = (store: StoreType) => {
 }
 
 
-rerenderEntireTree(store);
-store.subscribe(rerenderEntireTree) // У димыча в видео 37
+rerenderEntireTree(store.getState());
+store.subscribe = (() => {
+  debugger
+  let state = store.getState()
+  rerenderEntireTree(state)
+}) // У димыча в видео 37, 42
 
 

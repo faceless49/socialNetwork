@@ -10,10 +10,7 @@ import Settings from './components/Settings/Settings';
 import Music from './components/Music/Music';
 import {ActionsTypes, RootStateType, StoreType} from './redux/store';
 
-// type AppPropsType = {
-//   state: RootStateType
-//   dispatch: (action: ActionsTypes) => void
-// }
+
 type AppPropsStateType = {
   state: RootStateType
   store: StoreType
