@@ -10,6 +10,7 @@ import {
 
 } from '../../redux/store';
 import {updateNewMessageBodyCreator, sendMessageCreator} from '../../redux/dialogs-reducer'
+import Dialogs from './Dialogs';
 
 type PropsType = {
   //*state: DialogPageType 40 lesson
@@ -18,54 +19,24 @@ type PropsType = {
 };
 
 
-const Dialogs = (props: PropsType) => {
+const DialogsContainer = (props: PropsType) => {
 
   let state = props.store.getState().dialogsPage
-
-  //* 40lesson let dialogsElements =
-
-  let dialogsElements =
-    state.dialogs.map((d: DialogType) => <DialogItem key={d.id} name={d.name} id={d.id}/>);
-  let messagesElements =
-    state.messages.map((m: MessageType) => <Message key={m.id} message={m.message} id={m.id}/>);
-
-  let newMessageBody = state.newMessageBody
 
   let onSendMessageClick = () => {
     props.store.dispatch(sendMessageCreator())
   }
 
-  let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    let newMessageBody = e.currentTarget.value;
+  let onNewMessageChange = (updateNewMessageBody) => {
     props.store.dispatch(updateNewMessageBodyCreator(newMessageBody))
   }
 
 
-  return (
-    <div className={s.dialogs}>
-      <div className={s.dialogsItems}>
-        {dialogsElements}
-      </div>
-      <div className={s.messages}>
-        <div>{messagesElements}</div>
-        <div>
-          <div>
-            <textarea
-              value={newMessageBody}
-              onChange={onNewMessageChange}
-              placeholder={'Enter your message'}
-            />
-          </div>
-          <div>
-            <button
-              onClick={onSendMessageClick}
-              type={'button'}>Send message
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+  return <Dialogs
+    updateNewMessageBody={updateNewMessageBody}
+    sendMessage={onSendMessageClick}
+    dialogsPage={state}
+  />
 }
 
-export default Dialogs;
+export default DialogsContainer;

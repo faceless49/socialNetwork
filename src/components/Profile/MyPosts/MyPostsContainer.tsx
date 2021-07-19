@@ -11,6 +11,8 @@ type MyPostsType = {
 
 const MyPostsContainer = (props: MyPostsType) => {
 
+  let state = props.store.getState()
+
   const addPost = () => {
     props.store.dispatch(addPostAC());
   }
@@ -22,9 +24,9 @@ const MyPostsContainer = (props: MyPostsType) => {
 
 
   return <MyPosts
-    posts={props.posts}
+    posts={state.profilePage.posts}
     dispatch={}
-    newPostText={}
+    newPostText={state.profilePage.newPostText}
     updateNewPostText={onPostChange}
     addPost={addPost}
   />

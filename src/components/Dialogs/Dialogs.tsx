@@ -20,7 +20,7 @@ type PropsType = {
 
 const Dialogs = (props: PropsType) => {
 
-  let state = props.store.getState().dialogsPage
+  let state = props.dialogsPage
 
   //* 40lesson let dialogsElements =
 
@@ -32,12 +32,13 @@ const Dialogs = (props: PropsType) => {
   let newMessageBody = state.newMessageBody
 
   let onSendMessageClick = () => {
-    props.store.dispatch(sendMessageCreator())
+    props.sendMessage()
   }
 
   let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     let newMessageBody = e.currentTarget.value;
-    props.store.dispatch(updateNewMessageBodyCreator(newMessageBody))
+    props.updateNewMessageBody(newMessageBody)
+    // props.store.dispatch(updateNewMessageBodyCreator(newMessageBody))
   }
 
 

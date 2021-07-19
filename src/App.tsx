@@ -9,6 +9,7 @@ import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import Music from './components/Music/Music';
 import {ActionsTypes, StateType, StoreType} from './redux/store';
+import DialogsContainer from './components/Dialogs/DialogsContainer';
 
 
 type AppPropsStateType = {
@@ -24,14 +25,13 @@ const App = (props: AppPropsStateType) => {
       <div className="app-wrapper-content">
         <Route path="/dialogs"
                render={() =>
-                 <Dialogs
+                 <DialogsContainer
                    store={props.store}
                  />}/>
         <Route path="/profile"
                render={() =>
                  <Profile
                    store={props.store}
-                   dispatch={props.dispatch}
                  />}/>
 
         <Route path="/news" render={() => <News/>}/>
