@@ -10,13 +10,6 @@ type MyPostsType = {
   newPostText: string
 }
 
-
-// let addPostActionCreator = () => {
-//   return {
-//     type: 'ADD-POST'
-//   }
-// }
-
 const MyPosts = (props: MyPostsType) => {
 
   let postElements =
@@ -27,15 +20,13 @@ const MyPosts = (props: MyPostsType) => {
 
   let postMessageRef = React.createRef<HTMLTextAreaElement>();
 
-  const addPost = () => {
-    props.dispatch(addPostAC());
+  const onAddPost = () => {
+    props.addPost()
   }
 
   const onPostChange = () => {
-    if (postMessageRef.current) {
       let text = postMessageRef.current.value;
-      let action = changeNewTextAC(text)
-      props.dispatch(action)
+      props.updateNewPostText(text)
     }
   }
 
@@ -50,7 +41,7 @@ const MyPosts = (props: MyPostsType) => {
             value={props.newPostText}/>
         </div>
         <div>
-          <button onClick={addPost}>Add post</button>
+          <button onClick={onAddPost}>Add post</button>
         </div>
       </div>
       <div className={s.posts}>

@@ -28,14 +28,14 @@ export type DialogPageType = {
   newMessageBody: string
 }
 
-export type RootStateType = {
+export type StateType = {
   profilePage: ProfilePageType,
   dialogsPage: DialogPageType,
 }
 
 export type StoreType = {
-  _state: RootStateType
-  getState: () => RootStateType
+  _state: StateType
+  getState: () => StateType
   _callSubscriber: (store: StoreType) => void
   subscribe: (observer: (state: StoreType) => void) => void
   dispatch: (action: ActionsTypes) => void

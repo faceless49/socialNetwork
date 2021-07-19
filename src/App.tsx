@@ -8,11 +8,11 @@ import {Route} from 'react-router-dom';
 import News from './components/News/News';
 import Settings from './components/Settings/Settings';
 import Music from './components/Music/Music';
-import {ActionsTypes, RootStateType, StoreType} from './redux/store';
+import {ActionsTypes, StateType, StoreType} from './redux/store';
 
 
 type AppPropsStateType = {
-  state: RootStateType
+  state: StateType
   store: StoreType
   dispatch: (action: ActionsTypes) => void
 }

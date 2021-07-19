@@ -1,7 +1,7 @@
 import React from 'react';
-import MyPosts from './MyPosts/MyPosts';
 import ProfileInfo from './ProfileInfo/ProfileInfo';
 import {ActionsTypes, StoreType} from '../../redux/store';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 type ProfileType = {
   store: StoreType
@@ -14,11 +14,7 @@ const Profile = (props: ProfileType) => {
   return (
     <div>
       <ProfileInfo/>
-      <MyPosts
-        posts={state.posts}
-        dispatch={props.dispatch}
-        newPostText={state.newPostText}
-      />
+      <MyPostsContainer store={props.store}/>
     </div>
   )
 }

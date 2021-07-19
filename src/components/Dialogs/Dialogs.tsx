@@ -23,9 +23,7 @@ const Dialogs = (props: PropsType) => {
   let state = props.store.getState().dialogsPage
 
   //* 40lesson let dialogsElements =
-  //   props.state.dialogs.map((d: DialogType) => <DialogItem key={d.id} name={d.name} id={d.id}/>);
-  // let messagesElements =
-  //   props.state.messages.map((m: MessageType) => <Message key={m.id} message={m.message} id={m.id}/>);
+
   let dialogsElements =
     state.dialogs.map((d: DialogType) => <DialogItem key={d.id} name={d.name} id={d.id}/>);
   let messagesElements =
