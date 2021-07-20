@@ -8,7 +8,7 @@ type ProfileType = {
   dispatch: (action: ActionsTypes) => void
 };
 
-const Profile = (props: ProfileType) => {
+const Profile = (props: any) => {
   let state = props.store.getState().profilePage
 
   return (

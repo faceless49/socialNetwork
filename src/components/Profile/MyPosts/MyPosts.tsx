@@ -28,7 +28,7 @@ const MyPosts = (props: MyPostsType) => {
       let text = postMessageRef.current.value;
       props.updateNewPostText(text)
     }
-  }
+
 
   return (
     <div className={s.postsBlock}>

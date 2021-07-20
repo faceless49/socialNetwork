@@ -2,19 +2,10 @@ import s from './Dialogs.module.scss';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import React, {ChangeEvent} from 'react';
-
-import {
-  DialogType,
-  MessageType,
-  StoreType,
-
-} from '../../redux/store';
-import {updateNewMessageBodyCreator, sendMessageCreator} from '../../redux/dialogs-reducer'
+import {AppStateType} from '../../redux/redux-store';
 
 type PropsType = {
-  //*state: DialogPageType 40 lesson
-  //* dispatch: (action: ChangeNewMessageBodyActionType | AddMessageActionType) => void 40 lesson
-  store: StoreType
+  store: AppStateType
 };
 
 
@@ -25,7 +16,7 @@ const Dialogs = (props: PropsType) => {
   //* 40lesson let dialogsElements =
 
   let dialogsElements =
-    state.dialogs.map((d: DialogType) => <DialogItem key={d.id} name={d.name} id={d.id}/>);
+    state.dialogs.map((d: props.DialogType) => <DialogItem key={d.id} name={d.name} id={d.id}/>);
   let messagesElements =
     state.messages.map((m: MessageType) => <Message key={m.id} message={m.message} id={m.id}/>);
 

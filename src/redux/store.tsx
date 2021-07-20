@@ -1,39 +1,38 @@
 import {addPostAC, changeNewTextAC, profileReducer} from './profile-reducer';
 import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reducer';
 
-export type MessageType = {
+type MessageType = {
   id?: number,
   message: string,
 }
 
-export type DialogType = {
+type DialogType = {
   id: number,
   name: string,
 }
-
-export type PostType = {
+type PostType = {
   id: number,
   message: string,
   likesCount: number,
 }
 
-export type ProfilePageType = {
+type ProfilePageType = {
   posts: Array<PostType>,
   newPostText: string
 }
 
-export type DialogPageType = {
+type DialogPageType = {
   dialogs: Array<DialogType>,
   messages: Array<MessageType>
   newMessageBody: string
 }
 
-export type StateType = {
+type StateType = {
   profilePage: ProfilePageType,
   dialogsPage: DialogPageType,
 }
 
-export type StoreType = {
+type StoreType = {
   _state: StateType
   getState: () => StateType
   _callSubscriber: (store: StoreType) => void
