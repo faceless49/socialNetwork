@@ -2,12 +2,12 @@ import React from 'react';
 import s from './MyPosts.module.scss';
 import Post from './Post/Post';
 import {ActionsTypes, PostType} from '../../../redux/store';
-import {addPostAC, changeNewTextAC} from '../../../redux/profile-reducer'
 
 type MyPostsType = {
   posts: Array<PostType>
   dispatch: (action: ActionsTypes) => void
   newPostText: string
+  addPost: () => void
 }
 
 const MyPosts = (props: MyPostsType) => {
@@ -25,8 +25,10 @@ const MyPosts = (props: MyPostsType) => {
   }
 
   const onPostChange = () => {
-      let text = postMessageRef.current.value;
-      props.updateNewPostText(text)
+      // @ts-ignore
+    let text = postMessageRef.current.value;
+      // @ts-ignore
+    props.updateNewPostText(text)
     }
 
 

@@ -1,7 +1,7 @@
-import {addPostAC, changeNewTextAC, profileReducer} from './profile-reducer';
+import {addPostAC, updateNewPostTextAC, profileReducer} from './profile-reducer';
 import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reducer';
 
-type MessageType = {
+export type MessageType = {
   id?: number,
   message: string,
 }
@@ -10,13 +10,9 @@ type DialogType = {
   id: number,
   name: string,
 }
-type PostType = {
-  id: number,
-  message: string,
-  likesCount: number,
-}
 
-type ProfilePageType = {
+
+export type ProfilePageType = {
   posts: Array<PostType>,
   newPostText: string
 }
@@ -42,7 +38,7 @@ type StoreType = {
 
 export type ActionsTypes =
   ReturnType<typeof addPostAC>
-  | ReturnType<typeof changeNewTextAC>
+  | ReturnType<typeof updateNewPostTextAC>
   | ReturnType<typeof updateNewMessageBodyCreator>
   | ReturnType<typeof sendMessageCreator>
 
@@ -55,7 +51,7 @@ let store: StoreType = {
         {id: 2, message: 'Blala', likesCount: 11},
         {id: 2, message: 'Dada', likesCount: 15},
       ],
-      newPostText: '',
+      newPostText: 'it-kama',
     },
 
     dialogsPage: {

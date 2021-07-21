@@ -3,20 +3,20 @@ import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import React, {ChangeEvent} from 'react';
 import {AppStateType} from '../../redux/redux-store';
+import {DialogType, MessageType} from '../../redux/dialogs-reducer';
 
 type PropsType = {
   store: AppStateType
 };
 
 
-const Dialogs = (props: PropsType) => {
+const Dialogs = (props: any) => {
 
   let state = props.dialogsPage
 
-  //* 40lesson let dialogsElements =
 
   let dialogsElements =
-    state.dialogs.map((d: props.DialogType) => <DialogItem key={d.id} name={d.name} id={d.id}/>);
+    state.dialogs.map((d: DialogType) => <DialogItem key={d.id} name={d.name} id={d.id}/>);
   let messagesElements =
     state.messages.map((m: MessageType) => <Message key={m.id} message={m.message} id={m.id}/>);
 
@@ -27,9 +27,8 @@ const Dialogs = (props: PropsType) => {
   }
 
   let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    let newMessageBody = e.currentTarget.value;
-    props.updateNewMessageBody(newMessageBody)
-    // props.store.dispatch(updateNewMessageBodyCreator(newMessageBody))
+    let body = e.currentTarget.value;
+    props.updateNewMessageBody(body)
   }
 
 

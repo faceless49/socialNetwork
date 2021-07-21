@@ -9,12 +9,11 @@ type ProfileType = {
 };
 
 const Profile = (props: any) => {
-  let state = props.store.getState().profilePage
 
   return (
     <div>
       <ProfileInfo/>
-      <MyPostsContainer store={props.store}/>
+      <MyPostsContainer />
     </div>
   )
 }
