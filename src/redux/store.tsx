@@ -1,4 +1,4 @@
-import {addPostAC, updateNewPostTextAC, profileReducer} from './profile-reducer';
+import {addPostAC, updateNewPostTextAC, profileReducer, PostType} from './profile-reducer';
 import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reducer';
 
 export type MessageType = {
@@ -98,8 +98,8 @@ let store: StoreType = {
   },
 
   dispatch(action) {
-    this._state.profilePage = profileReducer(this._state.profilePage, action)
-    this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
+    // this._state.profilePage = profileReducer(this._state.profilePage, action)
+    // this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action)
 
 
     this._callSubscriber(this);

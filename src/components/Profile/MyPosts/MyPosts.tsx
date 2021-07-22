@@ -1,17 +1,17 @@
 import React from 'react';
 import s from './MyPosts.module.scss';
 import Post from './Post/Post';
-import {ActionsTypes, PostType} from '../../../redux/store';
+import {PostType} from '../../../redux/profile-reducer';
+
 
 type MyPostsType = {
   posts: Array<PostType>
-  dispatch: (action: ActionsTypes) => void
   newPostText: string
   addPost: () => void
+  updateNewPostText: (text: string) => void
 }
 
 const MyPosts = (props: MyPostsType) => {
-
   let postElements =
     props.posts.map((p: PostType) =>
       <Post id={p.id}
@@ -25,11 +25,11 @@ const MyPosts = (props: MyPostsType) => {
   }
 
   const onPostChange = () => {
-      // @ts-ignore
-    let text = postMessageRef.current.value;
-      // @ts-ignore
-    props.updateNewPostText(text)
+    let text = postMessageRef.current?.value;
+    if (text) {
+      props.updateNewPostText(text)
     }
+  }
 
 
   return (

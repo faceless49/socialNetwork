@@ -14,7 +14,6 @@ export type DialogType = {
   name: string,
 }
 
-export type InitialStateType = typeof initialState
 
 let initialState = {
   dialogs: [
@@ -34,6 +33,9 @@ let initialState = {
   ] as Array<MessageType>,
   newMessageBody: '' as string
 }
+
+export type InitialStateType = typeof initialState
+
 
 export const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
   switch (action.type) {
@@ -55,6 +57,6 @@ export const sendMessageCreator = () => ({type: SEND_MESSAGE}) as const
 export const updateNewMessageBodyCreator = (body: string) => {
   return {
     type: UPDATE_NEW_MESSAGE_BODY,
-    messageBody: body
+    body: body
   } as const
 }
