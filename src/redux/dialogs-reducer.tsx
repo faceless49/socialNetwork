@@ -1,69 +1,69 @@
-import {ActionsTypes} from './store';
+import { ActionsTypes } from './store';
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
-
 export type MessageType = {
-  id?: number,
-  message: string,
-}
+  id?: number;
+  message: string;
+};
 
 export type DialogType = {
-  id: number,
-  name: string,
-}
-
+  id: number;
+  name: string;
+};
 
 let initialState = {
   dialogs: [
-    {id: 1, name: 'Dima'},
-    {id: 2, name: 'Andrew'},
-    {id: 3, name: 'Sveta'},
-    {id: 4, name: 'Sasha'},
-    {id: 5, name: 'Viktor'},
-    {id: 6, name: 'Valera'},
+    { id: 1, name: 'Dima' },
+    { id: 2, name: 'Andrew' },
+    { id: 3, name: 'Sveta' },
+    { id: 4, name: 'Sasha' },
+    { id: 5, name: 'Viktor' },
+    { id: 6, name: 'Valera' }
   ] as Array<DialogType>,
   messages: [
-    {id: 1, message: 'Hello world'},
-    {id: 2, message: 'How is your it-kamasutra?'},
-    {id: 3, message: 'Yo'},
-    {id: 4, message: 'Yo'},
-    {id: 5, message: 'Yo'},
+    { id: 1, message: 'Hello world' },
+    { id: 2, message: 'How is your it-kamasutra?' },
+    { id: 3, message: 'Yo' },
+    { id: 4, message: 'Yo' },
+    { id: 5, message: 'Yo' }
   ] as Array<MessageType>,
   newMessageBody: '' as string
-}
+};
 
-export type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState;
 
-
-export const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes): InitialStateType => {
+export const dialogsReducer = (
+  state: InitialStateType = initialState,
+  action: ActionsTypes
+): InitialStateType => {
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_BODY: {
       return {
         ...state,
-        newMessageBody: action.body,
-      }
+        newMessageBody: action.body
+      };
     }
     case SEND_MESSAGE: {
       let body = state.newMessageBody;
       return {
         ...state,
         newMessageBody: '',
-        messages: [...state.messages, {id: 6, message: body}],
-      }
+        messages: [...state.messages, { id: 6, message: body }]
+      };
       // Идентичная запись 54 строке stateCopy.messages.push({id: 6, message: body});
     }
     default:
-      return state
+      return state;
   }
-}
+};
 
-export const sendMessageCreator = () => ({type: SEND_MESSAGE}) as const
+export const sendMessageCreator = () => ({ type: SEND_MESSAGE } as const);
 
 export const updateNewMessageBodyCreator = (body: string) => {
   return {
     type: UPDATE_NEW_MESSAGE_BODY,
     body: body
-  } as const
-}
+  } as const;
+};
