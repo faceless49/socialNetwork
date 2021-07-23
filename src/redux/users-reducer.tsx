@@ -22,30 +22,30 @@ export type UserType = {
 
 let initialState = {
   users: [
-    // {
-    //   id: v1(),
-    //   followed: true,
-    //   fullName: 'Dmitry K',
-    //   status: 'I am looking for a job now',
-    //   avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
-    //   location: {country: 'Belarus', city: 'Minsk'}
-    // },
-    // {
-    //   id: v1(),
-    //   followed: false,
-    //   fullName: 'Sveta',
-    //   status: 'Boss HTML',
-    //   avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
-    //   location: {country: 'Ukraine', city: 'Kiev'}
-    // },
-    // {
-    //   id: v1(),
-    //   followed: false,
-    //   fullName: 'Katya',
-    //   status: 'Boss of money',
-    //   avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
-    //   location: {country: 'Belarus', city: 'Minsk'}
-    // }
+    {
+      id: v1(),
+      followed: true,
+      fullName: 'Dmitry K',
+      status: 'I am looking for a job now',
+      avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
+      location: {country: 'Belarus', city: 'Minsk'}
+    },
+    {
+      id: v1(),
+      followed: false,
+      fullName: 'Sveta',
+      status: 'Boss HTML',
+      avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
+      location: {country: 'Ukraine', city: 'Kiev'}
+    },
+    {
+      id: v1(),
+      followed: false,
+      fullName: 'Katya',
+      status: 'Boss of money',
+      avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
+      location: {country: 'Belarus', city: 'Minsk'}
+    }
   ] as Array<UserType>
 };
 
