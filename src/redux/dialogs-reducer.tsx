@@ -1,43 +1,46 @@
-import { ActionsTypes } from './store';
+import {v1} from 'uuid';
+import {ActionsTypes} from './redux-store';
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
+
+export type DialogPageType = {
+  dialogs: Array<DialogType>;
+  messages: Array<MessageType>;
+  newMessageBody: string;
+};
 export type MessageType = {
-  id?: number;
+  id?: string;
   message: string;
 };
-
 export type DialogType = {
-  id: number;
+  id: string;
   name: string;
 };
 
 let initialState = {
   dialogs: [
-    { id: 1, name: 'Dima' },
-    { id: 2, name: 'Andrew' },
-    { id: 3, name: 'Sveta' },
-    { id: 4, name: 'Sasha' },
-    { id: 5, name: 'Viktor' },
-    { id: 6, name: 'Valera' }
+    {id: v1(), name: 'Dima'},
+    {id: v1(), name: 'Andrew'},
+    {id: v1(), name: 'Sveta'},
+    {id: v1(), name: 'Sasha'},
+    {id: v1(), name: 'Viktor'},
+    {id: v1(), name: 'Valera'}
   ] as Array<DialogType>,
   messages: [
-    { id: 1, message: 'Hello world' },
-    { id: 2, message: 'How is your it-kamasutra?' },
-    { id: 3, message: 'Yo' },
-    { id: 4, message: 'Yo' },
-    { id: 5, message: 'Yo' }
+    {id: v1(), message: 'Hello world'},
+    {id: v1(), message: 'How is your it-kamasutra?'},
+    {id: v1(), message: 'Yo'},
+    {id: v1(), message: 'Yo'},
+    {id: v1(), message: 'Yo'}
   ] as Array<MessageType>,
-  newMessageBody: '' as string
+  newMessageBody: ''
 };
 
-export type InitialStateType = typeof initialState;
+export type DialogsInitialStateType = typeof initialState;
 
-export const dialogsReducer = (
-  state: InitialStateType = initialState,
-  action: ActionsTypes
-): InitialStateType => {
+export const dialogsReducer = (state: DialogsInitialStateType = initialState, action: ActionsTypes): DialogsInitialStateType => {
   switch (action.type) {
     case UPDATE_NEW_MESSAGE_BODY: {
       return {
@@ -50,7 +53,7 @@ export const dialogsReducer = (
       return {
         ...state,
         newMessageBody: '',
-        messages: [...state.messages, { id: 6, message: body }]
+        messages: [...state.messages, {id: v1(), message: body}]
       };
       // Идентичная запись 54 строке stateCopy.messages.push({id: 6, message: body});
     }
@@ -59,11 +62,11 @@ export const dialogsReducer = (
   }
 };
 
-export const sendMessageCreator = () => ({ type: SEND_MESSAGE } as const);
+export const sendMessageCreator = () => ({type: SEND_MESSAGE} as const);
 
-export const updateNewMessageBodyCreator = (body: string) => {
+export const updateNewMessageBodyCreator = (text: string) => {
   return {
     type: UPDATE_NEW_MESSAGE_BODY,
-    body: body
+    body: text
   } as const;
 };

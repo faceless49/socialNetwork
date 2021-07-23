@@ -2,7 +2,12 @@ import s from './Dialogs.module.scss';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
 import React, {ChangeEvent} from 'react';
-import {DialogType, MessageType} from '../../redux/dialogs-reducer';
+import {MessageType} from '../../redux/dialogs-reducer';
+
+type DialogType = {
+  id: string;
+  name: string;
+};
 
 type PropsType = {
   dialogs: Array<DialogType>

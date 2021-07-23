@@ -1,21 +1,27 @@
-import {ActionsTypes} from './store';
+import {v1} from 'uuid';
+import {ActionsTypes} from './redux-store';
 
 
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 
+export type ProfilePageType = {
+  posts: Array<PostType>;
+  newPostText: string;
+};
+
 export type PostType = {
-  id: number,
+  id: string,
   message: string,
   likesCount: number,
 }
 
 let initialState = {
   posts: [
-    {id: 1, message: 'Hi, how are you?', likesCount: 12},
-    {id: 2, message: 'It\'s my first post', likesCount: 11},
-    {id: 2, message: 'Blala', likesCount: 11},
-    {id: 2, message: 'Dada', likesCount: 15},
+    {id: v1(), message: 'Hi, how are you?', likesCount: 12},
+    {id: v1(), message: 'It\'s my first post', likesCount: 11},
+    {id: v1(), message: 'Blala', likesCount: 11},
+    {id: v1(), message: 'Dada', likesCount: 15},
   ] as Array<PostType>,
   updateNewPostText: 'it-kamasutra' as string,
 }
@@ -28,7 +34,7 @@ export const profileReducer = (state: InitialStateType = initialState, action: A
   switch (action.type) {
     case ADD_POST: {
       let newPost: PostType = {
-        id: new Date().getTime(),
+        id: v1(),
         message: state.updateNewPostText,
         likesCount: 0
       };

@@ -1,53 +1,61 @@
-import { ActionsTypes } from './store';
+import {v1} from 'uuid';
+import {ActionsTypes} from './redux-store';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 
-type UserType = {
+type UserLocationType = {
+  country: string
+  city: string
+}
+
+
+export type UserType = {
   id: string;
   followed: boolean;
   fullName: string;
   status: string;
   avatar: string;
-  location: { country: string; city: string };
+  location: UserLocationType
 };
 
-let usersInitialState = {
+let initialState = {
   users: [
-    {
-      id: 1,
-      followed: true,
-      fullName: 'Dmitry K',
-      status: 'I am looking for a job now',
-      avatar: 'url()',
-      location: { country: 'Belarus', city: 'Minsk' }
-    },
-    {
-      id: 2,
-      followed: false,
-      fullName: 'Sveta',
-      status: 'Boss HTML',
-      avatar: 'url()',
-      location: { country: 'Ukrain', city: 'Kiev' }
-    },
-    {
-      id: 3,
-      followed: false,
-      fullName: 'Katya',
-      status: 'Boss of money',
-      avatar: 'url()',
-      location: { country: 'Belarus', city: 'Minsk' }
-    }
-  ]
+    // {
+    //   id: v1(),
+    //   followed: true,
+    //   fullName: 'Dmitry K',
+    //   status: 'I am looking for a job now',
+    //   avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
+    //   location: {country: 'Belarus', city: 'Minsk'}
+    // },
+    // {
+    //   id: v1(),
+    //   followed: false,
+    //   fullName: 'Sveta',
+    //   status: 'Boss HTML',
+    //   avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
+    //   location: {country: 'Ukraine', city: 'Kiev'}
+    // },
+    // {
+    //   id: v1(),
+    //   followed: false,
+    //   fullName: 'Katya',
+    //   status: 'Boss of money',
+    //   avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
+    //   location: {country: 'Belarus', city: 'Minsk'}
+    // }
+  ] as Array<UserType>
 };
 
-export type UsersInitialStateType = typeof usersInitialState;
+export type InitialStateType = typeof initialState; // TODO Как все-таки писать типы и инишиалы usersInitialStateType or InitialStateType
+
 
 export const usersReducer = (
-  state: UsersInitialStateType = usersInitialState,
+  state: InitialStateType = initialState,
   action: ActionsTypes
-): UsersInitialStateType => {
+): InitialStateType => {
   switch (action.type) {
     case FOLLOW:
       // Аналогичная запись мапу
@@ -56,7 +64,7 @@ export const usersReducer = (
         ...state,
         users: state.users.map((u) => {
           if (u.id === action.userID) {
-            return { ...u, followed: true };
+            return {...u, followed: true};
           }
           return u;
         })
@@ -67,18 +75,19 @@ export const usersReducer = (
         ...state,
         users: state.users.map((u) => {
           if (u.id === action.userID) {
-            return { ...u, followed: false };
+            return {...u, followed: false};
           }
           return u;
         })
       };
+    case SET_USERS: {
+      return {...state, users: [...state.users, ...action.users]}
+    }
     default:
       return state;
   }
 };
 
-export const followAC = (userID: string) => ({ type: FOLLOW, userID } as const);
-export const unFollowAC = (userID: string) =>
-  ({ type: UNFOLLOW, userID } as const);
-
-export const setUsersAC = (users) => ({ type: SET_USERS, users });
+export const followAC = (userID: string) => ({type: FOLLOW, userID} as const);
+export const unFollowAC = (userID: string) => ({type: UNFOLLOW, userID} as const);
+export const setUsersAC = (users: Array<UserType>) => ({type: SET_USERS, users} as const);

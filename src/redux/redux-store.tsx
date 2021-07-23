@@ -1,12 +1,22 @@
-import { combineReducers, createStore } from "redux";
-import { profileReducer } from "./profile-reducer";
-import { dialogsReducer } from "./dialogs-reducer";
-import { usersReducer } from "./users-reducer";
+import {combineReducers, createStore} from 'redux';
+import {addPostAC, profileReducer, updateNewPostTextAC} from './profile-reducer';
+import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reducer';
+import {followAC, setUsersAC, unFollowAC, usersReducer} from './users-reducer';
+
+
+export type ActionsTypes =
+  | ReturnType<typeof addPostAC>
+  | ReturnType<typeof updateNewPostTextAC>
+  | ReturnType<typeof updateNewMessageBodyCreator>
+  | ReturnType<typeof sendMessageCreator>
+  | ReturnType<typeof followAC>
+  | ReturnType<typeof unFollowAC>
+  | ReturnType<typeof setUsersAC>
 
 const reducers = combineReducers({
   profilePage: profileReducer,
   dialogsPage: dialogsReducer,
-  users: usersReducer
+  usersPage: usersReducer
 });
 
 type RootReduceType = typeof reducers;

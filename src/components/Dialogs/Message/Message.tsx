@@ -1,5 +1,5 @@
 import s from './../Dialogs.module.scss';
-import {MessageType} from '../../../redux/store';
+import {MessageType} from '../../../redux/dialogs-reducer';
 
 
 const Message = (props: MessageType) => {
