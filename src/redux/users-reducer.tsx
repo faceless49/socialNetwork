@@ -5,48 +5,54 @@ const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
 
-type UserLocationType = {
-  country: string
-  city: string
+// type UserLocationType = {
+//   country: string
+//   city: string
+// }
+
+export type PhotosType = {
+  small: string
+  large: string
 }
-
-
 export type UserType = {
   id: string;
   followed: boolean;
-  fullName: string;
+  name: string;
   status: string;
-  avatar: string;
-  location: UserLocationType
+  photos: PhotosType;
+  totalCount: number
+  error: null
+  // location: UserLocationType
 };
 
 let initialState = {
-  users: [
-    {
-      id: v1(),
-      followed: true,
-      fullName: 'Dmitry K',
-      status: 'I am looking for a job now',
-      avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
-      location: {country: 'Belarus', city: 'Minsk'}
-    },
-    {
-      id: v1(),
-      followed: false,
-      fullName: 'Sveta',
-      status: 'Boss HTML',
-      avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
-      location: {country: 'Ukraine', city: 'Kiev'}
-    },
-    {
-      id: v1(),
-      followed: false,
-      fullName: 'Katya',
-      status: 'Boss of money',
-      avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
-      location: {country: 'Belarus', city: 'Minsk'}
-    }
-  ] as Array<UserType>
+  users: [] as Array<UserType>
+  // users: [
+  //   {
+  //     id: v1(),
+  //     followed: true,
+  //     fullName: 'Dmitry K',
+  //     status: 'I am looking for a job now',
+  //     avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
+  //     location: {country: 'Belarus', city: 'Minsk'}
+  //   },
+  //   {
+  //     id: v1(),
+  //     followed: false,
+  //     fullName: 'Sveta',
+  //     status: 'Boss HTML',
+  //     avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
+  //     location: {country: 'Ukraine', city: 'Kiev'}
+  //   },
+  //   {
+  //     id: v1(),
+  //     followed: false,
+  //     fullName: 'Katya',
+  //     status: 'Boss of money',
+  //     avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
+  //     location: {country: 'Belarus', city: 'Minsk'}
+  //   }
+  // ] as Array<UserType>
 };
 
 export type InitialStateType = typeof initialState; // TODO Как все-таки писать типы и инишиалы usersInitialStateType or InitialStateType
