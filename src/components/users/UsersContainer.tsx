@@ -1,5 +1,5 @@
 import {connect} from 'react-redux';
-import Users from './UsersC';
+import UsersC from './UsersC';
 import {AppStateType} from '../../redux/redux-store';
 import {Dispatch} from 'redux';
 import {followAC, setUsersAC, unFollowAC, UserType} from '../../redux/users-reducer';
@@ -14,7 +14,7 @@ type MapDispatchToProps = {
   setUsers: (users: Array<UserType>) => void
 }
 
-export type UsersPropsType = MapStatePropsType & MapDispatchToProps // TODO можно ли так типизировать компоненту USERS или надо расписывать все что есть в этих типах
+export type UsersPropsType = MapStatePropsType & MapDispatchToProps
 
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
@@ -37,4 +37,5 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
   }
 }
 
-export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(Users);
+// @ts-ignore
+export const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersC);

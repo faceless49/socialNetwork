@@ -2,8 +2,8 @@ import React from 'react';
 import s from './Users.module.scss'
 import axios from 'axios';
 import userIcon from './../../assets/img/user.png'
-import {UsersPropsType} from './UsersContainer';
 import {UserType} from '../../redux/users-reducer';
+import {UsersPropsType} from './UsersContainer';
 
 
 type GetUsersResponseType = {
@@ -13,18 +13,26 @@ type GetUsersResponseType = {
 }
 
 
-class Users extends React.Component {
+class UsersC extends React.Component<UsersPropsType> {
 
-  constructor(props: UsersPropsType) {
-    super(props);
+  // constructor(props:GetUsersResponseType) {
+  //   super(props);
+  // }
+  // componentDidMount() {
+  //   axios.get('https://social-network.samuraijs.com/api/1.0/users')
+  //     .then((response) => {
+  //       this.props.setUsers(response.data.items)
+  //     })
+  // }
 
+  getUsers = ()  => {
+    axios.get('https://social-network.samuraijs.com/api/1.0/users')
+      .then((response) => {
+        this.props.setUsers(response.data.items)
+      })
   }
 
-  componentDidMount() {
-    axios.get('https://social-network.samuraijs.com/api/1.0/users').then((response) => { // * TODO Надо ли здесь типизировать респонс и как?
-      this.props.setUsers(response.data.items)
-    })
-  }
+
 
   render() {
     return <div>
@@ -61,4 +69,4 @@ class Users extends React.Component {
   }
 }
 
-export default Users
+export default UsersC

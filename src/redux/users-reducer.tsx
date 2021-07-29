@@ -55,7 +55,7 @@ let initialState = {
   // ] as Array<UserType>
 };
 
-export type InitialStateType = typeof initialState; // TODO Как все-таки писать типы и инишиалы usersInitialStateType or InitialStateType
+export type InitialStateType = typeof initialState;
 
 
 export const usersReducer = (
