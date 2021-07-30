@@ -16,7 +16,7 @@ export type ActionsTypes =
 const reducers = combineReducers({
   profilePage: profileReducer,
   dialogsPage: dialogsReducer,
-  usersPage: usersReducer
+  usersPage: usersReducer,
 });
 
 type RootReduceType = typeof reducers;
