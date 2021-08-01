@@ -2,10 +2,19 @@ import s from './Users.module.scss';
 import userIcon from '../../assets/img/user.png';
 import React from 'react';
 import {UsersPropsType} from './UsersContainer';
+import {UserType} from '../../redux/users-reducer';
 
+type ClearFuncUsersPropsType = {
+  users: Array<UserType>;
+  pageSize: number;
+  totalUsersCount: number;
+  currentPage: number;
+  follow: (userID: string) => void;
+  unfollow: (userID: string) => void;
+  onPageChanged: (pageNumber: number) => void
+}
 
-
-export const Users = (props:any) => {
+export const Users = (props:ClearFuncUsersPropsType) => { // @FIXME: Create new props for this comp. True? : i needed fixed UserPropsType & add onpageChanged()
   let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
   let pages = [];
   for (let i = 1; i <= pagesCount; i++) {

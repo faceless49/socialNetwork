@@ -1,13 +1,13 @@
 import {connect} from 'react-redux';
-import UsersAPIComponent from './UsersAPIComponent';
 import {AppStateType} from '../../redux/redux-store';
 import {Dispatch} from 'redux';
 import {
   followAC,
+  setCurrentPageAC,
+  setTotalUsersCountAC,
   setUsersAC,
   unFollowAC,
   UserType,
-  setCurrentPageAC, setTotalUsersCountAC,
 } from '../../redux/users-reducer';
 import React from 'react';
 import axios from 'axios';
@@ -30,7 +30,7 @@ type MapDispatchToProps = {
 
 export type UsersPropsType = MapStatePropsType & MapDispatchToProps;
 
-class UsersAPIComponent extends React.Component<UsersPropsType> {
+class UsersContainer extends React.Component<UsersPropsType> {
   // constructor(props:GetUsersResponseType) {
   //   super(props);
   // }
@@ -100,7 +100,7 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
 };
 
 // @ts-ignore
-export const UsersContainer = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps)
-(UsersAPIComponent);
+(UsersContainer);
