@@ -1,15 +1,9 @@
-import React from "react";
-import s from "./Users.module.scss";
-import axios from "axios";
-import userIcon from "./../../assets/img/user.png";
-import { UserType } from "../../redux/users-reducer";
-import { UsersPropsType } from "./UsersContainer";
+import React from 'react';
+import s from './Users.module.scss';
+import axios from 'axios';
+import userIcon from './../../assets/img/user.png';
+import {UsersPropsType} from './UsersContainer';
 
-type GetUsersResponseType = {
-  items: Array<UserType>;
-  totalCount: number;
-  error: null;
-};
 
 class UsersC extends React.Component<UsersPropsType> {
   // constructor(props:GetUsersResponseType) {
@@ -19,35 +13,25 @@ class UsersC extends React.Component<UsersPropsType> {
     // Единственное правильное место где надо делать сайд эффект
     axios
       .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
-      )
+        `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
       .then((response) => {
         this.props.setUsers(response.data.items);
         this.props.setTotalUsersCount(response.data.totalCount);
       });
   }
 
-  getUsers = () => {
-    axios
-      .get("https://social-network.samuraijs.com/api/1.0/users")
-      .then((response) => {
-        this.props.setUsers(response.data.items);
-      });
-  };
-
-  onPageChanged = (pageNumber) => {
-    this.props.setCurrentPage(p)
+  onPageChanged = (pageNumber: number) => {
+    this.props.setCurrentPage(pageNumber)
     axios
       .get(
-        `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`
-      )
+        `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
       .then((response) => {
         this.props.setUsers(response.data.items);
       });
   }
 
   render() {
-    let pagesCount = Math.ceil(this.props.totalUserCount / this.props.pageSize);
+    let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
     let pages = [];
     for (let i = 1; i <= pagesCount; i++) {
       pages.push(i);
@@ -55,16 +39,14 @@ class UsersC extends React.Component<UsersPropsType> {
 
     return (
       <div>
-        {pages.map((p) => {
-          return <span onClick={(e) => {this.onPageChanged(p)}}>{p}</span>;
-        })}
+
         <div className={s.pagination}>
-          <span>2</span>
-          <span>3</span>
-          <span>4</span>
-          <span>5</span>
+          {pages.map((p) => {
+            return <span className={this.props.currentPage === p ? s.selectedPage : ''} onClick={() => {
+              this.onPageChanged(p)
+            }}>{p}</span>;
+          })}
         </div>
-        <button onClick={this.getUsers}>Get users</button>
         {this.props.users.map((u) => (
           <div key={u.id}>
             <span>
@@ -101,8 +83,8 @@ class UsersC extends React.Component<UsersPropsType> {
                 <div>{u.status}</div>
               </span>
               <span>
-                <div>{"u.location.country"}</div>
-                <div>{"u.location.city"}</div>
+                <div>{'u.location.country'}</div>
+                <div>{'u.location.city'}</div>
               </span>
             </span>
           </div>
@@ -110,6 +92,7 @@ class UsersC extends React.Component<UsersPropsType> {
       </div>
     );
   }
+
 }
 
 export default UsersC;
