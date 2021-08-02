@@ -15,7 +15,25 @@ import axios, {AxiosResponse} from 'axios';
 import {Users} from './Users';
 import {Preloader} from '../common/preloader/Preloader';
 
-// type AxiosUsersResponseType
+type PhotosItemResponseType = {
+  small: string
+  large: string
+}
+
+type AxiosItemResponseType = {
+  name: string
+  id: number
+  uniqueUrlName: string
+  photos: Array<PhotosItemResponseType>,
+  status: string
+  followed: boolean
+}
+
+type ItemsResponseType = {
+  items: Array<AxiosItemResponseType>
+  totalCount: number
+  error: string | null
+}
 
 type MapStatePropsType = {
   users: Array<UserType>;
@@ -60,7 +78,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
     axios
       .get(
         `https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-      .then((response) => {
+      .then((response) => { // fixme when we get Promise will be using ItemsResponseType
         this.props.toggleIsFetching(false)
         this.props.setUsers(response.data.items);
       });
@@ -92,32 +110,38 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   }
 ;
 
-let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
-    return {
-      follow: (userID) => {
-        dispatch(followAC(userID));
-      },
-      unfollow: (userID) => {
-        dispatch(unFollowAC(userID));
-      },
-      setUsers: (users: Array<UserType>) => {
-        dispatch(setUsersAC(users));
-      },
-      setCurrentPage: (pageNumber) => {
-        dispatch(setCurrentPageAC(pageNumber));
-      },
-      setTotalUsersCount: (totalCount) => {
-        dispatch(setTotalUsersCountAC(totalCount));
-      },
-      toggleIsFetching: (isFetching) => {
-        dispatch(toggleIsFetchingAC(isFetching));
-      }
-    };
-  }
+// let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
+//     return {
+//       follow: (userID) => {
+//         dispatch(followAC(userID));
+//       },
+//       unfollow: (userID) => {
+//         dispatch(unFollowAC(userID));
+//       },
+//       setUsers: (users: Array<UserType>) => {
+//         dispatch(setUsersAC(users));
+//       },
+//       setCurrentPage: (pageNumber) => {
+//         dispatch(setCurrentPageAC(pageNumber));
+//       },
+//       setTotalUsersCount: (totalCount) => {
+//         dispatch(setTotalUsersCountAC(totalCount));
+//       },
+//       toggleIsFetching: (isFetching) => {
+//         dispatch(toggleIsFetchingAC(isFetching));
+//       }
+//     };
+//   }
 ;
 
 // @ts-ignore
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps)
+  mapStateToProps, {
+    follow: followAC,
+    unfollow: unFollowAC,
+    setUsers: setUsersAC,
+    setCurrentPage: setCurrentPageAC,
+    setTotalUsersCount: setTotalUsersCountAC,
+    toggleIsFetching: toggleIsFetchingAC
+  })
 (UsersContainer);
