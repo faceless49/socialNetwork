@@ -2,12 +2,12 @@ import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {Dispatch} from 'redux';
 import {
-  followAC,
-  setCurrentPageAC,
-  setTotalUsersCountAC,
-  setUsersAC,
-  toggleIsFetchingAC,
-  unFollowAC,
+  follow,
+  setCurrentPage,
+  setTotalUsersCount,
+  setUsers,
+  toggleIsFetching,
+  unfollow,
   UserType,
 } from '../../redux/users-reducer';
 import React from 'react';
@@ -137,11 +137,11 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 // @ts-ignore
 export default connect(
   mapStateToProps, {
-    follow: followAC,
-    unfollow: unFollowAC,
-    setUsers: setUsersAC,
-    setCurrentPage: setCurrentPageAC,
-    setTotalUsersCount: setTotalUsersCountAC,
-    toggleIsFetching: toggleIsFetchingAC
+    follow,
+    unfollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleIsFetching,
   })
 (UsersContainer);
