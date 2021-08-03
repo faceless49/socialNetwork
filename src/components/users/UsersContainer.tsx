@@ -81,6 +81,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
       .then((response) => { // fixme when we get Promise will be using ItemsResponseType
         this.props.toggleIsFetching(false)
         this.props.setUsers(response.data.items);
+        this.props.setTotalUsersCount(response.data.totalCount)
       });
   }
 

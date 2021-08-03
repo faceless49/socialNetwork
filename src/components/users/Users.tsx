@@ -2,6 +2,7 @@ import s from './Users.module.scss';
 import userIcon from '../../assets/img/user.png';
 import React from 'react';
 import {UserType} from '../../redux/users-reducer';
+import {NavLink} from 'react-router-dom';
 
 type ClearFuncUsersPropsType = {
   users: Array<UserType>;
@@ -13,7 +14,7 @@ type ClearFuncUsersPropsType = {
   onPageChanged: (pageNumber: number) => void
 }
 
-export const Users = (props:ClearFuncUsersPropsType) => {
+export const Users = (props: ClearFuncUsersPropsType) => {
   let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
   let pages = [];
   for (let i = 1; i <= pagesCount; i++) {
@@ -33,11 +34,14 @@ export const Users = (props:ClearFuncUsersPropsType) => {
         <div key={u.id}>
             <span>
               <div>
+                <NavLink to={'/profile/' + u.id}>
                 <img
                   src={u.photos.small != null ? u.photos.small : userIcon}
                   alt=""
                   className={s.avatar}
                 />
+                </NavLink>
+
               </div>
               <div>
                 {u.followed ? (
