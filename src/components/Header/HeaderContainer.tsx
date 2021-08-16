@@ -1,15 +1,13 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import s from './Header.module.scss';
+import Header from './Header';
 
-const Header = () => {
+class HeaderContainer extends React.Component {
 
-  return <header className={s.header}>
-    <img src="https://www.freelogodesign.org/Content/img/logo-ex-7.png"/>
-    <div className={s.login_block}>
-      <NavLink to={'/logion'}>Login</NavLink>
-    </div>
-  </header>
+  render() {
+    return <Header {...this.props}/>
+    // this.props - прокидываем все пропсы в header
+  }
+
 }
 
-export default Header;
+export default HeaderContainer;
