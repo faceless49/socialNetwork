@@ -133,9 +133,8 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 //       }
 //     };
 //   }
-;
+// ;
 
-// @ts-ignore
 export default connect(
   mapStateToProps, {
     follow,

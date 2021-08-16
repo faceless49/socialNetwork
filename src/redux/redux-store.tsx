@@ -10,7 +10,7 @@ import {
   unfollow,
   usersReducer
 } from './users-reducer';
-import authReducer, {setUserData} from './auth-reducer';
+import authReducer, {setAuthUserData} from './auth-reducer';
 
 
 export type ActionsTypes =
@@ -25,7 +25,7 @@ export type ActionsTypes =
   | ReturnType<typeof setCurrentPage>
   | ReturnType<typeof toggleIsFetching>
   | ReturnType<typeof setUserProfile>
-  | ReturnType<typeof setUserData>
+  | ReturnType<typeof setAuthUserData>
 
 const reducers = combineReducers({
   profilePage: profileReducer,

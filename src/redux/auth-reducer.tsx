@@ -7,10 +7,12 @@ export type DataPropsType = {
   userID: string | null,
   email: string | null,
   login: string | null,
+  isAuth: boolean
 }
 
 export type AuthPropsType = {
   data: Array<DataPropsType>
+  isAuth: boolean
 }
 // export type AuthPropsType = {
 //   messages: Array<string>
@@ -21,6 +23,7 @@ let authInitialState = {
   userID: null,
   email: null,
   login: null,
+  isAuth: false
 }
 
 const authReducer = (state: DataPropsType = authInitialState, action: ActionsTypes): DataPropsType => {
@@ -28,13 +31,14 @@ const authReducer = (state: DataPropsType = authInitialState, action: ActionsTyp
     case SET_USER_DATA:
    return {
      ...state,
-     ...action.data
+     ...action.data,
+     isAuth: true
    }
     default:
       return state
   }
 }
 
-export const setUserData = (userID: string, email: string, login: string) => ({type: SET_USER_DATA, data: {userID, email, login}} as const)
+export const setAuthUserData = (id: string, email: string, login: string) => ({type: SET_USER_DATA, data: {id, email, login}} as const)
 
 export default authReducer
