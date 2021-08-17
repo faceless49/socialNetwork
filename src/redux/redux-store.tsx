@@ -1,17 +1,26 @@
-import {combineReducers, createStore} from 'redux';
-import {addPostAC, profileReducer, setUserProfile, updateNewPostTextAC} from './profile-reducer';
-import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reducer';
+import { combineReducers, createStore } from 'redux';
+import {
+  addPostAC,
+  profileReducer,
+  setUserProfile,
+  updateNewPostTextAC
+} from './profile-reducer';
+import {
+  dialogsReducer,
+  sendMessageCreator,
+  updateNewMessageBodyCreator
+} from './dialogs-reducer';
 import {
   follow,
   setCurrentPage,
   setTotalUsersCount,
   setUsers,
   toggleIsFetching,
+  toggleFollowingProgress,
   unfollow,
   usersReducer
 } from './users-reducer';
-import authReducer, {setAuthUserData} from './auth-reducer';
-
+import authReducer, { setAuthUserData } from './auth-reducer';
 
 export type ActionsTypes =
   | ReturnType<typeof addPostAC>
@@ -26,6 +35,7 @@ export type ActionsTypes =
   | ReturnType<typeof toggleIsFetching>
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setAuthUserData>
+  | ReturnType<typeof toggleFollowingProgress>;
 
 const reducers = combineReducers({
   profilePage: profileReducer,
@@ -40,4 +50,4 @@ export type AppStateType = ReturnType<typeof reducers>;
 export let store = createStore(reducers);
 
 // @ts-ignore
-window.store = store
+window.store = store;

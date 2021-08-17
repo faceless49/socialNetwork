@@ -13,6 +13,7 @@ type ClearFuncUsersPropsType = {
   follow: (userID: string) => void;
   unfollow: (userID: string) => void;
   onPageChanged: (pageNumber: number) => void;
+  toggleFollowingProgress: (isFetching: boolean) => void;
 };
 
 export const Users = (props: ClearFuncUsersPropsType) => {
@@ -54,6 +55,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
               {u.followed ? (
                 <button
                   onClick={() => {
+                    props.toggleFollowingProgress(true);
                     // Сначала делаем запрос на сервак чтобы подписаться
                     axios
                       .delete(
@@ -71,6 +73,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                           // Подтверждение сервера
                           props.unfollow(u.id);
                         }
+                        props.toggleFollowingProgress(false);
                       });
                   }}
                 >
@@ -79,6 +82,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
               ) : (
                 <button
                   onClick={() => {
+                    props.toggleFollowingProgress(true);
                     // Сначала делаем запрос на сервак чтобы подписаться
                     axios
                       .post(
@@ -94,6 +98,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                         if (response.data.resultCode === 0) {
                           props.follow(u.id);
                         }
+                        props.toggleFollowingProgress(false);
                       });
                   }}
                 >
