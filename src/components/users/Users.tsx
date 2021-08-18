@@ -13,8 +13,8 @@ type ClearFuncUsersPropsType = {
   follow: (userID: string) => void;
   unfollow: (userID: string) => void;
   onPageChanged: (pageNumber: number) => void;
-  toggleFollowingProgress: (isFetching: boolean) => void;
-  followingInProgress: (isFetching: boolean) => void;
+  toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
+  followingInProgress: Array<string>
 };
 
 export const Users = (props: ClearFuncUsersPropsType) => {
@@ -55,9 +55,9 @@ export const Users = (props: ClearFuncUsersPropsType) => {
             <div>
               {u.followed ? (
                 <button
-                  disabled={props.followingInProgress.some((id) => id === u.id)}
+                  disabled={props.followingInProgress.some((id: string) => id === u.id)}
                   onClick={() => {
-                    props.followingInProgress(true, u.id);
+                    props.toggleFollowingProgress(true, u.id);
                     // Сначала делаем запрос на сервак чтобы подписаться
                     axios
                       .delete(
@@ -75,7 +75,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                           // Подтверждение сервера
                           props.unfollow(u.id);
                         }
-                        props.followingInProgress(false, u.id);
+                        props.toggleFollowingProgress(false, u.id);
                       });
                   }}
                 >
@@ -85,7 +85,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                 <button
                   disabled={props.followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
-                    props.followingInProgress(true, u.id);
+                    props.toggleFollowingProgress(true, u.id);
                     // Сначала делаем запрос на сервак чтобы подписаться
                     axios
                       .post(
@@ -101,7 +101,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                         if (response.data.resultCode === 0) {
                           props.follow(u.id);
                         }
-                        props.followingInProgress(false, u.id);
+                        props.toggleFollowingProgress(false, u.id);
                       });
                   }}
                 >
