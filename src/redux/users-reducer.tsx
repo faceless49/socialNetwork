@@ -34,33 +34,7 @@ let initialState = {
   totalUsersCount: 0,
   currentPage: 2,
   isFetching: false,
-  followingInProgress: false
-  // users: [
-  //   {
-  //     id: v1(),
-  //     followed: true,
-  //     fullName: 'Dmitry K',
-  //     status: 'I am looking for a job now',
-  //     avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
-  //     location: {country: 'Belarus', city: 'Minsk'}
-  //   },
-  //   {
-  //     id: v1(),
-  //     followed: false,
-  //     fullName: 'Sveta',
-  //     status: 'Boss HTML',
-  //     avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
-  //     location: {country: 'Ukraine', city: 'Kiev'}
-  //   },
-  //   {
-  //     id: v1(),
-  //     followed: false,
-  //     fullName: 'Katya',
-  //     status: 'Boss of money',
-  //     avatar: 'https://i.pinimg.com/originals/5a/2f/62/5a2f62cc03b9fefc06167a142bda9a61.jpg',
-  //     location: {country: 'Belarus', city: 'Minsk'}
-  //   }
-  // ] as Array<UserType>
+  followingInProgress: []
 };
 
 export type InitialStateType = typeof initialState;
@@ -101,7 +75,12 @@ export const usersReducer = (
     case TOGGLE_IS_FETCHING:
       return { ...state, isFetching: action.isFetching };
     case TOGGLE_IS_FOLLOWING_PROGRESS:
-      return { ...state, followingInProgress: action.isFetching };
+      return { ...state, 
+        followingInProgress: action.isFetching 
+        ? [...state.followingInProgress, action.userID] 
+        : state.followingInProgress.filter(id => id != action.userID) 
+      }
+    }
     default:
       return state;
   }
@@ -124,7 +103,7 @@ export const toggleIsFetching = (isFetching: boolean) =>
     type: TOGGLE_IS_FETCHING,
     isFetching
   } as const);
-export const toggleFollowingProgress = (isFetching: boolean) =>
+export const toggleFollowingProgress = (isFetching: boolean, userID: string) =>
   ({
     type: TOGGLE_IS_FOLLOWING_PROGRESS,
     isFetching

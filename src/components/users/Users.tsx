@@ -14,6 +14,7 @@ type ClearFuncUsersPropsType = {
   unfollow: (userID: string) => void;
   onPageChanged: (pageNumber: number) => void;
   toggleFollowingProgress: (isFetching: boolean) => void;
+  followingInProgress: (isFetching: boolean) => void;
 };
 
 export const Users = (props: ClearFuncUsersPropsType) => {
@@ -54,8 +55,9 @@ export const Users = (props: ClearFuncUsersPropsType) => {
             <div>
               {u.followed ? (
                 <button
+                  disabled={props.followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
-                    props.toggleFollowingProgress(true);
+                    props.followingInProgress(true, u.id);
                     // Сначала делаем запрос на сервак чтобы подписаться
                     axios
                       .delete(
@@ -73,7 +75,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                           // Подтверждение сервера
                           props.unfollow(u.id);
                         }
-                        props.toggleFollowingProgress(false);
+                        props.followingInProgress(false, u.id);
                       });
                   }}
                 >
@@ -81,8 +83,9 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                 </button>
               ) : (
                 <button
+                  disabled={props.followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
-                    props.toggleFollowingProgress(true);
+                    props.followingInProgress(true, u.id);
                     // Сначала делаем запрос на сервак чтобы подписаться
                     axios
                       .post(
@@ -98,7 +101,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                         if (response.data.resultCode === 0) {
                           props.follow(u.id);
                         }
-                        props.toggleFollowingProgress(false);
+                        props.followingInProgress(false, u.id);
                       });
                   }}
                 >
