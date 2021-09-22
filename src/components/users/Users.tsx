@@ -66,7 +66,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                         {
                           withCredentials: true,
                           headers: {
-                            'API-KEY': ''
+                            'API-KEY': 'db8d2f12-200b-4467-ba1f-cd791df3f39c'
                           }
                         }
                       )
@@ -94,7 +94,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                         {},
                         {
                           withCredentials: true,
-                          headers: { 'API-KEY': '' }
+                          headers: { 'API-KEY': 'db8d2f12-200b-4467-ba1f-cd791df3f39c' }
                         }
                       )
                       .then((response) => {

@@ -64,22 +64,24 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
     this.props.toggleIsFetching(true); // Пошел запрос, запустился фетчинг
 
-    usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then((data) => {
-      this.props.toggleIsFetching(false); // When we get answer, toggle is fetching
-      this.props.setUsers(data.items);
-      this.props.setTotalUsersCount(data.totalCount);
-    });
+    usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+      .then((data) => {
+        this.props.toggleIsFetching(false); // When we get answer, toggle is fetching
+        this.props.setUsers(data.items);
+        this.props.setTotalUsersCount(data.totalCount);
+      });
   }
 
   onPageChanged = (pageNumber: number) => {
     this.props.setCurrentPage(pageNumber);
     this.props.toggleIsFetching(true);
 
-    usersAPI.getUsers(pageNumber, this.props.pageSize).then((data) => {
-      // TODO: fixme when we get Promise will be using ItemsResponseType
-      this.props.toggleIsFetching(false);
-      this.props.setUsers(data.items);
-    });
+    usersAPI.getUsers(pageNumber, this.props.pageSize)
+      .then((data) => {
+        // TODO: fixme when we get Promise will be using ItemsResponseType
+        this.props.toggleIsFetching(false);
+        this.props.setUsers(data.items);
+      });
   };
 
   render() {
