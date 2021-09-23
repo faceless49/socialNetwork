@@ -3,7 +3,7 @@ import {
   addPostAC,
   profileReducer,
   setUserProfile,
-  updateNewPostTextAC
+  updateNewPostText
 } from './profile-reducer';
 import {
   dialogsReducer,
@@ -24,7 +24,7 @@ import authReducer, { setAuthUserData } from './auth-reducer';
 
 export type ActionsTypes =
   | ReturnType<typeof addPostAC>
-  | ReturnType<typeof updateNewPostTextAC>
+  | ReturnType<typeof updateNewPostText>
   | ReturnType<typeof updateNewMessageBodyCreator>
   | ReturnType<typeof sendMessageCreator>
   | ReturnType<typeof follow>

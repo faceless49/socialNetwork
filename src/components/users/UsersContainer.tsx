@@ -43,7 +43,7 @@ type MapStatePropsType = {
   isFetching: boolean;
   followingInProgress: Array<string>
 };
-type MapDispatchToProps = {
+type MapDispatchToPropsType = {
   follow: (userID: string) => void;
   unfollow: (userID: string) => void;
   setUsers: (users: Array<UserType>) => void;
@@ -53,7 +53,7 @@ type MapDispatchToProps = {
   toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
 };
 
-export type UsersPropsType = MapStatePropsType & MapDispatchToProps;
+export type UsersPropsType = MapStatePropsType & MapDispatchToPropsType;
 
 class UsersContainer extends React.Component<UsersPropsType> {
   // constructor(props:GetUsersResponseType) {
@@ -139,7 +139,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 //   }
 // ;
 
-export default connect<MapStatePropsType, MapDispatchToProps, {}, AppStateType>(mapStateToProps, {
+export default connect<MapStatePropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
   follow,
   unfollow,
   setUsers,

@@ -1,8 +1,8 @@
 import s from './Users.module.scss';
 import userIcon from '../../assets/img/user.png';
 import React from 'react';
-import { UserType } from '../../redux/users-reducer';
-import { NavLink } from 'react-router-dom';
+import {UserType} from '../../redux/users-reducer';
+import {NavLink} from 'react-router-dom';
 import axios from 'axios';
 
 type ClearFuncUsersPropsType = {
@@ -40,7 +40,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
           );
         })}
       </div>
-      {props.users.map((u: any) => (
+      {props.users.map((u: UserType) => (
         <div key={u.id}>
           <span>
             <div>
@@ -94,7 +94,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                         {},
                         {
                           withCredentials: true,
-                          headers: { 'API-KEY': 'db8d2f12-200b-4467-ba1f-cd791df3f39c' }
+                          headers: {'API-KEY': 'db8d2f12-200b-4467-ba1f-cd791df3f39c'}
                         }
                       )
                       .then((response) => {

@@ -3,15 +3,13 @@ import Profile from './Profile';
 import axios from 'axios';
 import {setUserProfile} from '../../redux/profile-reducer';
 import {connect} from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 
 class ProfileContainer extends React.Component<any> {
 
-
-
   componentDidMount() {
-  let userID = this.props.match.params.userID
+    let userID = this.props.match.params.userID
     if (!userID) {
       userID = 2
     }
@@ -28,6 +26,7 @@ class ProfileContainer extends React.Component<any> {
     return (
       <div>
         <Profile {...this.props} profile={this.props.profile}/>
+        {/*  ... Все пропсы прокидываем*/}
       </div>
     )
   }
@@ -35,6 +34,6 @@ class ProfileContainer extends React.Component<any> {
 
 let mapStateToProps = (state: any) => ({profile: state.profilePage.profile})
 
-let withUrlDataContainerComponent = withRouter(ProfileContainer)
+let WithUrlDataContainerComponent = withRouter(ProfileContainer) // Для прокидывания данных из URL
 
-export default connect(mapStateToProps, {setUserProfile})(withUrlDataContainerComponent)
+export default connect(mapStateToProps, {setUserProfile})(WithUrlDataContainerComponent)
