@@ -89,7 +89,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
                     // Сначала делаем запрос на сервак чтобы подписаться
                     axios
                       .post(
-                        // Здесь данные о нашей логинизации передаются 3 объектом, а не 2 как в HeaderContainer
+                        // Здесь данные о нашей логинизации передаются 3 объектом, а не 2 как в get request
                         `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
                         {},
                         {
