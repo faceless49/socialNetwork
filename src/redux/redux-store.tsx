@@ -11,13 +11,13 @@ import {
   updateNewMessageBodyCreator
 } from './dialogs-reducer';
 import {
-  follow,
+  followSuccess,
   setCurrentPage,
   setTotalUsersCount,
   setUsers,
   toggleIsFetching,
   toggleFollowingProgress,
-  unfollow,
+  unfollowSuccess,
   usersReducer
 } from './users-reducer';
 import authReducer, {setAuthUserData} from './auth-reducer';
@@ -29,8 +29,8 @@ export type ActionsTypes =
   | ReturnType<typeof updateNewPostText>
   | ReturnType<typeof updateNewMessageBodyCreator>
   | ReturnType<typeof sendMessageCreator>
-  | ReturnType<typeof follow>
-  | ReturnType<typeof unfollow>
+  | ReturnType<typeof followSuccess>
+  | ReturnType<typeof unfollowSuccess>
   | ReturnType<typeof setUsers>
   | ReturnType<typeof setTotalUsersCount>
   | ReturnType<typeof setCurrentPage>

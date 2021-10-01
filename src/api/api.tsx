@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, {AxiosResponse} from 'axios';
 
 const instance = axios.create({
   withCredentials: true,
@@ -14,9 +14,15 @@ export const usersAPI = {
       .get(`users?page=${currentPage}&count=${pageSize}`)
       .then((response) => response.data);
   },
-  follow(currentPage: number, pageSize: number) {
+  follow(userId: string) {
     return instance
-      .get(`follow?page=${currentPage}&count=${pageSize}`)
-      .then((response) => response.data);
+      .post(
+        // Здесь данные о нашей логинизации передаются 3 объектом, а не 2 как в get request
+        `https://social-network.samuraijs.com/api/1.0/follow/${userId}`
+      )
+  },
+  unfollow(userId: string) {
+    // Здесь данные о нашей логинизации передаются 2 объектом
+    return instance.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
   }
 };

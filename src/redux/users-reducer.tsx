@@ -85,8 +85,8 @@ export const usersReducer = (
   }
 };
 
-export const follow = (userID: string) => ({type: FOLLOW, userID} as const);
-export const unfollow = (userID: string) =>
+export const followSuccess = (userID: string) => ({type: FOLLOW, userID} as const);
+export const unfollowSuccess = (userID: string) =>
   ({type: UNFOLLOW, userID} as const);
 export const setUsers = (users: Array<UserType>) =>
   ({type: SET_USERS, users} as const);
@@ -110,10 +110,9 @@ export const toggleFollowingProgress = (isFetching: boolean, userID: string) =>
   } as const);
 
 
-
 // * Thunks
-export const getUsersThunkCreator = (currentPage: any, pageSize: any) => {
-  return (dispatch:any) => {
+export const getUsers = (currentPage: any, pageSize: any) => {
+  return (dispatch: any) => {
     dispatch(toggleIsFetching(true)); // Пошел запрос, запустился фетчинг
 
     usersAPI.getUsers(currentPage, pageSize)
@@ -121,6 +120,35 @@ export const getUsersThunkCreator = (currentPage: any, pageSize: any) => {
         dispatch(toggleIsFetching(false)); // When we get answer, toggle is fetching
         dispatch(setUsers(data.items));
         dispatch(setTotalUsersCount(data.totalCount));
+      });
+  }
+}
+
+export const follow = (userId: string) => {
+  return (dispatch: any) => {
+    dispatch(toggleFollowingProgress(true, userId))
+    // Сначала делаем запрос на сервак чтобы подписаться
+    usersAPI.unfollow(userId)
+      .then((response) => {
+        if (response.data.resultCode === 0) {
+          // Подтверждение сервера
+          dispatch(unfollowSuccess(userId))
+        }
+        dispatch(toggleFollowingProgress(false, userId))
+      });
+  }
+}
+
+export const unfollow = (userId: string) => {
+  return (dispatch: any) => {
+    toggleFollowingProgress(true, userId);
+    // Сначала делаем запрос на сервак чтобы подписаться
+    usersAPI.unfollow(userId)
+      .then((response) => {
+        if (response.data.resultCode === 0) {
+          unfollowSuccess(userId);
+        }
+        dispatch(toggleFollowingProgress(false, userId));
       });
   }
 }

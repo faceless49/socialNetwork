@@ -1,19 +1,16 @@
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
-  follow, getUsersThunkCreator,
+  followSuccess,
+  getUsers,
   setCurrentPage,
-  setTotalUsersCount,
-  setUsers,
   toggleFollowingProgress,
-  toggleIsFetching,
-  unfollow,
+  unfollowSuccess,
   UserType
 } from '../../redux/users-reducer';
 import React from 'react';
 import {Users} from './Users';
 import {Preloader} from '../common/preloader/Preloader';
-import {usersAPI} from '../../api/api';
 
 type PhotosItemResponseType = {
   small: string;
@@ -46,12 +43,12 @@ type MapStatePropsType = {
 type MapDispatchToPropsType = {
   follow: (userID: string) => void;
   unfollow: (userID: string) => void;
-  setUsers: (users: Array<UserType>) => void;
+  // setUsers: (users: Array<UserType>) => void;
   setCurrentPage: (currentPage: number) => void;
-  setTotalUsersCount: (totalCount: number) => void;
-  toggleIsFetching: (isFetching: boolean) => void;
+  // setTotalUsersCount: (totalCount: number) => void;
+  // toggleIsFetching: (isFetching: boolean) => void;
   toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
-  getUsersThunkCreator: any
+  getUsers: any
 };
 
 export type UsersPropsType = MapStatePropsType & MapDispatchToPropsType;
@@ -72,19 +69,21 @@ class UsersContainer extends React.Component<UsersPropsType> {
     //     this.props.setTotalUsersCount(data.totalCount);
     //   });
 
-    this.props.getUsersThunkCreator();
+    this.props.getUsers(this.props.currentPage, this.props.pageSize);
   }
 
   onPageChanged = (pageNumber: number) => {
-    this.props.setCurrentPage(pageNumber);
-    this.props.toggleIsFetching(true);
+    // * use Thunk
+    // this.props.setCurrentPage(pageNumber);
+    // this.props.toggleIsFetching(true);
+    this.props.getUsers(pageNumber, this.props.pageSize)
 
-    usersAPI.getUsers(pageNumber, this.props.pageSize)
-      .then((data) => {
-        // TODO: fixme when we get Promise will be using ItemsResponseType
-        this.props.toggleIsFetching(false);
-        this.props.setUsers(data.items);
-      });
+    // usersAPI.getUsers(pageNumber, this.props.pageSize)
+    //   .then((data) => {
+    //     // TODO: fixme when we get Promise will be using ItemsResponseType
+    //     this.props.toggleIsFetching(false);
+    //     this.props.setUsers(data.items);
+    //   });
   };
 
   render() {
@@ -99,7 +98,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
           users={this.props.users}
           follow={this.props.follow}
           unfollow={this.props.unfollow}
-          toggleFollowingProgress={this.props.toggleFollowingProgress}
+          // toggleFollowingProgress={this.props.toggleFollowingProgress}
           followingInProgress={this.props.followingInProgress}
         />
       </>
@@ -143,12 +142,12 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
 // ;
 
 export default connect<MapStatePropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
-  follow,
-  unfollow,
-  setUsers,
+  follow: followSuccess,
+  unfollow: unfollowSuccess,
   setCurrentPage,
-  setTotalUsersCount,
-  toggleIsFetching,
   toggleFollowingProgress,
-  getUsersThunkCreator
+  getUsers,
 })(UsersContainer);
+
+
+// Убираем toggleIsFetching, setTotalUsersCount, setUsers потому что санка getUsers делает всю работу 66L

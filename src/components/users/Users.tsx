@@ -4,6 +4,7 @@ import React from 'react';
 import {UserType} from '../../redux/users-reducer';
 import {NavLink} from 'react-router-dom';
 import axios from 'axios';
+import {usersAPI} from '../../api/api';
 
 type ClearFuncUsersPropsType = {
   users: Array<UserType>;
@@ -13,7 +14,7 @@ type ClearFuncUsersPropsType = {
   follow: (userID: string) => void;
   unfollow: (userID: string) => void;
   onPageChanged: (pageNumber: number) => void;
-  toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
+  // toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
   followingInProgress: Array<string>
 };
 
@@ -56,54 +57,14 @@ export const Users = (props: ClearFuncUsersPropsType) => {
               {u.followed ? (
                 <button
                   disabled={props.followingInProgress.some((id: string) => id === u.id)}
-                  onClick={() => {
-                    props.toggleFollowingProgress(true, u.id);
-                    // Сначала делаем запрос на сервак чтобы подписаться
-                    axios
-                      .delete(
-                        // Здесь данные о нашей логинизации передаются 2 объектом
-                        `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
-                        {
-                          withCredentials: true,
-                          headers: {
-                            'API-KEY': 'db8d2f12-200b-4467-ba1f-cd791df3f39c'
-                          }
-                        }
-                      )
-                      .then((response) => {
-                        if (response.data.resultCode === 0) {
-                          // Подтверждение сервера
-                          props.unfollow(u.id);
-                        }
-                        props.toggleFollowingProgress(false, u.id);
-                      });
-                  }}
+                  onClick={() => {props.unfollow(u.id)}}
                 >
                   Unfollow
                 </button>
               ) : (
                 <button
                   disabled={props.followingInProgress.some((id) => id === u.id)}
-                  onClick={() => {
-                    props.toggleFollowingProgress(true, u.id);
-                    // Сначала делаем запрос на сервак чтобы подписаться
-                    axios
-                      .post(
-                        // Здесь данные о нашей логинизации передаются 3 объектом, а не 2 как в get request
-                        `https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
-                        {},
-                        {
-                          withCredentials: true,
-                          headers: {'API-KEY': 'db8d2f12-200b-4467-ba1f-cd791df3f39c'}
-                        }
-                      )
-                      .then((response) => {
-                        if (response.data.resultCode === 0) {
-                          props.follow(u.id);
-                        }
-                        props.toggleFollowingProgress(false, u.id);
-                      });
-                  }}
+                  onClick={() => {props.follow(u.id)}}
                 >
                   Follow
                 </button>
