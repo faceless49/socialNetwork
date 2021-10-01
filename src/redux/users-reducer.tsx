@@ -1,4 +1,5 @@
 import {ActionsTypes} from './redux-store';
+import {usersAPI} from '../api/api';
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -29,12 +30,12 @@ export type UserType = {
 };
 
 let initialState = {
-  users: [ ] as Array<UserType>,
+  users: [] as Array<UserType>,
   pageSize: 100,
   totalUsersCount: 0,
   currentPage: 2,
   isFetching: false,
-  followingInProgress: [ ] as Array<string>
+  followingInProgress: [] as Array<string>
 };
 
 export type InitialStateType = typeof initialState;
@@ -107,3 +108,19 @@ export const toggleFollowingProgress = (isFetching: boolean, userID: string) =>
     isFetching,
     userID
   } as const);
+
+
+
+// * Thunks
+export const getUsersThunkCreator = (currentPage: any, pageSize: any) => {
+  return (dispatch:any) => {
+    dispatch(toggleIsFetching(true)); // Пошел запрос, запустился фетчинг
+
+    usersAPI.getUsers(currentPage, pageSize)
+      .then((data) => {
+        dispatch(toggleIsFetching(false)); // When we get answer, toggle is fetching
+        dispatch(setUsers(data.items));
+        dispatch(setTotalUsersCount(data.totalCount));
+      });
+  }
+}

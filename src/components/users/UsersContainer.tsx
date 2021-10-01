@@ -1,7 +1,7 @@
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {
-  follow,
+  follow, getUsersThunkCreator,
   setCurrentPage,
   setTotalUsersCount,
   setUsers,
@@ -51,6 +51,7 @@ type MapDispatchToPropsType = {
   setTotalUsersCount: (totalCount: number) => void;
   toggleIsFetching: (isFetching: boolean) => void;
   toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
+  getUsersThunkCreator: any
 };
 
 export type UsersPropsType = MapStatePropsType & MapDispatchToPropsType;
@@ -60,16 +61,18 @@ class UsersContainer extends React.Component<UsersPropsType> {
   //   super(props);
   // }
   componentDidMount() {
-    // Единственное правильное место где надо делать сайд эффект
+    // // Единственное правильное место где надо делать сайд эффект
+    // * Используем вместо всего Санку. 66L.
+    // this.props.toggleIsFetching(true); // Пошел запрос, запустился фетчинг
+    //
+    // usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+    //   .then((data) => {
+    //     this.props.toggleIsFetching(false); // When we get answer, toggle is fetching
+    //     this.props.setUsers(data.items);
+    //     this.props.setTotalUsersCount(data.totalCount);
+    //   });
 
-    this.props.toggleIsFetching(true); // Пошел запрос, запустился фетчинг
-
-    usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-      .then((data) => {
-        this.props.toggleIsFetching(false); // When we get answer, toggle is fetching
-        this.props.setUsers(data.items);
-        this.props.setTotalUsersCount(data.totalCount);
-      });
+    this.props.getUsersThunkCreator();
   }
 
   onPageChanged = (pageNumber: number) => {
@@ -146,5 +149,6 @@ export default connect<MapStatePropsType, MapDispatchToPropsType, {}, AppStateTy
   setCurrentPage,
   setTotalUsersCount,
   toggleIsFetching,
-  toggleFollowingProgress
+  toggleFollowingProgress,
+  getUsersThunkCreator
 })(UsersContainer);
