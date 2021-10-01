@@ -1,5 +1,6 @@
 import {v1} from 'uuid';
 import {ActionsTypes} from './redux-store';
+import {usersAPI} from '../api/api';
 
 
 const ADD_POST = 'ADD-POST';
@@ -66,3 +67,10 @@ export const updateNewPostText = (text: string) => {
   } as const
 }
 export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
+
+
+export const getUserProfile = (userId: any) => (dispatch: any) => {
+  usersAPI.getProfile(userId).then((response) => {
+    dispatch(setUserProfile(response.data))
+  });
+}

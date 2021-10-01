@@ -18,11 +18,26 @@ export const usersAPI = {
     return instance
       .post(
         // Здесь данные о нашей логинизации передаются 3 объектом, а не 2 как в get request
-        `https://social-network.samuraijs.com/api/1.0/follow/${userId}`
+        `follow/${userId}`
       )
   },
   unfollow(userId: string) {
     // Здесь данные о нашей логинизации передаются 2 объектом
-    return instance.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
-  }
+    return instance.delete(`follow/${userId}`)
+  },
+
+  //Homework
+  getProfile(userId: string) {
+    return instance
+      .get(
+        `profile/` + userId)
+  },
 };
+
+export const authApi = {
+  me() {
+    return instance.get(
+      `auth/me`)
+  }
+}
+
