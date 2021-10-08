@@ -80,7 +80,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
     // usersAPI.getUsers(pageNumber, this.props.pageSize)
     //   .then((data) => {
-    //     // TODO: fixme when we get Promise will be using ItemsResponseType
+    //
     //     this.props.toggleIsFetching(false);
     //     this.props.setUsers(data.items);
     //   });
@@ -98,7 +98,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
           users={this.props.users}
           follow={this.props.follow}
           unfollow={this.props.unfollow}
-          // toggleFollowingProgress={this.props.toggleFollowingProgress}
+          // toggleFollowingProgress={this.props.toggleFollowingProgress} // В санках
           followingInProgress={this.props.followingInProgress}
         />
       </>

@@ -69,8 +69,9 @@ export const updateNewPostText = (text: string) => {
 export const setUserProfile = (profile: any) => ({type: SET_USER_PROFILE, profile} as const)
 
 
-export const getUserProfile = (userId: any) => (dispatch: any) => {
-  usersAPI.getProfile(userId).then((response) => {
+export const getUserProfile = (userId: string) => (dispatch: any) => {
+  usersAPI.getProfile(userId)
+    .then((response) => {
     dispatch(setUserProfile(response.data))
   });
 }
