@@ -2,7 +2,13 @@ import React from 'react';
 import Profile from './Profile';
 import {getUserProfile} from '../../redux/profile-reducer';
 import {connect} from 'react-redux';
-import {withRouter} from 'react-router-dom';
+import {Redirect, withRouter} from 'react-router-dom';
+import {AppStateType} from '../../redux/redux-store';
+
+type MapStatePropsType = {
+  profile: null
+  isAuth: boolean
+};
 
 
 class ProfileContainer extends React.Component<any> {
@@ -23,6 +29,9 @@ class ProfileContainer extends React.Component<any> {
   }
 
   render() {
+
+    if (!this.props.isAuth) return <Redirect to={'/login'}/>
+
     return (
       <div>
         <Profile {...this.props} profile={this.props.profile}/>
@@ -32,7 +41,10 @@ class ProfileContainer extends React.Component<any> {
   }
 }
 
-let mapStateToProps = (state: any) => ({profile: state.profilePage.profile})
+let mapStateToProps = (state: AppStateType): MapStatePropsType => ({
+  profile: state.profilePage.profile,
+  isAuth: state.auth.isAuth,
+})
 
 let WithUrlDataContainerComponent = withRouter(ProfileContainer) // Для прокидывания данных из URL
 

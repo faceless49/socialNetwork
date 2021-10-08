@@ -10,6 +10,7 @@ const SET_USER_PROFILE = 'SET_USER_PROFILE'
 export type ProfilePageType = {
   posts: Array<PostType>;
   newPostText: string;
+  profile: null | any
 };
 
 export type PostType = {
