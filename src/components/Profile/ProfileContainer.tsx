@@ -2,22 +2,34 @@ import React from 'react';
 import Profile from './Profile';
 import {getUserProfile} from '../../redux/profile-reducer';
 import {connect} from 'react-redux';
-import {Redirect, withRouter} from 'react-router-dom';
+import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
 import {AppStateType} from '../../redux/redux-store';
 
 type MapStatePropsType = {
   profile: null
   isAuth: boolean
 };
+type MapDispatchToProps = {
+  getUserProfile: (userID: string) => void
+}
+
+type PathParamsType = {
+  userID: string
+}
+
+type OwnPropsType = MapStatePropsType & MapDispatchToProps
+type PropsType = RouteComponentProps<PathParamsType> & OwnPropsType
 
 
-class ProfileContainer extends React.Component<any> {
+
+
+class ProfileContainer extends React.Component<PropsType> {
 
   componentDidMount() {
     let userID = this.props.match.params.userID
-    if (!userID) {
-      userID = 2
-    }
+    // if (!userID) {
+    //   userID = 2
+    // }
     //* THUNK HOMEWORK
     // axios
     //   .get(
