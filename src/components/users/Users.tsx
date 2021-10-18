@@ -1,10 +1,10 @@
-import s from './Users.module.scss';
-import userIcon from '../../assets/img/user.png';
-import React from 'react';
-import {UserType} from '../../redux/users-reducer';
-import {NavLink} from 'react-router-dom';
-import axios from 'axios';
-import {usersAPI} from '../../api/api';
+import s from "./Users.module.scss";
+import userIcon from "../../assets/img/user.png";
+import React from "react";
+import { UserType } from "../../redux/users-reducer";
+import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { usersAPI } from "../../api/api";
 
 type ClearFuncUsersPropsType = {
   users: Array<UserType>;
@@ -15,7 +15,7 @@ type ClearFuncUsersPropsType = {
   unfollow: (userID: string) => void;
   onPageChanged: (pageNumber: number) => void;
   // toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
-  followingInProgress: Array<string>
+  followingInProgress: Array<string>;
 };
 
 export const Users = (props: ClearFuncUsersPropsType) => {
@@ -31,7 +31,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
         {pages.map((p) => {
           return (
             <span
-              className={props.currentPage === p ? s.selectedPage : ''}
+              className={props.currentPage === p ? s.selectedPage : ""}
               onClick={() => {
                 props.onPageChanged(p);
               }}
@@ -45,7 +45,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
         <div key={u.id}>
           <span>
             <div>
-              <NavLink to={'/profile/' + u.id}>
+              <NavLink to={"/profile/" + u.id}>
                 <img
                   src={u.photos.small != null ? u.photos.small : userIcon}
                   alt=""
@@ -56,15 +56,21 @@ export const Users = (props: ClearFuncUsersPropsType) => {
             <div>
               {u.followed ? (
                 <button
-                  disabled={props.followingInProgress.some((id: string) => id === u.id)}
-                  onClick={() => {props.unfollow(u.id)}}
+                  disabled={props.followingInProgress.some(
+                    (id: string) => id === u.id
+                  )}
+                  onClick={() => {
+                    props.unfollow(u.id);
+                  }}
                 >
                   Unfollow
                 </button>
               ) : (
                 <button
                   disabled={props.followingInProgress.some((id) => id === u.id)}
-                  onClick={() => {props.follow(u.id)}}
+                  onClick={() => {
+                    props.follow(u.id);
+                  }}
                 >
                   Follow
                 </button>
@@ -77,8 +83,8 @@ export const Users = (props: ClearFuncUsersPropsType) => {
               <div>{u.status}</div>
             </span>
             <span>
-              <div>{'u.location.country'}</div>
-              <div>{'u.location.city'}</div>
+              <div>{"u.location.country"}</div>
+              <div>{"u.location.city"}</div>
             </span>
           </span>
         </div>

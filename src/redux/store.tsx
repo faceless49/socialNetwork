@@ -1,12 +1,10 @@
-import {PostType} from './profile-reducer';
-import {ActionsTypes} from './redux-store';
+import { PostType } from "./profile-reducer";
+import { ActionsTypes } from "./redux-store";
 
 // export type MessageType = {
 //   id?: string;
 //   message: string;
 // };
-
-
 
 // export type ProfilePageType = {
 //   posts: Array<PostType>;
@@ -31,8 +29,6 @@ import {ActionsTypes} from './redux-store';
 //   subscribe: (observer: (state: StoreType) => void) => void;
 //   dispatch: (action: ActionsTypes) => void;
 // };
-
-
 
 // let store: StoreType = {
 //   _state: {

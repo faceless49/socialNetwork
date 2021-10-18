@@ -1,16 +1,18 @@
-import {connect} from 'react-redux';
-import {AppStateType} from '../../redux/redux-store';
+import { connect } from "react-redux";
+import { AppStateType } from "../../redux/redux-store";
 import {
   followSuccess,
   getUsers,
   setCurrentPage,
   toggleFollowingProgress,
   unfollowSuccess,
-  UserType
-} from '../../redux/users-reducer';
-import React from 'react';
-import {Users} from './Users';
-import {Preloader} from '../common/preloader/Preloader';
+  UserType,
+} from "../../redux/users-reducer";
+import React from "react";
+import { Users } from "./Users";
+import { Preloader } from "../common/preloader/Preloader";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { compose } from "redux";
 
 type PhotosItemResponseType = {
   small: string;
@@ -38,7 +40,7 @@ type MapStatePropsType = {
   totalUsersCount: number;
   currentPage: number;
   isFetching: boolean;
-  followingInProgress: Array<string>
+  followingInProgress: Array<string>;
 };
 type MapDispatchToPropsType = {
   follow: (userID: string) => void;
@@ -48,7 +50,7 @@ type MapDispatchToPropsType = {
   // setTotalUsersCount: (totalCount: number) => void;
   // toggleIsFetching: (isFetching: boolean) => void;
   toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
-  getUsers: any
+  getUsers: any;
 };
 
 export type UsersPropsType = MapStatePropsType & MapDispatchToPropsType;
@@ -76,7 +78,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
     // * use Thunk
     // this.props.setCurrentPage(pageNumber);
     // this.props.toggleIsFetching(true);
-    this.props.getUsers(pageNumber, this.props.pageSize)
+    this.props.getUsers(pageNumber, this.props.pageSize);
 
     // usersAPI.getUsers(pageNumber, this.props.pageSize)
     //   .then((data) => {
@@ -89,7 +91,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
   render() {
     return (
       <>
-        {this.props.isFetching ? <Preloader/> : null}
+        {this.props.isFetching ? <Preloader /> : null}
         <Users
           totalUsersCount={this.props.totalUsersCount}
           pageSize={this.props.pageSize}
@@ -113,41 +115,20 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
     isFetching: state.usersPage.isFetching,
-    followingInProgress: state.usersPage.followingInProgress
+    followingInProgress: state.usersPage.followingInProgress,
   };
 };
 
-// let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToProps => {
-//     return {
-//       follow: (userID) => {
-//         dispatch(followAC(userID));
-//       },
-//       unfollow: (userID) => {
-//         dispatch(unFollowAC(userID));
-//       },
-//       setUsers: (users: Array<UserType>) => {
-//         dispatch(setUsersAC(users));
-//       },
-//       setCurrentPage: (pageNumber) => {
-//         dispatch(setCurrentPageAC(pageNumber));
-//       },
-//       setTotalUsersCount: (totalCount) => {
-//         dispatch(setTotalUsersCountAC(totalCount));
-//       },
-//       toggleIsFetching: (isFetching) => {
-//         dispatch(toggleIsFetchingAC(isFetching));
-//       }
-//     };
-//   }
-// ;
-
-export default connect<MapStatePropsType, MapDispatchToPropsType, {}, AppStateType>(mapStateToProps, {
-  follow: followSuccess,
-  unfollow: unfollowSuccess,
-  setCurrentPage,
-  toggleFollowingProgress,
-  getUsers,
-})(UsersContainer);
-
-
-// Убираем toggleIsFetching, setTotalUsersCount, setUsers потому что санка getUsers делает всю работу 66L
+export default compose<React.ComponentType>(
+  withAuthRedirect,
+  connect<MapStatePropsType, MapDispatchToPropsType, {}, AppStateType>(
+    mapStateToProps,
+    {
+      follow: followSuccess,
+      unfollow: unfollowSuccess,
+      setCurrentPage,
+      toggleFollowingProgress,
+      getUsers,
+    }
+  )
+)(UsersContainer);
