@@ -2,8 +2,10 @@ import { applyMiddleware, combineReducers, createStore } from "redux";
 import {
   addPostAC,
   profileReducer,
+  setStatus,
   setUserProfile,
   updateNewPostText,
+  updateStatus,
 } from "./profile-reducer";
 import {
   dialogsReducer,
@@ -37,7 +39,8 @@ export type ActionsTypes =
   | ReturnType<typeof toggleIsFetching>
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof setAuthUserData>
-  | ReturnType<typeof toggleFollowingProgress>;
+  | ReturnType<typeof toggleFollowingProgress>
+  | ReturnType<typeof setStatus>;
 
 const reducer = combineReducers({
   profilePage: profileReducer,
