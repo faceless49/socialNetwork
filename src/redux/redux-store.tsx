@@ -5,7 +5,6 @@ import {
   setStatus,
   setUserProfile,
   updateNewPostText,
-  updateStatus,
 } from "./profile-reducer";
 import {
   dialogsReducer,
@@ -17,13 +16,13 @@ import {
   setCurrentPage,
   setTotalUsersCount,
   setUsers,
-  toggleIsFetching,
   toggleFollowingProgress,
+  toggleIsFetching,
   unfollowSuccess,
   usersReducer,
 } from "./users-reducer";
 import authReducer, { setAuthUserData } from "./auth-reducer";
-
+import { reducer as formReducer } from "redux-form";
 import thunkMiddleware from "redux-thunk";
 
 export type ActionsTypes =
@@ -47,6 +46,7 @@ const reducer = combineReducers({
   dialogsPage: dialogsReducer,
   usersPage: usersReducer,
   auth: authReducer,
+  form: formReducer,
 });
 
 type RootReduceType = typeof reducer;

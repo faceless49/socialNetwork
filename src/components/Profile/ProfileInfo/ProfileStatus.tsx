@@ -22,6 +22,19 @@ export class ProfileStatus extends Component<any> {
       status: e.currentTarget.value,
     });
   };
+
+  componentDidUpdate(
+    prevProps: Readonly<any>,
+    prevState: Readonly<{}>,
+    snapshot?: any
+  ) {
+    if (prevProps.status !== this.props.status)
+      this.setState({
+        status: this.props.status,
+      });
+    console.log("CDU");
+  }
+
   render() {
     return (
       <>
