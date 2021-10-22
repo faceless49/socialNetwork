@@ -4,13 +4,8 @@ import {
   profileReducer,
   setStatus,
   setUserProfile,
-  updateNewPostText,
 } from "./profile-reducer";
-import {
-  dialogsReducer,
-  sendMessageCreator,
-  updateNewMessageBodyCreator,
-} from "./dialogs-reducer";
+import { dialogsReducer, sendMessageCreator } from "./dialogs-reducer";
 import {
   followSuccess,
   setCurrentPage,
@@ -27,8 +22,6 @@ import thunkMiddleware from "redux-thunk";
 
 export type ActionsTypes =
   | ReturnType<typeof addPostAC>
-  | ReturnType<typeof updateNewPostText>
-  | ReturnType<typeof updateNewMessageBodyCreator>
   | ReturnType<typeof sendMessageCreator>
   | ReturnType<typeof followSuccess>
   | ReturnType<typeof unfollowSuccess>
