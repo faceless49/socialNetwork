@@ -1,4 +1,6 @@
 import { Field, reduxForm } from "redux-form";
+import { Input } from "../common/FormsControls/FormsControls";
+import { minLengthCreator, required } from "../../utils/validators/validators";
 
 export const Login = (props: any) => {
   const onSubmit = (formData: any) => {
@@ -11,6 +13,9 @@ export const Login = (props: any) => {
     </div>
   );
 };
+
+const minLength4 = minLengthCreator(4);
+
 const LoginForm = (props: any) => {
   return (
     <form onSubmit={props.handleSubmit}>
@@ -19,7 +24,8 @@ const LoginForm = (props: any) => {
           type="text"
           placeholder="Login"
           name="login"
-          component={"input"}
+          component={Input}
+          validate={[required, minLength4]}
         />
       </div>{" "}
       <div>
@@ -27,11 +33,12 @@ const LoginForm = (props: any) => {
           type="text"
           placeholder="Password"
           name="password"
-          component={"input"}
+          component={Input}
+          validate={[required, minLength4]}
         />
       </div>{" "}
       <div>
-        <Field type="checkbox" component={"input"} name={"rememberMe"} />{" "}
+        <Field type="checkbox" component={"input"} name={"rememberMe"} />
         remember me
       </div>
       <div>
