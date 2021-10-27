@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { login } from "../../redux/auth-reducer";
 import { Redirect } from "react-router-dom";
 import { AppStateType } from "../../redux/redux-store";
-
+import styles from "./../common/FormsControls/FormsControls.module.scss";
 const mapStateToProps = (state: AppStateType) => ({
   isAuth: state.auth.isAuth,
 });
@@ -55,6 +55,7 @@ const LoginForm = (props: any) => {
         <Field type="checkbox" component={"input"} name={"rememberMe"} />
         remember me
       </div>
+      {props.error && <div className={styles.formSummaryError}>Error</div>}
       <div>
         <button>Login</button>
       </div>
