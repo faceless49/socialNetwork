@@ -1,36 +1,33 @@
 import { ActionsTypes } from "./redux-store";
 import { authApi } from "../api/api";
 import { stopSubmit } from "redux-form";
+import { Dispatch } from "redux";
 
 const SET_USER_DATA = "SET_USER_DATA";
 
-export type DataPropsType = {
-  userID: string | null;
+export type AuthInitialStateType = {
+  userId: string | null;
   email: string | null;
   login: string | null;
   isAuth: boolean;
 };
 
-export type AuthPropsType = {
-  data: Array<DataPropsType>;
-  isAuth: boolean;
-};
-// export type AuthPropsType = {
-//   messages: Array<string>
-//   data: Array<DataPropsType>
-// }
-
-let authInitialState = {
-  userID: null,
+let authInitialState: AuthInitialStateType = {
+  userId: null,
   email: null,
   login: null,
   isAuth: false,
 };
 
+export type SetAuthUserDataType = {
+  type: typeof SET_USER_DATA;
+  payload: AuthInitialStateType;
+};
+
 const authReducer = (
-  state: DataPropsType = authInitialState,
+  state = authInitialState,
   action: ActionsTypes
-): DataPropsType => {
+): AuthInitialStateType => {
   switch (action.type) {
     case SET_USER_DATA:
       return {
@@ -47,13 +44,13 @@ export const setAuthUserData = (
   email: string | null,
   login: string | null,
   isAuth: boolean
-) =>
+): SetAuthUserDataType =>
   ({
     type: SET_USER_DATA,
     payload: { userId, email, login, isAuth },
   } as const);
 
-export const getAuthUserData = () => (dispatch: any) => {
+export const getAuthUserData = () => (dispatch: Dispatch<ActionsTypes>) => {
   authApi.me().then((response) => {
     if (response.data.resultCode === 0) {
       let { id, email, login } = response.data.data;
@@ -61,6 +58,7 @@ export const getAuthUserData = () => (dispatch: any) => {
     }
   });
 };
+
 export const login =
   (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
     authApi.login(email, password, rememberMe).then((response) => {

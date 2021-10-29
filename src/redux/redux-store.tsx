@@ -16,7 +16,10 @@ import {
   unfollowSuccess,
   usersReducer,
 } from "./users-reducer";
-import authReducer, { setAuthUserData } from "./auth-reducer";
+import authReducer, {
+  setAuthUserData,
+  SetAuthUserDataType,
+} from "./auth-reducer";
 import { reducer as formReducer } from "redux-form";
 import thunkMiddleware from "redux-thunk";
 
@@ -30,9 +33,10 @@ export type ActionsTypes =
   | ReturnType<typeof setCurrentPage>
   | ReturnType<typeof toggleIsFetching>
   | ReturnType<typeof setUserProfile>
-  | ReturnType<typeof setAuthUserData>
   | ReturnType<typeof toggleFollowingProgress>
-  | ReturnType<typeof setStatus>;
+  | ReturnType<typeof setStatus>
+  | ReturnType<typeof setAuthUserData>
+  | SetAuthUserDataType;
 
 const reducer = combineReducers({
   profilePage: profileReducer,
@@ -43,7 +47,7 @@ const reducer = combineReducers({
 });
 
 type RootReduceType = typeof reducer;
-export type AppStateType = ReturnType<typeof reducer>;
+export type AppStateType = ReturnType<RootReduceType>;
 
 export let store = createStore(reducer, applyMiddleware(thunkMiddleware));
 
