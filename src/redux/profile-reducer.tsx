@@ -1,16 +1,12 @@
 import { v1 } from "uuid";
 import { ActionsTypes } from "./redux-store";
 import { profileAPI, usersAPI } from "../api/api";
+import { Dispatch } from "redux";
 
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
 
-export type ProfilePageType = {
-  posts: Array<PostType>;
-  newPostText: string;
-  profile: null;
-};
 export type ProfileType = {
   userId: number;
   lookingForAJob: boolean;
@@ -75,25 +71,28 @@ export const setStatus = (status: string) => {
     status,
   } as const;
 };
-export const setUserProfile = (profile: any) =>
+export const setUserProfile = (profile: ProfileType) =>
   ({ type: SET_USER_PROFILE, profile } as const);
 
-export const getUserProfile = (userId: string) => (dispatch: any) => {
-  usersAPI.getProfile(userId).then((response) => {
-    dispatch(setUserProfile(response.data));
-  });
-};
+export const getUserProfile =
+  (userId: string) => (dispatch: Dispatch<ActionsTypes>) => {
+    usersAPI.getProfile(userId).then((response) => {
+      dispatch(setUserProfile(response.data));
+    });
+  };
 
-export const getStatus = (userId: string) => (dispatch: any) => {
-  profileAPI.getStatus(userId).then((response) => {
-    dispatch(setStatus(response.data));
-  });
-};
+export const getStatus =
+  (userId: string) => (dispatch: Dispatch<ActionsTypes>) => {
+    profileAPI.getStatus(userId).then((response) => {
+      dispatch(setStatus(response.data));
+    });
+  };
 
-export const updateStatus = (status: string) => (dispatch: any) => {
-  profileAPI.updateStatus(status).then((response) => {
-    if (response.data.resultCode === 0) {
-      dispatch(setStatus(status));
-    }
-  });
-};
+export const updateStatus =
+  (status: string) => (dispatch: Dispatch<ActionsTypes>) => {
+    profileAPI.updateStatus(status).then((response) => {
+      if (response.data.resultCode === 0) {
+        dispatch(setStatus(status));
+      }
+    });
+  };

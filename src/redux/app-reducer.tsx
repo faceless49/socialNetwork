@@ -1,9 +1,4 @@
-import { Dispatch } from "redux";
-import {
-  getAuthUserData,
-  setAuthUserData,
-  SetAuthUserDataType,
-} from "./auth-reducer";
+import { getAuthUserData, setAuthUserData } from "./auth-reducer";
 
 type InitialStateType = {
   initialized: boolean;
@@ -37,11 +32,16 @@ export const initializedSuccess = (): InitializedSuccessActionType =>
     type: "INITIALIZED_SUCCESS",
   } as const);
 
-export const initializeApp = () => (dispatch: Dispatch<ActionsTypes>) => {
-  dispatch(getAuthUserData());
-  dispatch(initializedSuccess());
+export const initializeApp = () => (dispatch: any) => {
+  // * Type for THUNK Dispatch
+  let promise = dispatch(getAuthUserData());
+  Promise.all([promise]).then(() => {
+    dispatch(initializedSuccess());
+  });
 };
 
-type ActionsTypes = InitializedSuccessActionType | SetAuthUserDataType;
+type ActionsTypes =
+  | InitializedSuccessActionType
+  | ReturnType<typeof setAuthUserData>;
 
 export default appReducer;

@@ -3,8 +3,6 @@ import userIcon from "../../assets/img/user.png";
 import React from "react";
 import { UserType } from "../../redux/users-reducer";
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-import { usersAPI } from "../../api/api";
 
 type ClearFuncUsersPropsType = {
   users: Array<UserType>;

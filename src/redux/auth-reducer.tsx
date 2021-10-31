@@ -12,16 +12,12 @@ export type AuthInitialStateType = {
   isAuth: boolean;
 };
 
-let authInitialState: AuthInitialStateType = {
-  userId: null,
-  email: null,
-  login: null,
+// export type AuthInitialStateType = typeof authInitialState;
+let authInitialState = {
+  userId: null as string | null,
+  email: null as string | null,
+  login: null as string | null,
   isAuth: false,
-};
-
-export type SetAuthUserDataType = {
-  type: typeof SET_USER_DATA;
-  payload: AuthInitialStateType;
 };
 
 const authReducer = (
@@ -44,7 +40,7 @@ export const setAuthUserData = (
   email: string | null,
   login: string | null,
   isAuth: boolean
-): SetAuthUserDataType =>
+) =>
   ({
     type: SET_USER_DATA,
     payload: { userId, email, login, isAuth },
@@ -74,7 +70,7 @@ export const login =
     });
   };
 
-export const logout = () => (dispatch: any) => {
+export const logout = () => (dispatch: Dispatch<ActionsTypes>) => {
   authApi.logout().then((response) => {
     if (response.data.resultCode === 0) {
       dispatch(setAuthUserData(null, null, null, false));

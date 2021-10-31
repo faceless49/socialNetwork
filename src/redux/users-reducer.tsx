@@ -1,5 +1,6 @@
 import { ActionsTypes } from "./redux-store";
 import { usersAPI } from "../api/api";
+import { Dispatch } from "redux";
 
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
@@ -9,10 +10,10 @@ const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS";
 
-// type UserLocationType = {
-//   country: string
-//   city: string
-// }
+type UserLocationType = {
+  country: string;
+  city: string;
+};
 
 export type PhotosType = {
   small: string;
@@ -20,13 +21,13 @@ export type PhotosType = {
 };
 export type UserType = {
   id: string;
-  followed: boolean;
   name: string;
+  followed: boolean;
   status: string;
   photos: PhotosType;
   totalCount: number;
   error: null;
-  // location: UserLocationType
+  location: UserLocationType;
 };
 
 let initialState = {
@@ -111,7 +112,7 @@ export const toggleFollowingProgress = (isFetching: boolean, userID: string) =>
   } as const);
 
 // * Thunks
-export const getUsers = (currentPage: any, pageSize: any) => {
+export const getUsers = (currentPage: number, pageSize: number) => {
   return (dispatch: any) => {
     dispatch(toggleIsFetching(true)); // Пошел запрос, запустился фетчинг
 
@@ -125,7 +126,7 @@ export const getUsers = (currentPage: any, pageSize: any) => {
 };
 
 export const follow = (userId: string) => {
-  return (dispatch: any) => {
+  return (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(toggleFollowingProgress(true, userId));
     // Сначала делаем запрос на сервак чтобы подписаться
     usersAPI.unfollow(userId).then((response) => {
@@ -139,7 +140,7 @@ export const follow = (userId: string) => {
 };
 
 export const unfollow = (userId: string) => {
-  return (dispatch: any) => {
+  return (dispatch: Dispatch<ActionsTypes>) => {
     toggleFollowingProgress(true, userId);
     // Сначала делаем запрос на сервак чтобы подписаться
     usersAPI.unfollow(userId).then((response) => {
