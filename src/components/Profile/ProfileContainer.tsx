@@ -19,13 +19,13 @@ type MapStatePropsType = {
 };
 
 type MapDispatchToProps = {
-  getUserProfile: (userID: string) => void;
-  getStatus: (userID: string) => void;
+  getUserProfile: (userID: number) => void;
+  getStatus: (userID: number) => void;
   updateStatus: (status: string) => void;
 };
 
 type PathParamsType = {
-  userID: string;
+  userID: any;
 };
 
 type OwnPropsType = MapStatePropsType & MapDispatchToProps;

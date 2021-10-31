@@ -14,28 +14,28 @@ export const usersAPI = {
       .get(`users?page=${currentPage}&count=${pageSize}`)
       .then((response) => response.data);
   },
-  follow(userId: string) {
+  follow(userId: number) {
     return instance.post(
       // Здесь данные о нашей логинизации передаются 3 объектом, а не 2 как в get request
       `follow/${userId}`
     );
   },
-  unfollow(userId: string) {
+  unfollow(userId: number) {
     // Здесь данные о нашей логинизации передаются 2 объектом
     return instance.delete(`follow/${userId}`);
   },
 
-  getProfile(userId: string) {
+  getProfile(userId: number) {
     console.warn("Obsolete method. Please use profileAPI object.");
     return profileAPI.getProfile(userId);
   },
 };
 
 export const profileAPI = {
-  getProfile(userId: string) {
+  getProfile(userId: number) {
     return instance.get(`profile/` + userId);
   },
-  getStatus(userId: string) {
+  getStatus(userId: number) {
     return instance.get(`profile/status/` + userId);
   },
   updateStatus(status: string) {

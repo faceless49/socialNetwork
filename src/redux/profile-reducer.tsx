@@ -75,14 +75,14 @@ export const setUserProfile = (profile: ProfileType) =>
   ({ type: SET_USER_PROFILE, profile } as const);
 
 export const getUserProfile =
-  (userId: string) => (dispatch: Dispatch<ActionsTypes>) => {
+  (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
     usersAPI.getProfile(userId).then((response) => {
       dispatch(setUserProfile(response.data));
     });
   };
 
 export const getStatus =
-  (userId: string) => (dispatch: Dispatch<ActionsTypes>) => {
+  (userId: number) => (dispatch: Dispatch<ActionsTypes>) => {
     profileAPI.getStatus(userId).then((response) => {
       dispatch(setStatus(response.data));
     });

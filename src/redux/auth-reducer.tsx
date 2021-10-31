@@ -6,7 +6,7 @@ import { Dispatch } from "redux";
 const SET_USER_DATA = "SET_USER_DATA";
 
 export type AuthInitialStateType = {
-  userId: string | null;
+  userId: number | null;
   email: string | null;
   login: string | null;
   isAuth: boolean;
@@ -14,7 +14,7 @@ export type AuthInitialStateType = {
 
 // export type AuthInitialStateType = typeof authInitialState;
 let authInitialState = {
-  userId: null as string | null,
+  userId: null as number | null,
   email: null as string | null,
   login: null as string | null,
   isAuth: false,
@@ -36,7 +36,7 @@ const authReducer = (
 };
 
 export const setAuthUserData = (
-  userId: string | null,
+  userId: number | null,
   email: string | null,
   login: string | null,
   isAuth: boolean

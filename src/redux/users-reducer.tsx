@@ -20,7 +20,7 @@ export type PhotosType = {
   large: string;
 };
 export type UserType = {
-  id: string;
+  id: number;
   name: string;
   followed: boolean;
   status: string;
@@ -36,7 +36,7 @@ let initialState = {
   totalUsersCount: 0,
   currentPage: 2,
   isFetching: false,
-  followingInProgress: [] as Array<string>,
+  followingInProgress: [] as Array<number>,
 };
 
 export type InitialStateType = typeof initialState;
@@ -86,9 +86,9 @@ export const usersReducer = (
   }
 };
 
-export const followSuccess = (userID: string) =>
+export const followSuccess = (userID: number) =>
   ({ type: FOLLOW, userID } as const);
-export const unfollowSuccess = (userID: string) =>
+export const unfollowSuccess = (userID: number) =>
   ({ type: UNFOLLOW, userID } as const);
 export const setUsers = (users: Array<UserType>) =>
   ({ type: SET_USERS, users } as const);
@@ -104,7 +104,7 @@ export const toggleIsFetching = (isFetching: boolean) =>
     type: TOGGLE_IS_FETCHING,
     isFetching,
   } as const);
-export const toggleFollowingProgress = (isFetching: boolean, userID: string) =>
+export const toggleFollowingProgress = (isFetching: boolean, userID: number) =>
   ({
     type: TOGGLE_IS_FOLLOWING_PROGRESS,
     isFetching,
@@ -112,24 +112,23 @@ export const toggleFollowingProgress = (isFetching: boolean, userID: string) =>
   } as const);
 
 // * Thunks
-export const getUsers = (currentPage: number, pageSize: number) => {
-  return (dispatch: any) => {
+export const requestUsers = (page: number, pageSize: number) => {
+  return (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(toggleIsFetching(true)); // Пошел запрос, запустился фетчинг
-
-    usersAPI.getUsers(currentPage, pageSize).then((data) => {
+    dispatch(setCurrentPage(page));
+    usersAPI.getUsers(page, pageSize).then((data) => {
       dispatch(toggleIsFetching(false)); // When we get answer, toggle is fetching
-      dispatch(setCurrentPage(currentPage));
       dispatch(setUsers(data.items));
       dispatch(setTotalUsersCount(data.totalCount));
     });
   };
 };
 
-export const follow = (userId: string) => {
+export const follow = (userId: number) => {
   return (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(toggleFollowingProgress(true, userId));
     // Сначала делаем запрос на сервак чтобы подписаться
-    usersAPI.unfollow(userId).then((response) => {
+    usersAPI.follow(userId).then((response) => {
       if (response.data.resultCode === 0) {
         // Подтверждение сервера
         dispatch(unfollowSuccess(userId));
@@ -139,7 +138,7 @@ export const follow = (userId: string) => {
   };
 };
 
-export const unfollow = (userId: string) => {
+export const unfollow = (userId: number) => {
   return (dispatch: Dispatch<ActionsTypes>) => {
     toggleFollowingProgress(true, userId);
     // Сначала делаем запрос на сервак чтобы подписаться

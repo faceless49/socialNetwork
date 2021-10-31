@@ -9,11 +9,11 @@ type ClearFuncUsersPropsType = {
   pageSize: number;
   totalUsersCount: number;
   currentPage: number;
-  follow: (userID: string) => void;
-  unfollow: (userID: string) => void;
+  follow: (userID: number) => void;
+  unfollow: (userID: number) => void;
   onPageChanged: (pageNumber: number) => void;
   // toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
-  followingInProgress: Array<string>;
+  followingInProgress: Array<number>;
 };
 
 export const Users = (props: ClearFuncUsersPropsType) => {
@@ -55,7 +55,7 @@ export const Users = (props: ClearFuncUsersPropsType) => {
               {u.followed ? (
                 <button
                   disabled={props.followingInProgress.some(
-                    (id: string) => id === u.id
+                    (id: number) => id === u.id
                   )}
                   onClick={() => {
                     props.unfollow(u.id);

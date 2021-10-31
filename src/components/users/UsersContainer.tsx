@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { AppStateType } from "../../redux/redux-store";
 import {
   followSuccess,
-  getUsers,
+  requestUsers,
   setCurrentPage,
   toggleFollowingProgress,
   unfollowSuccess,
@@ -11,8 +11,15 @@ import {
 import React from "react";
 import { Users } from "./Users";
 import { Preloader } from "../common/preloader/Preloader";
-import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import { compose } from "redux";
+import {
+  getCurrentPageSelect,
+  getFollowingIsProgress,
+  getIsFetchingSelect,
+  getPageSizeSelect,
+  getTotalUsersCountSelect,
+  getUsersSelect,
+} from "../../redux/user-selectors";
 
 type PhotosItemResponseType = {
   small: string;
@@ -40,17 +47,17 @@ type MapStatePropsType = {
   totalUsersCount: number;
   currentPage: number;
   isFetching: boolean;
-  followingInProgress: Array<string>;
+  followingInProgress: Array<number>;
 };
 type MapDispatchToPropsType = {
-  follow: (userID: string) => void;
-  unfollow: (userID: string) => void;
+  follow: (userID: number) => void;
+  unfollow: (userID: number) => void;
   // setUsers: (users: Array<UserType>) => void;
   setCurrentPage: (currentPage: number) => void;
   // setTotalUsersCount: (totalCount: number) => void;
   // toggleIsFetching: (isFetching: boolean) => void;
-  toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
-  getUsers: any;
+  toggleFollowingProgress: (isFetching: boolean, userID: number) => void;
+  getUsers: (currentPage: number, pageSize: number) => void;
 };
 
 export type UsersPropsType = MapStatePropsType & MapDispatchToPropsType;
@@ -108,14 +115,25 @@ class UsersContainer extends React.Component<UsersPropsType> {
   }
 }
 
+// let mapStateToProps = (state: AppStateType): MapStatePropsType => {
+//   return {
+//     users: state.usersPage.users,
+//     pageSize: state.usersPage.pageSize,
+//     totalUsersCount: state.usersPage.totalUsersCount,
+//     currentPage: state.usersPage.currentPage,
+//     isFetching: state.usersPage.isFetching,
+//     followingInProgress: state.usersPage.followingInProgress,
+//   };
+// };
+
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    currentPage: state.usersPage.currentPage,
-    isFetching: state.usersPage.isFetching,
-    followingInProgress: state.usersPage.followingInProgress,
+    users: getUsersSelect(state),
+    pageSize: getPageSizeSelect(state),
+    totalUsersCount: getTotalUsersCountSelect(state),
+    currentPage: getCurrentPageSelect(state),
+    isFetching: getIsFetchingSelect(state),
+    followingInProgress: getFollowingIsProgress(state),
   };
 };
 
@@ -127,7 +145,7 @@ export default compose<React.ComponentType>(
       unfollow: unfollowSuccess,
       setCurrentPage,
       toggleFollowingProgress,
-      getUsers,
+      getUsers: requestUsers,
     }
   )
 )(UsersContainer);
