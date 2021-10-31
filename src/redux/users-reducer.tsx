@@ -47,6 +47,7 @@ export const usersReducer = (
 ): InitialStateType => {
   switch (action.type) {
     case FOLLOW:
+      debugger;
       return {
         ...state,
         users: state.users.map((u) => {
@@ -57,6 +58,8 @@ export const usersReducer = (
         }),
       };
     case UNFOLLOW:
+      debugger;
+
       return {
         ...state,
         users: state.users.map((u) => {
@@ -125,13 +128,14 @@ export const requestUsers = (page: number, pageSize: number) => {
 };
 
 export const follow = (userId: number) => {
+  debugger;
   return (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(toggleFollowingProgress(true, userId));
     // Сначала делаем запрос на сервак чтобы подписаться
     usersAPI.follow(userId).then((response) => {
       if (response.data.resultCode === 0) {
         // Подтверждение сервера
-        dispatch(unfollowSuccess(userId));
+        dispatch(followSuccess(userId));
       }
       dispatch(toggleFollowingProgress(false, userId));
     });
@@ -139,8 +143,10 @@ export const follow = (userId: number) => {
 };
 
 export const unfollow = (userId: number) => {
+  debugger;
+
   return (dispatch: Dispatch<ActionsTypes>) => {
-    toggleFollowingProgress(true, userId);
+    dispatch(toggleFollowingProgress(true, userId));
     // Сначала делаем запрос на сервак чтобы подписаться
     usersAPI.unfollow(userId).then((response) => {
       if (response.data.resultCode === 0) {
