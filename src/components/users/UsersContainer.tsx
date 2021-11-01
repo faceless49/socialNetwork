@@ -18,7 +18,7 @@ import {
   getIsFetchingSelect,
   getPageSizeSelect,
   getTotalUsersCountSelect,
-  getUsersSelect,
+  getUsersSelector,
 } from "../../redux/user-selectors";
 
 type PhotosItemResponseType = {
@@ -128,7 +128,7 @@ class UsersContainer extends React.Component<UsersPropsType> {
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
-    users: getUsersSelect(state),
+    users: getUsersSelector(state),
     pageSize: getPageSizeSelect(state),
     totalUsersCount: getTotalUsersCountSelect(state),
     currentPage: getCurrentPageSelect(state),

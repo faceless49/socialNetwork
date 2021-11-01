@@ -128,7 +128,6 @@ export const requestUsers = (page: number, pageSize: number) => {
 };
 
 export const follow = (userId: number) => {
-  debugger;
   return (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(toggleFollowingProgress(true, userId));
     // Сначала делаем запрос на сервак чтобы подписаться
@@ -143,14 +142,12 @@ export const follow = (userId: number) => {
 };
 
 export const unfollow = (userId: number) => {
-  debugger;
-
   return (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(toggleFollowingProgress(true, userId));
     // Сначала делаем запрос на сервак чтобы подписаться
     usersAPI.unfollow(userId).then((response) => {
       if (response.data.resultCode === 0) {
-        unfollowSuccess(userId);
+        dispatch(unfollowSuccess(userId));
       }
       dispatch(toggleFollowingProgress(false, userId));
     });
