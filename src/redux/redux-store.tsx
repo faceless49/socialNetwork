@@ -1,6 +1,7 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import {
   addPostAC,
+  deleteMessage,
   profileReducer,
   setStatus,
   setUserProfile,
@@ -23,6 +24,7 @@ import appReducer from "./app-reducer";
 
 export type ActionsTypes =
   | ReturnType<typeof addPostAC>
+  | ReturnType<typeof deleteMessage>
   | ReturnType<typeof sendMessage>
   | ReturnType<typeof followSuccess>
   | ReturnType<typeof unfollowSuccess>
