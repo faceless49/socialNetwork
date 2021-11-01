@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
 type PropsType = {
   status: string;
@@ -8,6 +8,11 @@ type PropsType = {
 export const ProfileStatusWithHooks = (props: PropsType) => {
   let [editMode, setEditmode] = useState<boolean>(false);
   let [status, setStatus] = useState<string>(props.status);
+
+  useEffect(() => {
+    setStatus(props.status);
+  }, [props.status]);
+
   const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStatus(e.currentTarget.value);
   };
@@ -19,7 +24,7 @@ export const ProfileStatusWithHooks = (props: PropsType) => {
     setEditmode(false);
     props.updateStatus(status);
   };
-
+  console.log("render profilestatus");
   return (
     <>
       {!editMode && (
