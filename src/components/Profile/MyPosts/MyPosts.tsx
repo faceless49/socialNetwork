@@ -14,7 +14,8 @@ type MyPostsType = {
   addPost: (newPostText: string) => void;
 };
 
-const MyPosts = (props: MyPostsType) => {
+export const MyPosts = React.memo((props: MyPostsType) => {
+  console.log("render Mypost PC");
   let postElements = props.posts
     .map((p: PostType) => (
       <Post id={p.id} message={p.message} likesCount={p.likesCount} />
@@ -34,7 +35,7 @@ const MyPosts = (props: MyPostsType) => {
       <div className={s.posts}>{postElements}</div>
     </div>
   );
-};
+});
 
 const maxLength10 = maxLengthCreator(10);
 const AddNewPostForm = (props: any) => {
