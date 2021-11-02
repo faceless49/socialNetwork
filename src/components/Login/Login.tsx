@@ -32,15 +32,24 @@ const minLength4 = minLengthCreator(4);
 
 const LoginForm = (
   { handleSubmit }: { handleSubmit: () => any },
-  error: any
+  error: boolean
 ) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        {CreateField("Email", "email", [required], Input, null)}
-        {CreateField("Password", "password", [required], Input, {
+        {CreateField("Email", "email", [required, minLength4], Input, null)}
+        {CreateField("Password", "password", [required, minLength4], Input, {
           type: "password",
         })}
+        {CreateField(
+          null,
+          "rememberMe",
+          null,
+          Input,
+          { type: "checkbox" },
+          "Remember me"
+        )}
+
         {/*<Field*/}
         {/*  type="text"*/}
         {/*  placeholder="Email"*/}
@@ -59,8 +68,8 @@ const LoginForm = (
         {/*/>*/}
       </div>{" "}
       <div>
-        <Field type="checkbox" component={"input"} name={"rememberMe"} />
-        remember me
+        {/*<Field type="checkbox" component={"input"} name={"rememberMe"} />*/}
+        {/*remember me*/}
       </div>
       {error && <div className={styles.formSummaryError}>Error</div>}
       <div>

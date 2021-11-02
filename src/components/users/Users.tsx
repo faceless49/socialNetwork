@@ -3,6 +3,7 @@ import userIcon from "../../assets/img/user.png";
 import React from "react";
 import { UserType } from "../../redux/users-reducer";
 import { NavLink } from "react-router-dom";
+import { Paginator } from "../common/Paginator/Paginator";
 
 type ClearFuncUsersPropsType = {
   users: Array<UserType>;
@@ -15,9 +16,17 @@ type ClearFuncUsersPropsType = {
   // toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
   followingInProgress: Array<number>;
 };
-
-export const Users = (props: ClearFuncUsersPropsType) => {
-  let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
+export const Users: React.FC<ClearFuncUsersPropsType> = ({
+  users,
+  pageSize,
+  totalUsersCount,
+  currentPage,
+  follow,
+  unfollow,
+  onPageChanged,
+  followingInProgress,
+}) => {
+  let pagesCount = Math.ceil(totalUsersCount / pageSize);
   let pages = [];
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i);
@@ -25,21 +34,27 @@ export const Users = (props: ClearFuncUsersPropsType) => {
 
   return (
     <div>
-      <div className={s.pagination}>
-        {pages.map((p) => {
-          return (
-            <span
-              className={props.currentPage === p ? s.selectedPage : ""}
-              onClick={() => {
-                props.onPageChanged(p);
-              }}
-            >
-              {p}
-            </span>
-          );
-        })}
-      </div>
-      {props.users.map((u: UserType) => (
+      {/*<div className={s.pagination}>*/}
+      {/*  {pages.map((p) => {*/}
+      {/*    return (*/}
+      {/*      <span*/}
+      {/*        className={props.currentPage === p ? s.selectedPage : ""}*/}
+      {/*        onClick={() => {*/}
+      {/*          props.onPageChanged(p);*/}
+      {/*        }}*/}
+      {/*      >*/}
+      {/*        {p}*/}
+      {/*      </span>*/}
+      {/*    );*/}
+      {/*  })}*/}
+      {/*</div>*/}
+      <Paginator
+        totalUsersCount={totalUsersCount}
+        currentPage={currentPage}
+        pageSize={pageSize}
+        onPageChanged={onPageChanged}
+      />
+      {users.map((u: UserType) => (
         <div key={u.id}>
           <span>
             <div>
@@ -54,18 +69,18 @@ export const Users = (props: ClearFuncUsersPropsType) => {
             <div>
               {u.followed ? (
                 <button
-                  disabled={props.followingInProgress.some((id) => id === u.id)}
+                  disabled={followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
-                    props.unfollow(u.id);
+                    unfollow(u.id);
                   }}
                 >
                   Unfollow
                 </button>
               ) : (
                 <button
-                  disabled={props.followingInProgress.some((id) => id === u.id)}
+                  disabled={followingInProgress.some((id) => id === u.id)}
                   onClick={() => {
-                    props.follow(u.id);
+                    follow(u.id);
                   }}
                 >
                   Follow
