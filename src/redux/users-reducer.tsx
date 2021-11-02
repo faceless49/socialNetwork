@@ -126,25 +126,56 @@ export const requestUsers =
     dispatch(setTotalUsersCount(response.totalCount));
   };
 
+const followUnfollowFlow = async (
+  dispatch: Dispatch<ActionsTypes>,
+  userId: number,
+  apiMethod: any,
+  actionCreator: any
+) => {
+  dispatch(toggleFollowingProgress(true, userId));
+
+  // Сначала делаем запрос на сервак чтобы подписаться
+  const response = await apiMethod(userId);
+  if (response.data.resultCode === 0) {
+    // Подтверждение сервера
+    dispatch(actionCreator(userId));
+  }
+  dispatch(toggleFollowingProgress(false, userId));
+};
+
 export const follow =
   (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
-    dispatch(toggleFollowingProgress(true, userId));
-    // Сначала делаем запрос на сервак чтобы подписаться
-    const response = await usersAPI.follow(userId);
-    if (response.data.resultCode === 0) {
-      // Подтверждение сервера
-      dispatch(followSuccess(userId));
-    }
-    dispatch(toggleFollowingProgress(false, userId));
+    followUnfollowFlow(
+      dispatch,
+      userId,
+      usersAPI.follow.bind(usersAPI),
+      followSuccess
+    );
+
+    // dispatch(toggleFollowingProgress(true, userId));
+    // // Сначала делаем запрос на сервак чтобы подписаться
+    // const response = await apiMethod(userId);
+    // if (response.data.resultCode === 0) {
+    //   // Подтверждение сервера
+    //   dispatch(actionCreator(userId));
+    // }
+    // dispatch(toggleFollowingProgress(false, userId));
   };
 
 export const unfollow =
   (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
-    dispatch(toggleFollowingProgress(true, userId));
-    // Сначала делаем запрос на сервак чтобы подписаться
-    const response = await usersAPI.unfollow(userId);
-    if (response.data.resultCode === 0) {
-      dispatch(unfollowSuccess(userId));
-    }
-    dispatch(toggleFollowingProgress(false, userId));
+    followUnfollowFlow(
+      dispatch,
+      userId,
+      usersAPI.unfollow.bind(usersAPI),
+      unfollowSuccess
+    );
+
+    // dispatch(toggleFollowingProgress(true, userId));
+    // // Сначала делаем запрос на сервак чтобы подписаться
+    // const response = await apiMethod(userId);
+    // if (response.data.resultCode === 0) {
+    //   dispatch(actionCreator(userId));
+    // }
+    // dispatch(toggleFollowingProgress(false, userId));
   };
