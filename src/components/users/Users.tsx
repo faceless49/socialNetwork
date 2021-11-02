@@ -4,6 +4,7 @@ import React from "react";
 import { UserType } from "../../redux/users-reducer";
 import { NavLink } from "react-router-dom";
 import { Paginator } from "../common/Paginator/Paginator";
+import { User } from "./User";
 
 type ClearFuncUsersPropsType = {
   users: Array<UserType>;
@@ -34,20 +35,6 @@ export const Users: React.FC<ClearFuncUsersPropsType> = ({
 
   return (
     <div>
-      {/*<div className={s.pagination}>*/}
-      {/*  {pages.map((p) => {*/}
-      {/*    return (*/}
-      {/*      <span*/}
-      {/*        className={props.currentPage === p ? s.selectedPage : ""}*/}
-      {/*        onClick={() => {*/}
-      {/*          props.onPageChanged(p);*/}
-      {/*        }}*/}
-      {/*      >*/}
-      {/*        {p}*/}
-      {/*      </span>*/}
-      {/*    );*/}
-      {/*  })}*/}
-      {/*</div>*/}
       <Paginator
         totalUsersCount={totalUsersCount}
         currentPage={currentPage}
@@ -55,50 +42,13 @@ export const Users: React.FC<ClearFuncUsersPropsType> = ({
         onPageChanged={onPageChanged}
       />
       {users.map((u: UserType) => (
-        <div key={u.id}>
-          <span>
-            <div>
-              <NavLink to={"/profile/" + u.id}>
-                <img
-                  src={u.photos.small != null ? u.photos.small : userIcon}
-                  alt=""
-                  className={s.avatar}
-                />
-              </NavLink>
-            </div>
-            <div>
-              {u.followed ? (
-                <button
-                  disabled={followingInProgress.some((id) => id === u.id)}
-                  onClick={() => {
-                    unfollow(u.id);
-                  }}
-                >
-                  Unfollow
-                </button>
-              ) : (
-                <button
-                  disabled={followingInProgress.some((id) => id === u.id)}
-                  onClick={() => {
-                    follow(u.id);
-                  }}
-                >
-                  Follow
-                </button>
-              )}
-            </div>
-          </span>
-          <span>
-            <span>
-              <div>{u.name}</div>
-              <div>{u.status}</div>
-            </span>
-            <span>
-              <div>{"u.location.country"}</div>
-              <div>{"u.location.city"}</div>
-            </span>
-          </span>
-        </div>
+        <User
+          key={u.id}
+          user={u}
+          followingInProgress={followingInProgress}
+          follow={follow}
+          unfollow={unfollow}
+        />
       ))}
     </div>
   );
