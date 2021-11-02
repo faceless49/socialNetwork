@@ -1,5 +1,5 @@
 import { Field, reduxForm } from "redux-form";
-import { Input } from "../common/FormsControls/FormsControls";
+import { CreateField, Input } from "../common/FormsControls/FormsControls";
 import { minLengthCreator, required } from "../../utils/validators/validators";
 import { connect } from "react-redux";
 import { login } from "../../redux/auth-reducer";
@@ -30,32 +30,39 @@ const Login = (props: any) => {
 
 const minLength4 = minLengthCreator(4);
 
-const LoginForm = (props: any) => {
+const LoginForm = (
+  { handleSubmit }: { handleSubmit: () => any },
+  error: any
+) => {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <div>
-        <Field
-          type="text"
-          placeholder="Email"
-          name="email"
-          component={Input}
-          validate={[required, minLength4]}
-        />
+        {CreateField("Email", "email", [required], Input, null)}
+        {CreateField("Password", "password", [required], Input, {
+          type: "password",
+        })}
+        {/*<Field*/}
+        {/*  type="text"*/}
+        {/*  placeholder="Email"*/}
+        {/*  name="email"*/}
+        {/*  component={Input}*/}
+        {/*  validate={[required, minLength4]}*/}
+        {/*/>*/}
       </div>{" "}
       <div>
-        <Field
-          type="password"
-          placeholder="Password"
-          name="password"
-          component={Input}
-          validate={[required, minLength4]}
-        />
+        {/*<Field*/}
+        {/*  type="password"*/}
+        {/*  placeholder="Password"*/}
+        {/*  name="password"*/}
+        {/*  component={Input}*/}
+        {/*  validate={[required, minLength4]}*/}
+        {/*/>*/}
       </div>{" "}
       <div>
         <Field type="checkbox" component={"input"} name={"rememberMe"} />
         remember me
       </div>
-      {props.error && <div className={styles.formSummaryError}>Error</div>}
+      {error && <div className={styles.formSummaryError}>Error</div>}
       <div>
         <button>Login</button>
       </div>
@@ -65,6 +72,7 @@ const LoginForm = (props: any) => {
 
 const LoginReduxForm = reduxForm({
   form: "login", // a unique name for this form
-})(LoginForm);
+  //@ts-ignore
+})(LoginForm); // TODO: Typification
 
 export default connect(mapStateToProps, { login })(Login);

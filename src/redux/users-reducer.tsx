@@ -1,6 +1,7 @@
 import { ActionsTypes } from "./redux-store";
 import { usersAPI } from "../api/api";
 import { Dispatch } from "redux";
+import { updateObjectInArray } from "../utils/object-helpers/object-helpers";
 
 const FOLLOW = "USERS/FOLLOW";
 const UNFOLLOW = "USERS/UNFOLLOW";
@@ -47,19 +48,19 @@ export const usersReducer = (
 ): InitialStateType => {
   switch (action.type) {
     case FOLLOW:
-      debugger;
       return {
         ...state,
-        users: state.users.map((u) => {
-          if (u.id === action.userID) {
-            return { ...u, followed: true };
-          }
-          return u;
-        }),
+        // users: state.users.map((u) => {
+        //   if (u.id === action.userID) {
+        //     return { ...u, followed: true };
+        //   }
+        //   return u;
+        // }),
+        // users: updateObjectInArray(state.users, action.userID, "id", {
+        //   followed: true,
+        // }),
       };
     case UNFOLLOW:
-      debugger;
-
       return {
         ...state,
         users: state.users.map((u) => {
@@ -68,6 +69,9 @@ export const usersReducer = (
           }
           return u;
         }),
+        // users: updateObjectInArray(state.users, action.userID, "id", {
+        //   followed: false,
+        // }),
       };
     case SET_USERS:
       return { ...state, users: action.users };
@@ -134,10 +138,8 @@ const followUnfollowFlow = async (
 ) => {
   dispatch(toggleFollowingProgress(true, userId));
 
-  // Сначала делаем запрос на сервак чтобы подписаться
   const response = await apiMethod(userId);
   if (response.data.resultCode === 0) {
-    // Подтверждение сервера
     dispatch(actionCreator(userId));
   }
   dispatch(toggleFollowingProgress(false, userId));
@@ -151,7 +153,6 @@ export const follow =
       usersAPI.follow.bind(usersAPI),
       followSuccess
     );
-
     // dispatch(toggleFollowingProgress(true, userId));
     // // Сначала делаем запрос на сервак чтобы подписаться
     // const response = await apiMethod(userId);
