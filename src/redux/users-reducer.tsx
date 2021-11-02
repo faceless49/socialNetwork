@@ -2,13 +2,13 @@ import { ActionsTypes } from "./redux-store";
 import { usersAPI } from "../api/api";
 import { Dispatch } from "redux";
 
-const FOLLOW = "FOLLOW";
-const UNFOLLOW = "UNFOLLOW";
-const SET_USERS = "SET_USERS";
-const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
-const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
-const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
-const TOGGLE_IS_FOLLOWING_PROGRESS = "TOGGLE_IS_FOLLOWING_PROGRESS";
+const FOLLOW = "USERS/FOLLOW";
+const UNFOLLOW = "USERS/UNFOLLOW";
+const SET_USERS = "USERS/SET_USERS";
+const SET_CURRENT_PAGE = "USERS/SET_CURRENT_PAGE";
+const SET_TOTAL_USERS_COUNT = "USERS/SET_TOTAL_USERS_COUNT";
+const TOGGLE_IS_FETCHING = "USERS/TOGGLE_IS_FETCHING";
+const TOGGLE_IS_FOLLOWING_PROGRESS = "USERS/TOGGLE_IS_FOLLOWING_PROGRESS";
 
 type UserLocationType = {
   country: string;
@@ -115,41 +115,36 @@ export const toggleFollowingProgress = (isFetching: boolean, userID: number) =>
   } as const);
 
 // * Thunks
-export const requestUsers = (page: number, pageSize: number) => {
-  return (dispatch: Dispatch<ActionsTypes>) => {
+export const requestUsers =
+  (page: number, pageSize: number) =>
+  async (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(toggleIsFetching(true)); // Пошел запрос, запустился фетчинг
     dispatch(setCurrentPage(page));
-    usersAPI.getUsers(page, pageSize).then((data) => {
-      dispatch(toggleIsFetching(false)); // When we get answer, toggle is fetching
-      dispatch(setUsers(data.items));
-      dispatch(setTotalUsersCount(data.totalCount));
-    });
+    const response = await usersAPI.getUsers(page, pageSize);
+    dispatch(toggleIsFetching(false)); // When we get answer, toggle is fetching
+    dispatch(setUsers(response.items));
+    dispatch(setTotalUsersCount(response.totalCount));
   };
-};
 
-export const follow = (userId: number) => {
-  return (dispatch: Dispatch<ActionsTypes>) => {
+export const follow =
+  (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(toggleFollowingProgress(true, userId));
     // Сначала делаем запрос на сервак чтобы подписаться
-    usersAPI.follow(userId).then((response) => {
-      if (response.data.resultCode === 0) {
-        // Подтверждение сервера
-        dispatch(followSuccess(userId));
-      }
-      dispatch(toggleFollowingProgress(false, userId));
-    });
+    const response = await usersAPI.follow(userId);
+    if (response.data.resultCode === 0) {
+      // Подтверждение сервера
+      dispatch(followSuccess(userId));
+    }
+    dispatch(toggleFollowingProgress(false, userId));
   };
-};
 
-export const unfollow = (userId: number) => {
-  return (dispatch: Dispatch<ActionsTypes>) => {
+export const unfollow =
+  (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(toggleFollowingProgress(true, userId));
     // Сначала делаем запрос на сервак чтобы подписаться
-    usersAPI.unfollow(userId).then((response) => {
-      if (response.data.resultCode === 0) {
-        dispatch(unfollowSuccess(userId));
-      }
-      dispatch(toggleFollowingProgress(false, userId));
-    });
+    const response = await usersAPI.unfollow(userId);
+    if (response.data.resultCode === 0) {
+      dispatch(unfollowSuccess(userId));
+    }
+    dispatch(toggleFollowingProgress(false, userId));
   };
-};
