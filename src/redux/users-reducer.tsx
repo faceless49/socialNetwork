@@ -50,12 +50,12 @@ export const usersReducer = (
     case FOLLOW:
       return {
         ...state,
-        // users: state.users.map((u) => {
-        //   if (u.id === action.userID) {
-        //     return { ...u, followed: true };
-        //   }
-        //   return u;
-        // }),
+        users: state.users.map((u) => {
+          if (u.id === action.userID) {
+            return { ...u, followed: true };
+          }
+          return u;
+        }),
         // users: updateObjectInArray(state.users, action.userID, "id", {
         //   followed: true,
         // }),
@@ -164,11 +164,10 @@ export const follow =
 
 export const unfollow =
   (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
-    debugger;
     dispatch(toggleFollowingProgress(true, userId));
     const response = await usersAPI.unfollow(userId);
     if (response.data.resultCode === 0) {
-      unfollowSuccess(userId);
+      dispatch(unfollowSuccess(userId));
     }
     dispatch(toggleFollowingProgress(false, userId));
   };
