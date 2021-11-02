@@ -1,8 +1,5 @@
-import s from "./Users.module.scss";
-import userIcon from "../../assets/img/user.png";
 import React from "react";
 import { UserType } from "../../redux/users-reducer";
-import { NavLink } from "react-router-dom";
 import { Paginator } from "../common/Paginator/Paginator";
 import { User } from "./User";
 
@@ -14,7 +11,6 @@ type ClearFuncUsersPropsType = {
   follow: (userID: number) => void;
   unfollow: (userID: number) => void;
   onPageChanged: (pageNumber: number) => void;
-  // toggleFollowingProgress: (isFetching: boolean, userID: string) => void;
   followingInProgress: Array<number>;
 };
 export const Users: React.FC<ClearFuncUsersPropsType> = ({

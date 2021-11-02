@@ -147,36 +147,28 @@ const followUnfollowFlow = async (
 
 export const follow =
   (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
-    followUnfollowFlow(
-      dispatch,
-      userId,
-      usersAPI.follow.bind(usersAPI),
-      followSuccess
-    );
-    // dispatch(toggleFollowingProgress(true, userId));
-    // // Сначала делаем запрос на сервак чтобы подписаться
-    // const response = await apiMethod(userId);
-    // if (response.data.resultCode === 0) {
-    //   // Подтверждение сервера
-    //   dispatch(actionCreator(userId));
-    // }
-    // dispatch(toggleFollowingProgress(false, userId));
+    // followUnfollowFlow(
+    //   dispatch,
+    //   userId,
+    //   usersAPI.follow.bind(usersAPI),
+    //   followSuccess
+    // );
+
+    dispatch(toggleFollowingProgress(true, userId));
+    const response = await usersAPI.follow(userId);
+    if (response.data.resultCode === 0) {
+      dispatch(followSuccess(userId));
+    }
+    dispatch(toggleFollowingProgress(false, userId));
   };
 
 export const unfollow =
   (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
-    followUnfollowFlow(
-      dispatch,
-      userId,
-      usersAPI.unfollow.bind(usersAPI),
-      unfollowSuccess
-    );
-
-    // dispatch(toggleFollowingProgress(true, userId));
-    // // Сначала делаем запрос на сервак чтобы подписаться
-    // const response = await apiMethod(userId);
-    // if (response.data.resultCode === 0) {
-    //   dispatch(actionCreator(userId));
-    // }
-    // dispatch(toggleFollowingProgress(false, userId));
+    debugger;
+    dispatch(toggleFollowingProgress(true, userId));
+    const response = await usersAPI.unfollow(userId);
+    if (response.data.resultCode === 0) {
+      unfollowSuccess(userId);
+    }
+    dispatch(toggleFollowingProgress(false, userId));
   };
