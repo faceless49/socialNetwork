@@ -32,7 +32,6 @@ export class ProfileStatus extends Component<any> {
       this.setState({
         status: this.props.status,
       });
-    console.log("CDU");
   }
 
   render() {

@@ -6,7 +6,6 @@ import {
   ProfileType,
   setStatus,
 } from "./profile-reducer";
-import { v1 } from "uuid";
 
 type startStateType = {
   posts: Array<PostType>;
