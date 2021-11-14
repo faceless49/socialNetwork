@@ -24,7 +24,7 @@ const UsersContainer = React.lazy(
   () => import("./components/users/UsersContainer")
 );
 
-class App extends React.Component {
+class App extends React.Component<AppStateType> {
   componentDidMount() {
     //@ts-ignore
     this.props.initializeApp();
