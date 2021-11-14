@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
-import { BrowserRouter, Route, withRouter } from "react-router-dom";
+import { HashRouter, Route, withRouter } from "react-router-dom";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
@@ -68,12 +68,12 @@ let AppContainer = compose(
 
 const SamuraiJSApp = (props: any) => {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter basename={process.env.PUBLIC_URL}>
       <Provider store={store}>
         {/*// @ts-ignore*/}
         <AppContainer />
       </Provider>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
