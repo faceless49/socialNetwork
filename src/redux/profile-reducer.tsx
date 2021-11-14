@@ -7,13 +7,18 @@ const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_STATUS = "SET_STATUS";
 
+export type PhotosType = {
+  small: string;
+  large: string;
+};
+
 export type ProfileType = {
   userId: number;
   lookingForAJob: boolean;
   lookingForAJobDescription: string;
   fullName: string;
   contacts: any;
-  photos: any;
+  photos: PhotosType;
   aboutMe: string;
   status: string;
 };
@@ -62,6 +67,10 @@ export const profileReducer = (
         ...state,
         posts: state.posts.filter((p) => p.id !== action.postId),
       };
+    case "SAVE_PHOTO_SUCCESS":
+      //@ts-ignore
+      return { ...state, profile: { ...state.profile, photos: action.photos } };
+
     default:
       return state;
   }
@@ -82,6 +91,9 @@ export const setUserProfile = (profile: ProfileType) =>
 export const deleteMessage = (postId: string) =>
   ({ type: "DELETE_POST", postId } as const);
 
+export const savePhotoSuccess = (photos: PhotosType) =>
+  ({ type: "SAVE_PHOTO_SUCCESS", photos } as const);
+
 export const getUserProfile =
   (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
     let response = await usersAPI.getProfile(userId);
@@ -101,3 +113,10 @@ export const updateStatus =
       dispatch(setStatus(status));
     }
   };
+
+export const savePhoto = (file: any) => async (dispatch: Dispatch) => {
+  let response = await profileAPI.savePhoto(file);
+  if (response.data.resultCode === 0) {
+    dispatch(savePhotoSuccess(response.data.data.photos));
+  }
+};

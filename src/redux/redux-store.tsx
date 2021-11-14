@@ -3,6 +3,7 @@ import {
   addPostAC,
   deleteMessage,
   profileReducer,
+  savePhotoSuccess,
   setStatus,
   setUserProfile,
 } from "./profile-reducer";
@@ -35,7 +36,8 @@ export type ActionsTypes =
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof toggleFollowingProgress>
   | ReturnType<typeof setStatus>
-  | ReturnType<typeof setAuthUserData>;
+  | ReturnType<typeof setAuthUserData>
+  | ReturnType<typeof savePhotoSuccess>;
 
 const reducer = combineReducers({
   profilePage: profileReducer,
