@@ -37,13 +37,13 @@ let initialState = {
   totalUsersCount: 0,
   currentPage: 2,
   isFetching: false,
-  followingInProgress: [] as Array<number>,
+  followingInProgress: [] as Array<number>, // array of users id
 };
 
 export type InitialStateType = typeof initialState;
 
 export const usersReducer = (
-  state: InitialStateType = initialState,
+  state = initialState,
   action: ActionsTypes
 ): InitialStateType => {
   switch (action.type) {

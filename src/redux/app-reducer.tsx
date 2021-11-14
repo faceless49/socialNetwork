@@ -1,16 +1,10 @@
 import { getAuthUserData, setAuthUserData } from "./auth-reducer";
 
-type InitialStateType = {
-  initialized: boolean;
-};
+type InitialStateType = { initialized: boolean };
 
-let initialState: InitialStateType = {
-  initialized: false,
-};
+let initialState: InitialStateType = { initialized: false };
 
-type InitializedSuccessActionType = {
-  type: "INITIALIZED_SUCCESS";
-};
+type InitializedSuccessActionType = { type: "INITIALIZED_SUCCESS" };
 
 const appReducer = (
   state = initialState,

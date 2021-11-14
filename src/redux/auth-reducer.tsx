@@ -5,19 +5,15 @@ import { Dispatch } from "redux";
 
 const SET_USER_DATA = "auth/SET_USER_DATA";
 
-export type AuthInitialStateType = {
-  userId: number | null;
-  email: string | null;
-  login: string | null;
-  isAuth: boolean;
-};
-
 let authInitialState = {
-  userId: null as number | null,
+  userId: null as number | null, // В связи с тем, что мы создали тип с помощью typeof, ТС видит null и не воспринимает
+  // его как число, нет четкого контроля
   email: null as string | null,
   login: null as string | null,
   isAuth: false,
 };
+
+export type AuthInitialStateType = typeof authInitialState;
 
 const authReducer = (
   state = authInitialState,
@@ -34,12 +30,23 @@ const authReducer = (
   }
 };
 
+type SetAuthUserDataPayloadType = {
+  userId: number | null;
+  email: string | null;
+  login: string | null;
+  isAuth: boolean;
+};
+
+type SetAuthUserData = {
+  type: typeof SET_USER_DATA;
+  payload: SetAuthUserDataPayloadType;
+};
 export const setAuthUserData = (
   userId: number | null,
   email: string | null,
   login: string | null,
   isAuth: boolean
-) =>
+): SetAuthUserData =>
   ({
     type: SET_USER_DATA,
     payload: { userId, email, login, isAuth },

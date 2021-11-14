@@ -3,11 +3,6 @@ import { ActionsTypes } from "./redux-store";
 
 const SEND_MESSAGE = "SEND-MESSAGE";
 
-export type DialogPageType = {
-  dialogs: Array<DialogType>;
-  messages: Array<MessageType>;
-  newMessageBody: string;
-};
 export type MessageType = {
   id?: string;
   message: string;
@@ -15,6 +10,12 @@ export type MessageType = {
 export type DialogType = {
   id: string;
   name: string;
+};
+
+export type DialogPageType = {
+  dialogs: Array<DialogType>;
+  messages: Array<MessageType>;
+  newMessageBody: string;
 };
 
 let initialState = {
