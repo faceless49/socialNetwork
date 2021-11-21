@@ -52,12 +52,37 @@ export const profileAPI = {
   },
 };
 
+export enum ResultCodes {
+  Success = 0,
+  Error = 1,
+  CaptchaIsRequired = 10,
+}
+
+type MeResponseType = {
+  data: {
+    id: number;
+    email: string;
+    login: string;
+  };
+  resultCode: ResultCodes;
+  messages: Array<string>;
+};
+type LoginResponseType = {
+  data: {
+    userId: number;
+  };
+  resultCode: ResultCodes;
+  messages: Array<string>;
+};
+
 export const authApi = {
   me() {
-    return instance.get(`auth/me`);
+    return instance.get<MeResponseType>(`auth/me`).then((res) => res.data);
   },
   login(email: string, password: string, rememberMe: boolean = false) {
-    return instance.post(`auth/login`, { email, password, rememberMe });
+    return instance
+      .post<LoginResponseType>(`auth/login`, { email, password, rememberMe })
+      .then((res) => res.data);
   },
   logout() {
     return instance.delete(`auth/login`);
