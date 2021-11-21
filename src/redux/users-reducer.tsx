@@ -1,7 +1,6 @@
 import { ActionsTypes } from "./redux-store";
 import { usersAPI } from "../api/api";
 import { Dispatch } from "redux";
-import { updateObjectInArray } from "../utils/object-helpers/object-helpers";
 
 const FOLLOW = "USERS/FOLLOW";
 const UNFOLLOW = "USERS/UNFOLLOW";

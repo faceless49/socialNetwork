@@ -1,4 +1,6 @@
 import { AppStateType } from "./redux-store";
+import { createSelector } from "reselect";
+import { UserType } from "./users-reducer";
 
 export const getUsersSelector = (state: AppStateType) => {
   return state.usersPage.users;
@@ -21,9 +23,9 @@ export const getFollowingIsProgress = (state: AppStateType) => {
 };
 
 // // * Example
-// export const getUsers = createSelector(
-//   getUsersSelector,
-//   (users: Array<UserType>) => {
-//     return users.filter((u) => u);
-//   }
-// );
+export const getUsers = createSelector(
+  getUsersSelector,
+  (users: Array<UserType>) => {
+    return users.filter((u) => true);
+  }
+);

@@ -46,6 +46,7 @@ let initialState = {
   ] as Array<PostType>,
   profile: null as ProfileType | null,
   status: "",
+  newPostText: "",
 };
 
 export type InitialStateType = typeof initialState;
@@ -76,7 +77,10 @@ export const profileReducer = (
         posts: state.posts.filter((p) => p.id !== action.postId),
       };
     case "SAVE_PHOTO_SUCCESS":
-      return { ...state, profile: { ...state.profile, photos: action.photos } };
+      return {
+        ...state,
+        profile: { ...state.profile, photos: action.photos } as ProfileType,
+      };
 
     default:
       return state;

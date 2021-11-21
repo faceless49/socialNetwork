@@ -39,7 +39,7 @@ export type ActionsTypes =
   | ReturnType<typeof setAuthUserData>
   | ReturnType<typeof savePhotoSuccess>;
 
-const reducer = combineReducers({
+const rootReducer = combineReducers({
   profilePage: profileReducer,
   dialogsPage: dialogsReducer,
   usersPage: usersReducer,
@@ -48,15 +48,15 @@ const reducer = combineReducers({
   app: appReducer,
 });
 
-type RootReduceType = typeof reducer;
-export type AppStateType = ReturnType<RootReduceType>;
+type RootReducerType = typeof rootReducer;
+export type AppStateType = ReturnType<RootReducerType>;
 
 // @ts-ignore
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const store = createStore(
-  reducer,
+  rootReducer,
   composeEnhancers(applyMiddleware(thunkMiddleware))
 );
 
-// export let store = createStore(reducer, applyMiddleware(thunkMiddleware));
+// export let store = createStore(rootReducer, applyMiddleware(thunkMiddleware));

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import { UserType } from "../../redux/users-reducer";
 import { Paginator } from "../common/Paginator/Paginator";
 import { User } from "./User";
@@ -13,7 +13,7 @@ type ClearFuncUsersPropsType = {
   onPageChanged: (pageNumber: number) => void;
   followingInProgress: Array<number>;
 };
-export const Users: React.FC<ClearFuncUsersPropsType> = ({
+export const Users: FC<ClearFuncUsersPropsType> = ({
   users,
   pageSize,
   totalUsersCount,
@@ -24,7 +24,7 @@ export const Users: React.FC<ClearFuncUsersPropsType> = ({
   followingInProgress,
 }) => {
   let pagesCount = Math.ceil(totalUsersCount / pageSize);
-  let pages = [];
+  let pages: Array<number> = [];
   for (let i = 1; i <= pagesCount; i++) {
     pages.push(i);
   }
