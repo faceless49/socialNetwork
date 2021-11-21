@@ -1,19 +1,38 @@
-import { Field, reduxForm } from "redux-form";
-import { CreateField, Input } from "../common/FormsControls/FormsControls";
+import { InjectedFormProps, reduxForm } from "redux-form";
+import { createField, Input } from "../common/FormsControls/FormsControls";
 import { minLengthCreator, required } from "../../utils/validators/validators";
 import { connect } from "react-redux";
 import { login } from "../../redux/auth-reducer";
 import { Redirect } from "react-router-dom";
 import { AppStateType } from "../../redux/redux-store";
 import styles from "./../common/FormsControls/FormsControls.module.scss";
-const mapStateToProps = (state: AppStateType) => ({
+import { FC } from "react";
+
+type MapStatePropsType = {
+  isAuth: boolean;
+};
+type MapDispatchPropsType = {
+  login: (email: string, password: string, rememberMe: boolean) => void;
+};
+type LoginFormOwnPropsType = {
+  captchaUrl?: string | null;
+};
+
+export type LoginFormValuesType = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+};
+type LoginFormValuesTypeKeys = Extract<keyof LoginFormValuesType, string>;
+
+const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
   isAuth: state.auth.isAuth,
 });
 
-const Login = (props: any) => {
-  const onSubmit = (formData: any) => {
+const Login: FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
+  const onSubmit = (formData: LoginFormValuesType) => {
     console.log(formData);
-    props.login(formData.email, formData.password, formData.rememberMe);
+    login(formData.email, formData.password, formData.rememberMe);
   };
 
   if (props.isAuth) {
@@ -30,46 +49,39 @@ const Login = (props: any) => {
 
 const minLength4 = minLengthCreator(4);
 
-const LoginForm = (
-  { handleSubmit }: { handleSubmit: () => any },
-  error: boolean
-) => {
+const LoginForm: FC<
+  InjectedFormProps<LoginFormValuesType, LoginFormOwnPropsType> &
+    LoginFormOwnPropsType
+> = ({ handleSubmit, error }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        {CreateField("Email", "email", [required, minLength4], Input, null)}
-        {CreateField("Password", "password", [required, minLength4], Input, {
-          type: "password",
-        })}
-        {CreateField(
-          null,
+        {createField<LoginFormValuesTypeKeys>(
+          "Email",
+          "email",
+          [required, minLength4],
+          Input,
+          {},
+          ""
+        )}
+        {createField<LoginFormValuesTypeKeys>(
+          "Password",
+          "password",
+          [required, minLength4],
+          Input,
+          {
+            type: "password",
+          },
+          ""
+        )}
+        {createField<LoginFormValuesTypeKeys>(
+          undefined,
           "rememberMe",
-          null,
+          [],
           Input,
           { type: "checkbox" },
           "Remember me"
         )}
-
-        {/*<Field*/}
-        {/*  type="text"*/}
-        {/*  placeholder="Email"*/}
-        {/*  name="email"*/}
-        {/*  component={Input}*/}
-        {/*  validate={[required, minLength4]}*/}
-        {/*/>*/}
-      </div>{" "}
-      <div>
-        {/*<Field*/}
-        {/*  type="password"*/}
-        {/*  placeholder="Password"*/}
-        {/*  name="password"*/}
-        {/*  component={Input}*/}
-        {/*  validate={[required, minLength4]}*/}
-        {/*/>*/}
-      </div>{" "}
-      <div>
-        {/*<Field type="checkbox" component={"input"} name={"rememberMe"} />*/}
-        {/*remember me*/}
       </div>
       {error && <div className={styles.formSummaryError}>Error</div>}
       <div>
@@ -79,9 +91,8 @@ const LoginForm = (
   );
 };
 
-const LoginReduxForm = reduxForm({
+const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnPropsType>({
   form: "login", // a unique name for this form
-  //@ts-ignore
-})(LoginForm); // TODO: Typification
+})(LoginForm);
 
 export default connect(mapStateToProps, { login })(Login);

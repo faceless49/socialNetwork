@@ -1,13 +1,16 @@
 import styles from "./FormsControls.module.scss";
-import { Field } from "redux-form";
-import { required } from "../../../utils/validators/validators";
+import { Field, WrappedFieldMetaProps, WrappedFieldProps } from "redux-form";
+import { FieldValidatorType } from "../../../utils/validators/validators";
+import React, { FC } from "react";
 
-export const FormControl = ({
-  input,
+type FormControlType = {
+  meta: WrappedFieldMetaProps;
+};
+
+export const FormControl: React.FC<FormControlType> = ({
   meta: { touched, error },
   children,
-  ...props
-}: any) => {
+}) => {
   const hasError = touched && error;
 
   return (
@@ -18,8 +21,8 @@ export const FormControl = ({
   );
 };
 
-export const Textarea = (props: any) => {
-  const { input, meta, children, ...restProps } = props;
+export const Textarea: FC<WrappedFieldProps> = (props) => {
+  const { input, meta, ...restProps } = props;
   return (
     <FormControl {...props}>
       <textarea {...input} {...props} {...restProps} />
@@ -27,8 +30,8 @@ export const Textarea = (props: any) => {
   );
 };
 
-export const Input = (props: any) => {
-  const { input, meta, children, ...restProps } = props;
+export const Input: FC<WrappedFieldProps> = (props) => {
+  const { input, meta, ...restProps } = props;
   return (
     <FormControl {...props}>
       <input {...input} {...props} {...restProps} />
@@ -36,27 +39,26 @@ export const Input = (props: any) => {
   );
 };
 
-export const CreateField = (
-  placeholder?: string | null,
-  name?: string,
-  validators?: any | null,
-  component?: any | null,
-  props: any = {},
-  text?: string | null
-) => {
+export function createField<FormKeysType extends string>(
+  placeholder: string | undefined,
+  name: FormKeysType,
+  validators: Array<FieldValidatorType>,
+  component: FC<WrappedFieldProps>,
+  props = {},
+  text: string
+) {
   return (
     <div>
       <Field
         type="text"
         placeholder={placeholder}
         name={name}
-        component={component}
         validate={validators}
+        component={component}
         {...props}
         text={""}
       />{" "}
       {text}
     </div>
   );
-};
-//* TODO: Type validators component
+}
