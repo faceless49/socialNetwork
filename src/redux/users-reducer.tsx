@@ -1,6 +1,7 @@
-import { ActionsTypes } from "./redux-store";
+import { ActionsTypes, AppStateType } from "./redux-store";
 import { usersAPI } from "../api/api";
 import { Dispatch } from "redux";
+import { ThunkAction } from "redux-thunk";
 
 const FOLLOW = "USERS/FOLLOW";
 const UNFOLLOW = "USERS/UNFOLLOW";
@@ -118,9 +119,16 @@ export const toggleFollowingProgress = (isFetching: boolean, userID: number) =>
   } as const);
 
 // * Thunks
+
+type ThunkType = ThunkAction<
+  Promise<void>,
+  AppStateType,
+  unknown,
+  ActionsTypes
+>;
 export const requestUsers =
-  (page: number, pageSize: number) =>
-  async (dispatch: Dispatch<ActionsTypes>) => {
+  (page: number, pageSize: number): ThunkType =>
+  async (dispatch) => {
     dispatch(toggleIsFetching(true)); // Пошел запрос, запустился фетчинг
     dispatch(setCurrentPage(page));
     const response = await usersAPI.getUsers(page, pageSize);
@@ -145,7 +153,8 @@ const followUnfollowFlow = async (
 };
 
 export const follow =
-  (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
+  (userId: number): ThunkType =>
+  async (dispatch) => {
     // followUnfollowFlow(
     //   dispatch,
     //   userId,
@@ -162,7 +171,8 @@ export const follow =
   };
 
 export const unfollow =
-  (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
+  (userId: number): ThunkType =>
+  async (dispatch) => {
     dispatch(toggleFollowingProgress(true, userId));
     const response = await usersAPI.unfollow(userId);
     if (response.data.resultCode === 0) {
