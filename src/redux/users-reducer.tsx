@@ -137,11 +137,13 @@ export const requestUsers =
     dispatch(setTotalUsersCount(response.totalCount));
   };
 
-const followUnfollowFlow = async (
+const _followUnfollowFlow = async (
   dispatch: Dispatch<ActionsTypes>,
   userId: number,
   apiMethod: any,
-  actionCreator: any
+  actionCreator: (
+    userId: number
+  ) => ReturnType<typeof followSuccess> | ReturnType<typeof unfollowSuccess>
 ) => {
   dispatch(toggleFollowingProgress(true, userId));
 
@@ -155,28 +157,35 @@ const followUnfollowFlow = async (
 export const follow =
   (userId: number): ThunkType =>
   async (dispatch) => {
-    // followUnfollowFlow(
-    //   dispatch,
-    //   userId,
-    //   usersAPI.follow.bind(usersAPI),
-    //   followSuccess
-    // );
+    _followUnfollowFlow(
+      dispatch,
+      userId,
+      usersAPI.follow.bind(usersAPI),
+      followSuccess
+    );
 
-    dispatch(toggleFollowingProgress(true, userId));
-    const response = await usersAPI.follow(userId);
-    if (response.data.resultCode === 0) {
-      dispatch(followSuccess(userId));
-    }
-    dispatch(toggleFollowingProgress(false, userId));
+    // dispatch(toggleFollowingProgress(true, userId));
+    // const response = await usersAPI.follow(userId);
+    // if (response.data.resultCode === 0) {
+    //   dispatch(followSuccess(userId));
+    // }
+    // dispatch(toggleFollowingProgress(false, userId));
   };
 
 export const unfollow =
   (userId: number): ThunkType =>
   async (dispatch) => {
-    dispatch(toggleFollowingProgress(true, userId));
-    const response = await usersAPI.unfollow(userId);
-    if (response.data.resultCode === 0) {
-      dispatch(unfollowSuccess(userId));
-    }
-    dispatch(toggleFollowingProgress(false, userId));
+    _followUnfollowFlow(
+      dispatch,
+      userId,
+      usersAPI.follow.bind(usersAPI),
+      unfollowSuccess
+    );
+
+    // dispatch(toggleFollowingProgress(true, userId));
+    // const response = await usersAPI.unfollow(userId);
+    // if (response.data.resultCode === 0) {
+    //   dispatch(unfollowSuccess(userId));
+    // }
+    // dispatch(toggleFollowingProgress(false, userId));
   };
