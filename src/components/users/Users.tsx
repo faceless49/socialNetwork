@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import { UserType } from "../../redux/users-reducer";
 import { Paginator } from "../common/Paginator/Paginator";
 import { User } from "./User";
+import { UserType } from "../../types/types";
 
 type ClearFuncUsersPropsType = {
   users: Array<UserType>;

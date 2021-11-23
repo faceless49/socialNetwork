@@ -1,9 +1,9 @@
-import { ActionsTypes } from "./redux-store";
 import { authApi, ResultCodes } from "../api/api";
 import { stopSubmit } from "redux-form";
 import { ThunkType } from "../types/types";
+import { InferActionsType } from "./redux-store";
 
-const SET_USER_DATA = "auth/SET_USER_DATA";
+const SET_USER_DATA = "SOCIAL-NETWORK/AUTH-REDUCER/SET_USER_DATA";
 
 let authInitialState = {
   userId: null as number | null, // В связи с тем, что мы создали тип с помощью typeof, ТС видит null и не воспринимает
@@ -14,10 +14,20 @@ let authInitialState = {
 };
 
 export type AuthInitialStateType = typeof authInitialState;
+export const setAuthUserData = (
+  userId: number | null,
+  email: string | null,
+  login: string | null,
+  isAuth: boolean
+) =>
+  ({
+    type: SET_USER_DATA,
+    payload: { userId, email, login, isAuth },
+  } as const);
 
-const authReducer = (
+export const authReducer = (
   state = authInitialState,
-  action: ActionsTypes
+  action: ReturnType<typeof setAuthUserData>
 ): AuthInitialStateType => {
   switch (action.type) {
     case SET_USER_DATA:
@@ -30,27 +40,17 @@ const authReducer = (
   }
 };
 
-type SetAuthUserDataPayloadType = {
-  userId: number | null;
-  email: string | null;
-  login: string | null;
-  isAuth: boolean;
-};
+// type SetAuthUserDataPayloadType = {
+//   userId: number | null;
+//   email: string | null;
+//   login: string | null;
+//   isAuth: boolean;
+// };
 
-type SetAuthUserData = {
-  type: typeof SET_USER_DATA;
-  payload: SetAuthUserDataPayloadType;
-};
-export const setAuthUserData = (
-  userId: number | null,
-  email: string | null,
-  login: string | null,
-  isAuth: boolean
-): SetAuthUserData =>
-  ({
-    type: SET_USER_DATA,
-    payload: { userId, email, login, isAuth },
-  } as const);
+// type SetAuthUserData = {
+//   type: 'SOCIAL-NETWORK/AUTH-REDUCER/SET_USER_DATA';
+//   payload: SetAuthUserDataPayloadType;
+// };
 
 // * Promise with then
 // export const getAuthUserData = () => (dispatch: Dispatch<ActionsTypes>) => {

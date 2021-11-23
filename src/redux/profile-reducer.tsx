@@ -1,5 +1,5 @@
 import { v1 } from "uuid";
-import { ActionsTypes } from "./redux-store";
+import { RootActionsTypes } from "./redux-store";
 import { profileAPI, usersAPI } from "../api/api";
 import { Dispatch } from "redux";
 
@@ -53,7 +53,7 @@ export type InitialStateType = typeof initialState;
 
 export const profileReducer = (
   state = initialState,
-  action: ActionsTypes
+  action: RootActionsTypes
 ): InitialStateType => {
   switch (action.type) {
     case ADD_POST: {
@@ -107,19 +107,19 @@ export const savePhotoSuccess = (photos: PhotosType) =>
 
 //* Thunks
 export const getUserProfile =
-  (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
+  (userId: number) => async (dispatch: Dispatch<RootActionsTypes>) => {
     let response = await usersAPI.getProfile(userId);
     dispatch(setUserProfile(response.data));
   };
 
 export const getStatus =
-  (userId: number) => async (dispatch: Dispatch<ActionsTypes>) => {
+  (userId: number) => async (dispatch: Dispatch<RootActionsTypes>) => {
     let response = await profileAPI.getStatus(userId);
     dispatch(setStatus(response.data));
   };
 
 export const updateStatus =
-  (status: string) => async (dispatch: Dispatch<ActionsTypes>) => {
+  (status: string) => async (dispatch: Dispatch<RootActionsTypes>) => {
     let response = await profileAPI.updateStatus(status);
     if (response.data.resultCode === 0) {
       dispatch(setStatus(status));
@@ -127,7 +127,7 @@ export const updateStatus =
   };
 
 export const savePhoto =
-  (file: any) => async (dispatch: Dispatch<ActionsTypes>) => {
+  (file: any) => async (dispatch: Dispatch<RootActionsTypes>) => {
     let response = await profileAPI.savePhoto(file);
     if (response.data.resultCode === 0) {
       dispatch(savePhotoSuccess(response.data.data.photos));

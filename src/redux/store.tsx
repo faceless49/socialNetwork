@@ -1,5 +1,5 @@
 import { PostType } from "./profile-reducer";
-import { ActionsTypes } from "./redux-store";
+import { RootActionsTypes } from "./redux-store";
 
 // export type MessageType = {
 //   id?: string;

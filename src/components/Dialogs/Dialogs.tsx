@@ -2,8 +2,8 @@ import s from "./Dialogs.module.scss";
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import React from "react";
-import { MessageType } from "../../redux/dialogs-reducer";
 import { AddMessageFormRedux } from "./AddMessageForm";
+import { MessageType } from "../../types/types";
 
 type DialogType = {
   id: string;

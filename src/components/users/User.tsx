@@ -1,8 +1,8 @@
 import s from "./Users.module.scss";
 import userIcon from "../../assets/img/user.png";
 import React from "react";
-import { UserType } from "../../redux/users-reducer";
 import { NavLink } from "react-router-dom";
+import { UserType } from "../../types/types";
 
 type ClearFuncUsersPropsType = {
   follow: (userID: number) => void;

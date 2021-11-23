@@ -1,14 +1,11 @@
 import React from "react";
-import {
-  DialogType,
-  MessageType,
-  sendMessage,
-} from "../../redux/dialogs-reducer";
+import { sendMessage } from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
 import { AppStateType } from "../../redux/redux-store";
 import { compose, Dispatch } from "redux";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { DialogType, MessageType } from "../../types/types";
 
 type MapStatePropsType = {
   dialogs: Array<DialogType>;

@@ -1,4 +1,4 @@
-import { UserType } from "../../redux/users-reducer";
+import { UserType } from "../../types/types";
 
 export const updateObjectInArray = (
   items: Array<UserType>,

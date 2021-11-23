@@ -8,33 +8,24 @@ import {
   setUserProfile,
 } from "./profile-reducer";
 import { dialogsReducer, sendMessage } from "./dialogs-reducer";
-import {
-  followSuccess,
-  setCurrentPage,
-  setTotalUsersCount,
-  setUsers,
-  toggleFollowingProgress,
-  toggleIsFetching,
-  unfollowSuccess,
-  usersReducer,
-} from "./users-reducer";
+import { actions, usersReducer } from "./users-reducer";
 import authReducer, { setAuthUserData } from "./auth-reducer";
 import { reducer as formReducer } from "redux-form";
 import thunkMiddleware from "redux-thunk";
 import appReducer from "./app-reducer";
 
-export type ActionsTypes =
+export type RootActionsTypes =
   | ReturnType<typeof addPostAC>
   | ReturnType<typeof deleteMessage>
   | ReturnType<typeof sendMessage>
-  | ReturnType<typeof followSuccess>
-  | ReturnType<typeof unfollowSuccess>
-  | ReturnType<typeof setUsers>
-  | ReturnType<typeof setTotalUsersCount>
-  | ReturnType<typeof setCurrentPage>
-  | ReturnType<typeof toggleIsFetching>
+  | ReturnType<typeof actions.followSuccess>
+  | ReturnType<typeof actions.unfollowSuccess>
+  | ReturnType<typeof actions.setUsers>
+  | ReturnType<typeof actions.setTotalUsersCount>
+  | ReturnType<typeof actions.setCurrentPage>
+  | ReturnType<typeof actions.toggleIsFetching>
   | ReturnType<typeof setUserProfile>
-  | ReturnType<typeof toggleFollowingProgress>
+  | ReturnType<typeof actions.toggleFollowingProgress>
   | ReturnType<typeof setStatus>
   | ReturnType<typeof setAuthUserData>
   | ReturnType<typeof savePhotoSuccess>;
@@ -50,6 +41,12 @@ const rootReducer = combineReducers({
 
 type RootReducerType = typeof rootReducer;
 export type AppStateType = ReturnType<RootReducerType>;
+
+export type InferActionsType<T> = T extends {
+  [keys: string]: (...args: any[]) => infer U;
+}
+  ? U
+  : never;
 
 // @ts-ignore
 

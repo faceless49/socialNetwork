@@ -1,13 +1,6 @@
 import { connect } from "react-redux";
 import { AppStateType } from "../../redux/redux-store";
-import {
-  follow,
-  requestUsers,
-  setCurrentPage,
-  toggleFollowingProgress,
-  unfollow,
-  UserType,
-} from "../../redux/users-reducer";
+import { follow, requestUsers, unfollow } from "../../redux/users-reducer";
 import React from "react";
 import { Users } from "./Users";
 import { Preloader } from "../common/preloader/Preloader";
@@ -19,8 +12,8 @@ import {
   getPageSizeSelect,
   getTotalUsersCountSelect,
   getUsers,
-  getUsersSelector,
 } from "../../redux/user-selectors";
+import { UserType } from "../../types/types";
 
 type PhotosItemResponseType = {
   small: string;
