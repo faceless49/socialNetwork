@@ -9,6 +9,7 @@ export type ProfilePropsType = {
   updateStatus: (status: string) => void;
   isOwner?: boolean;
   savePhoto: (file: any) => void;
+  goToEditMode?: () => void;
 };
 const Profile = (props: ProfilePropsType) => {
   return (

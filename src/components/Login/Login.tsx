@@ -31,7 +31,6 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
 
 const Login: FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
   const onSubmit = (formData: LoginFormValuesType) => {
-    debugger;
     console.log(formData);
     login(formData.email, formData.password, formData.rememberMe);
   };

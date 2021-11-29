@@ -1,7 +1,6 @@
 import { authApi, ResultCodes } from "../api/api";
 import { stopSubmit } from "redux-form";
 import { ThunkType } from "../types/types";
-import { InferActionsType } from "./redux-store";
 
 const SET_USER_DATA = "SOCIAL-NETWORK/AUTH-REDUCER/SET_USER_DATA";
 
