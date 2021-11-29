@@ -1,7 +1,8 @@
 import { InferActionsType } from "./redux-store";
-import { usersAPI } from "../api/api";
 import { Dispatch } from "redux";
 import { ThunkType, UserType } from "../types/types";
+import { usersAPI } from "../api/users-api";
+import { ResultCodesEnum } from "../api/api";
 
 type ActionTypes = InferActionsType<typeof actions>;
 
@@ -124,7 +125,7 @@ const _followUnfollowFlow = async (
   dispatch(actions.toggleFollowingProgress(true, userId));
 
   const response = await apiMethod(userId);
-  if (response.data.resultCode === 0) {
+  if (response.data.resultCode === ResultCodesEnum.Success) {
     dispatch(actionCreator(userId));
   }
   dispatch(actions.toggleFollowingProgress(false, userId));

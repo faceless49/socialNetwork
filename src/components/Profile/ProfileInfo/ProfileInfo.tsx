@@ -12,6 +12,7 @@ const ProfileInfo: React.FC<ProfilePropsType> = ({
   updateStatus,
   isOwner,
   savePhoto,
+  saveProfile,
 }) => {
   const [editMode, setEditMode] = useState<boolean>(false);
   if (!profile) {
@@ -24,7 +25,7 @@ const ProfileInfo: React.FC<ProfilePropsType> = ({
     }
   };
   const onSubmit = (formData: any) => {
-    console.log(formData);
+    saveProfile(formData);
   };
   return (
     <div>

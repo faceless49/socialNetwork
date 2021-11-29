@@ -1,7 +1,13 @@
 import { v1 } from "uuid";
-import { RootActionsTypes } from "./redux-store";
-import { profileAPI, usersAPI } from "../api/api";
+import { AppStateType, RootActionsTypes } from "./redux-store";
 import { Dispatch } from "redux";
+import { usersAPI } from "../api/users-api";
+import { profileAPI } from "../api/profile-api";
+import { stopSubmit } from "redux-form";
+import { ThunkAction } from "redux-thunk";
+import App from "../App";
+import {ResultCodesEnum} from '../api/api';
+import {ThunkType} from '../types/types';
 
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
@@ -109,19 +115,19 @@ export const savePhotoSuccess = (photos: PhotosType) =>
 export const getUserProfile =
   (userId: number) => async (dispatch: Dispatch<RootActionsTypes>) => {
     let response = await usersAPI.getProfile(userId);
-    dispatch(setUserProfile(response.data));
+    dispatch(setUserProfile(response));
   };
 
 export const getStatus =
   (userId: number) => async (dispatch: Dispatch<RootActionsTypes>) => {
     let response = await profileAPI.getStatus(userId);
-    dispatch(setStatus(response.data));
+    dispatch(setStatus(response));
   };
 
 export const updateStatus =
   (status: string) => async (dispatch: Dispatch<RootActionsTypes>) => {
     let response = await profileAPI.updateStatus(status);
-    if (response.data.resultCode === 0) {
+    if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(setStatus(status));
     }
   };
@@ -129,7 +135,21 @@ export const updateStatus =
 export const savePhoto =
   (file: any) => async (dispatch: Dispatch<RootActionsTypes>) => {
     let response = await profileAPI.savePhoto(file);
-    if (response.data.resultCode === 0) {
-      dispatch(savePhotoSuccess(response.data.data.photos));
+    if (response.resultCode === ResultCodesEnum.Success) {
+      dispatch(savePhotoSuccess(response.data.photos));
+    }
+  };
+
+
+export const saveProfile =
+  (profile: ProfileType):ThunkType =>
+  async (dispatch, getState: () => AppStateType) => {
+    const userId = getState().auth.userId;
+    let response = await profileAPI.saveProfile(profile);
+    if (response.resultCode === ResultCodesEnum.Success) {
+      dispatch(getUserProfile(response.data.));//@TODO:
+    } else {
+      dispatch(stopSubmit("edit-profile", { _error: response.messages[0] }));
+      return Promise.reject(response.messages[0]);
     }
   };

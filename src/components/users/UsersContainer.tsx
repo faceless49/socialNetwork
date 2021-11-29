@@ -29,12 +29,6 @@ type AxiosItemResponseType = {
   followed: boolean;
 };
 
-type ItemsResponseType = {
-  items: Array<AxiosItemResponseType>;
-  totalCount: number;
-  error: string | null;
-};
-
 type OwnPropsType = {
   pageTitle: string;
 };
