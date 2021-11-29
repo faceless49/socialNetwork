@@ -8,10 +8,10 @@ import {
   setUserProfile,
 } from "./profile-reducer";
 import { dialogsReducer, sendMessage } from "./dialogs-reducer";
-import { actions, usersReducer } from "./users-reducer";
-import authReducer, { setAuthUserData } from "./auth-reducer";
+import { usersReducer } from "./users-reducer";
 import { reducer as formReducer } from "redux-form";
 import thunkMiddleware from "redux-thunk";
+import authReducer from "./auth-reducer";
 import appReducer from "./app-reducer";
 
 export type RootActionsTypes =
@@ -27,7 +27,7 @@ export type RootActionsTypes =
   | ReturnType<typeof setUserProfile>
   | ReturnType<typeof actions.toggleFollowingProgress>
   | ReturnType<typeof setStatus>
-  | ReturnType<typeof setAuthUserData>
+  | ReturnType<typeof actions.setAuthUserData>
   | ReturnType<typeof savePhotoSuccess>;
 
 const rootReducer = combineReducers({

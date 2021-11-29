@@ -4,8 +4,6 @@ import { ThunkType } from "../types/types";
 import { authApi } from "../api/auth-api";
 import { InferActionsType } from "./redux-store";
 
-const SET_USER_DATA = "SN/AUTH/SET_USER_DATA";
-
 let authInitialState = {
   userId: null as number | null, // В связи с тем, что мы создали тип с помощью typeof, ТС видит null и не воспринимает
   // его как число, нет четкого контроля
@@ -14,8 +12,6 @@ let authInitialState = {
   isAuth: false,
 };
 
-export type AuthInitialStateType = typeof authInitialState;
-export type ActionsType = InferActionsType<typeof actions>;
 export const authReducer = (
   state = authInitialState,
   action: ActionsType
@@ -37,10 +33,11 @@ export const actions = {
     email: string | null,
     login: string | null,
     isAuth: boolean
-  ) => ({
-    type: "SN/AUTH/SET_USER_DATA",
-    payload: { userId, email, login, isAuth },
-  }),
+  ) =>
+    ({
+      type: "SN/AUTH/SET_USER_DATA",
+      payload: { userId, email, login, isAuth },
+    } as const),
 };
 
 // * Promise with then
@@ -84,3 +81,6 @@ export const logout = (): ThunkType => async (dispatch) => {
 };
 
 export default authReducer;
+
+export type AuthInitialStateType = typeof authInitialState;
+export type ActionsType = InferActionsType<typeof actions>;

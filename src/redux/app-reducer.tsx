@@ -30,9 +30,10 @@ export const initializeApp = () => (dispatch: any) => {
 };
 
 export const actions = {
-  initializedSuccess: () => ({
-    type: "SN/APP/INITIALIZED_SUCCESS",
-  }),
+  initializedSuccess: () =>
+    ({
+      type: "SN/APP/INITIALIZED_SUCCESS",
+    } as const),
 };
 
 export default appReducer;
