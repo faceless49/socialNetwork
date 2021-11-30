@@ -22,7 +22,7 @@ export const usersReducer = (
   action: UsersActionTypes
 ): InitialStateType => {
   switch (action.type) {
-    case "SOCIAL-NETWORK/USERS-REDUCER/FOLLOW":
+    case "SN/USERS/FOLLOW":
       return {
         ...state,
         users: state.users.map((u) => {
@@ -35,7 +35,7 @@ export const usersReducer = (
         //   followed: true,
         // }),
       };
-    case "SOCIAL-NETWORK/USERS-REDUCER/UNFOLLOW":
+    case "SN/USERS/UNFOLLOW":
       return {
         ...state,
         users: state.users.map((u) => {
@@ -48,15 +48,15 @@ export const usersReducer = (
         //   followed: false,
         // }),
       };
-    case "SOCIAL-NETWORK/USERS-REDUCER/SET_USERS":
+    case "SN/USERS/SET_USERS":
       return { ...state, users: action.users };
-    case "SOCIAL-NETWORK/USERS-REDUCER/SET_CURRENT_PAGE":
+    case "SN/USERS/SET_CURRENT_PAGE":
       return { ...state, currentPage: action.currentPage };
-    case "SOCIAL-NETWORK/USERS-REDUCER/SET_TOTAL_USERS_COUNT":
+    case "SN/USERS/SET_TOTAL_USERS_COUNT":
       return { ...state, totalUsersCount: action.count };
-    case "SOCIAL-NETWORK/USERS-REDUCER/TOGGLE_IS_FETCHING":
+    case "SN/USERS/TOGGLE_IS_FETCHING":
       return { ...state, isFetching: action.isFetching };
-    case "SOCIAL-NETWORK/USERS-REDUCER/TOGGLE_IS_FOLLOWING_PROGRESS":
+    case "SN/USERS/TOGGLE_IS_FOLLOWING_PROGRESS":
       return {
         ...state,
         followingInProgress: action.isFetching
@@ -71,29 +71,29 @@ export const usersReducer = (
 // * Action Creators
 export const actions = {
   followSuccess: (userID: number) =>
-    ({ type: "SOCIAL-NETWORK/USERS-REDUCER/FOLLOW", userID } as const),
+    ({ type: "SN/USERS/FOLLOW", userID } as const),
   unfollowSuccess: (userID: number) =>
-    ({ type: "SOCIAL-NETWORK/USERS-REDUCER/UNFOLLOW", userID } as const),
+    ({ type: "SN/USERS/UNFOLLOW", userID } as const),
   setUsers: (users: Array<UserType>) =>
-    ({ type: "SOCIAL-NETWORK/USERS-REDUCER/SET_USERS", users } as const),
+    ({ type: "SN/USERS/SET_USERS", users } as const),
   setCurrentPage: (currentPage: number) =>
     ({
-      type: "SOCIAL-NETWORK/USERS-REDUCER/SET_CURRENT_PAGE",
+      type: "SN/USERS/SET_CURRENT_PAGE",
       currentPage,
     } as const),
   setTotalUsersCount: (totalUsersCount: number) =>
     ({
-      type: "SOCIAL-NETWORK/USERS-REDUCER/SET_TOTAL_USERS_COUNT",
+      type: "SN/USERS/SET_TOTAL_USERS_COUNT",
       count: totalUsersCount,
     } as const),
   toggleIsFetching: (isFetching: boolean) =>
     ({
-      type: "SOCIAL-NETWORK/USERS-REDUCER/TOGGLE_IS_FETCHING",
+      type: "SN/USERS/TOGGLE_IS_FETCHING",
       isFetching,
     } as const),
   toggleFollowingProgress: (isFetching: boolean, userID: number) =>
     ({
-      type: "SOCIAL-NETWORK/USERS-REDUCER/TOGGLE_IS_FOLLOWING_PROGRESS",
+      type: "SN/USERS/TOGGLE_IS_FOLLOWING_PROGRESS",
       isFetching,
       userID,
     } as const),
@@ -116,16 +116,11 @@ const _followUnfollowFlow = async (
   dispatch: Dispatch<UsersActionTypes>,
   userId: number,
   apiMethod: any,
-  actionCreator: (
-    userId: number
-  ) =>
-    | ReturnType<typeof actions.followSuccess>
-    | ReturnType<typeof actions.unfollowSuccess>
+  actionCreator: (userId: number) => UsersActionTypes
 ) => {
   dispatch(actions.toggleFollowingProgress(true, userId));
-
   const response = await apiMethod(userId);
-  if (response.data.resultCode === ResultCodesEnum.Success) {
+  if (response.resultCode === ResultCodesEnum.Success) {
     dispatch(actionCreator(userId));
   }
   dispatch(actions.toggleFollowingProgress(false, userId));
@@ -134,7 +129,7 @@ const _followUnfollowFlow = async (
 export const follow =
   (userId: number): ThunkType =>
   async (dispatch) => {
-    _followUnfollowFlow(
+    await _followUnfollowFlow(
       dispatch,
       userId,
       usersAPI.follow.bind(usersAPI),
@@ -152,10 +147,10 @@ export const follow =
 export const unfollow =
   (userId: number): ThunkType =>
   async (dispatch) => {
-    _followUnfollowFlow(
+    await _followUnfollowFlow(
       dispatch,
       userId,
-      usersAPI.follow.bind(usersAPI),
+      usersAPI.unfollow.bind(usersAPI),
       actions.unfollowSuccess
     );
 
