@@ -36,7 +36,7 @@ export const profileAPI = {
   },
   saveProfile(profile: ProfileType) {
     return instance
-      .put<ResponseType<SavePhotoResponseDataType>>("/profile", { profile })
+      .put<ResponseType>("/profile", profile)
       .then((res) => res.data);
   },
 };

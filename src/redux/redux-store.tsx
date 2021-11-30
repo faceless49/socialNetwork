@@ -1,34 +1,18 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
-import {
-  addPostAC,
-  deleteMessage,
-  profileReducer,
-  savePhotoSuccess,
-  setStatus,
-  setUserProfile,
-} from "./profile-reducer";
-import { dialogsReducer, sendMessage } from "./dialogs-reducer";
-import { usersReducer } from "./users-reducer";
+import { ProfileActionsType, profileReducer } from "./profile-reducer";
+import { DialogsActionsType, dialogsReducer } from "./dialogs-reducer";
+import { UsersActionTypes, usersReducer } from "./users-reducer";
 import { reducer as formReducer } from "redux-form";
 import thunkMiddleware from "redux-thunk";
-import authReducer from "./auth-reducer";
-import appReducer from "./app-reducer";
+import authReducer, { AuthActionsType } from "./auth-reducer";
+import appReducer, { AppActionsType } from "./app-reducer";
 
 export type RootActionsTypes =
-  | ReturnType<typeof addPostAC>
-  | ReturnType<typeof deleteMessage>
-  | ReturnType<typeof sendMessage>
-  | ReturnType<typeof actions.followSuccess>
-  | ReturnType<typeof actions.unfollowSuccess>
-  | ReturnType<typeof actions.setUsers>
-  | ReturnType<typeof actions.setTotalUsersCount>
-  | ReturnType<typeof actions.setCurrentPage>
-  | ReturnType<typeof actions.toggleIsFetching>
-  | ReturnType<typeof setUserProfile>
-  | ReturnType<typeof actions.toggleFollowingProgress>
-  | ReturnType<typeof setStatus>
-  | ReturnType<typeof actions.setAuthUserData>
-  | ReturnType<typeof savePhotoSuccess>;
+  | AppActionsType
+  | AuthActionsType
+  | DialogsActionsType
+  | ProfileActionsType
+  | UsersActionTypes;
 
 const rootReducer = combineReducers({
   profilePage: profileReducer,

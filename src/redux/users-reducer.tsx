@@ -4,7 +4,7 @@ import { ThunkType, UserType } from "../types/types";
 import { usersAPI } from "../api/users-api";
 import { ResultCodesEnum } from "../api/api";
 
-type ActionTypes = InferActionsType<typeof actions>;
+export type UsersActionTypes = InferActionsType<typeof actions>;
 
 let initialState = {
   users: [] as Array<UserType>,
@@ -19,7 +19,7 @@ export type InitialStateType = typeof initialState;
 
 export const usersReducer = (
   state = initialState,
-  action: ActionTypes
+  action: UsersActionTypes
 ): InitialStateType => {
   switch (action.type) {
     case "SOCIAL-NETWORK/USERS-REDUCER/FOLLOW":
@@ -113,7 +113,7 @@ export const requestUsers =
   };
 
 const _followUnfollowFlow = async (
-  dispatch: Dispatch<ActionTypes>,
+  dispatch: Dispatch<UsersActionTypes>,
   userId: number,
   apiMethod: any,
   actionCreator: (

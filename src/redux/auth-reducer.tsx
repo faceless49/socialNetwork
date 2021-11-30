@@ -14,7 +14,7 @@ let authInitialState = {
 
 export const authReducer = (
   state = authInitialState,
-  action: ActionsType
+  action: AuthActionsType
 ): AuthInitialStateType => {
   switch (action.type) {
     case "SN/AUTH/SET_USER_DATA":
@@ -83,4 +83,4 @@ export const logout = (): ThunkType => async (dispatch) => {
 export default authReducer;
 
 export type AuthInitialStateType = typeof authInitialState;
-export type ActionsType = InferActionsType<typeof actions>;
+export type AuthActionsType = InferActionsType<typeof actions>;

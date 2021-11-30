@@ -4,7 +4,8 @@ import { Preloader } from "../../common/preloader/Preloader";
 import { ProfileStatusWithHooks } from "./ProfileStatusWithHooks";
 import React, { ChangeEvent, FC, useState } from "react";
 import { ProfilePropsType } from "../Profile";
-import { ProfileDataFormReduxForm } from "./ProfileDataForm";
+import { ProfileDataForm } from "./ProfileDataForm";
+import { ProfileType } from "../../../redux/profile-reducer";
 
 const ProfileInfo: React.FC<ProfilePropsType> = ({
   profile,
@@ -14,7 +15,7 @@ const ProfileInfo: React.FC<ProfilePropsType> = ({
   savePhoto,
   saveProfile,
 }) => {
-  const [editMode, setEditMode] = useState<boolean>(false);
+  const [editMode, setEditMode] = useState(false);
   if (!profile) {
     return <Preloader />;
   }
@@ -24,8 +25,11 @@ const ProfileInfo: React.FC<ProfilePropsType> = ({
       savePhoto(e.target.files[0]);
     }
   };
-  const onSubmit = (formData: any) => {
-    saveProfile(formData);
+  const onSubmit = (formData: ProfileType) => {
+    console.log(formData);
+    // saveProfile(formData).then(() => {
+    //   setEditMode(false);
+    // });
   };
   return (
     <div>
@@ -37,7 +41,12 @@ const ProfileInfo: React.FC<ProfilePropsType> = ({
         {isOwner && <input type={"file"} onChange={onMainPhotoSelected} />}
 
         {editMode ? (
-          <ProfileDataFormReduxForm onSubmit={onSubmit} />
+          <ProfileDataForm
+            //@ts-ignore
+            onSubmit={onSubmit}
+            initialValues={profile}
+            profile={profile}
+          />
         ) : (
           <ProfileData
             profile={profile}
@@ -60,7 +69,10 @@ type ContactPropsType = {
   contactValue: string;
 };
 
-const Contact: FC<ContactPropsType> = ({ contactTitle, contactValue }) => {
+export const Contact: FC<ContactPropsType> = ({
+  contactTitle,
+  contactValue,
+}) => {
   return (
     <div>
       <b>
@@ -70,7 +82,7 @@ const Contact: FC<ContactPropsType> = ({ contactTitle, contactValue }) => {
   );
 };
 
-const ProfileData: FC<ProfilePropsType> = ({
+const ProfileData: FC<any> = ({
   profile,
   status,
   updateStatus,
@@ -88,23 +100,25 @@ const ProfileData: FC<ProfilePropsType> = ({
         <b>Full Name</b> {profile.fullName}
       </div>
       <div className="">
-        <b>Looking for a job:</b> {profile.lookingForAJob ? "yes" : "no"}{" "}
+        <b>Looking for a job:</b> {profile.lookingForAJob ? "yes" : "no"}
       </div>
 
       {profile.lookingForAJob && (
         <div className="">
-          <b>My professional skills</b> {profile.lookingForAJobDescription}{" "}
+          <b>My professional skills</b> {profile.lookingForAJobDescription}
         </div>
       )}
       <div className="">
         <b>
           Contacts:
           {Object.keys(profile.contacts).map((key) => {
-            <Contact
-              contactTitle={key}
-              //@ts-ignore
-              contactValue={profile.contacts[key]}
-            />;
+            return (
+              <Contact
+                contactTitle={key}
+                //@ts-ignore
+                contactValue={profile.contacts[key]}
+              />
+            );
             //@TODO: Refactor 97L
           })}
         </b>
