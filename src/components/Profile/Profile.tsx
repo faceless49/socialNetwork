@@ -4,13 +4,12 @@ import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import { ProfileType } from "../../redux/profile-reducer";
 
 export type ProfilePropsType = {
-  profile: ProfileType;
+  profile: ProfileType | null;
   status: string;
   updateStatus: (status: string) => void;
-  isOwner?: boolean;
-  savePhoto: (file: any) => void;
-  goToEditMode?: () => void;
-  saveProfile: (formData: ProfileType) => void;
+  isOwner: boolean;
+  savePhoto: (file: File) => void;
+  saveProfile?: (formData: ProfileType) => Promise<any>;
 };
 const Profile = (props: ProfilePropsType) => {
   return (

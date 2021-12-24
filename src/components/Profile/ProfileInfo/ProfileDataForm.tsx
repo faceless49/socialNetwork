@@ -1,39 +1,44 @@
 import React, { FC } from "react";
 import {
   createField,
+  GetStringKeys,
   Input,
   Textarea,
 } from "../../common/FormsControls/FormsControls";
 import { InjectedFormProps, reduxForm } from "redux-form";
-import { ContactsType, ProfileType } from "../../../redux/profile-reducer";
-import { Contact } from "./ProfileInfo";
+import { ProfileType } from "../../../redux/profile-reducer";
 import styles from "../../common/FormsControls/FormsControls.module.scss";
 
-export type ProfileDataFormPropsType = {
-  profile: ProfileType;
-  status: string;
-  updateStatus: (status: string) => void;
-  isOwner?: boolean;
-  savePhoto: (file: any) => void;
-  goToEditMode?: () => void;
-  handleSubmit: () => void;
-};
-type ProfileDataFormValuesType = {
-  profile: ProfileType;
-  status: string;
-  isOwner?: boolean;
-};
-type ProfileDataFormOwnProps = {
-  updateStatus: (status: string) => void;
-  savePhoto: (file: any) => void;
-  goToEditMode?: () => void;
-  handleSubmit: () => void;
-};
+// export type ProfileDataFormPropsType = {
+//   profile: ProfileType;
+//   status: string;
+//   updateStatus: (status: string) => void;
+//   isOwner?: boolean;
+//   savePhoto: (file: any) => void;
+//   goToEditMode?: () => void;
+//   handleSubmit: () => void;
+// };
+// type ProfileDataFormValuesType = {
+//   profile: ProfileType;
+//   status: string;
+//   isOwner?: boolean;
+// };
+// type ProfileDataFormOwnProps = {
+//   updateStatus: (status: string) => void;
+//   savePhoto: (file: any) => void;
+//   goToEditMode?: () => void;
+//   handleSubmit: () => void;
+// };
+//
+// type ProfileDataFormValuesTypeKeys = Extract<keyof ProfileType, string>;
+// type ContactValuesTypeKeys = Extract<keyof ContactsType, string>;
 
-type ProfileDataFormValuesTypeKeys = Extract<keyof ProfileType, string>;
-type ContactValuesTypeKeys = Extract<keyof ContactsType, string>;
+type PropsType = {
+  profile: ProfileType;
+};
+type ProfileTypeKeys = GetStringKeys<ProfileType>;
 export const ProfileDataForm: FC<
-  InjectedFormProps<ProfileDataFormValuesType, ProfileDataFormOwnProps>
+  InjectedFormProps<ProfileType, PropsType> & PropsType
 > = ({ handleSubmit, error }, profile) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -44,7 +49,7 @@ export const ProfileDataForm: FC<
 
       <div className="">
         <b>Full Name</b>
-        {createField<ProfileDataFormValuesTypeKeys>(
+        {createField<ProfileTypeKeys>(
           "Full name",
           "fullName",
           [],
@@ -56,7 +61,7 @@ export const ProfileDataForm: FC<
       <div className="">
         <b>Looking for a job:</b> {profile.lookingForAJob ? "yes" : "no"}
       </div>
-      {createField<ProfileDataFormValuesTypeKeys>(
+      {createField<ProfileTypeKeys>(
         "",
         "lookingForAJob",
         [],
@@ -67,7 +72,7 @@ export const ProfileDataForm: FC<
 
       <div className="">
         <b>My professional skills</b> {profile.lookingForAJobDescription}
-        {createField<ProfileDataFormValuesTypeKeys>(
+        {createField<ProfileTypeKeys>(
           "My professional skills",
           "lookingForAJobDescription",
           [],
@@ -78,7 +83,7 @@ export const ProfileDataForm: FC<
       </div>
 
       <div className="">About me: {profile.aboutMe} </div>
-      {createField<ProfileDataFormValuesTypeKeys>(
+      {createField<ProfileTypeKeys>(
         "About me",
         "aboutMe",
         [],
@@ -92,15 +97,17 @@ export const ProfileDataForm: FC<
         {Object.keys(profile.contacts).map((key) => {
           return (
             <div key={key} className="">
-              {key}:
-              {createField<ProfileDataFormValuesTypeKeys>(
-                key,
-                "contacts", //@TODO: + KEY 97 L needed TS
-                [],
-                Input,
-                {},
-                ""
-              )}
+              <b>
+                {key}:
+                {createField(
+                  key,
+                  "contacts" + key, //@TODO: + KEY 97 L needed TS
+                  [],
+                  Input,
+                  {},
+                  ""
+                )}
+              </b>
             </div>
           );
           //@TODO: Refactor 97L
@@ -110,10 +117,6 @@ export const ProfileDataForm: FC<
   );
 };
 
-const ProfileDataFormReduxForm = reduxForm<
-  ProfileDataFormValuesType,
-  ProfileDataFormOwnProps
->({ form: "edit-profile" })(
-  //@ts-ignore TODO
-  ProfileDataForm
-);
+const ProfileDataFormReduxForm = reduxForm<ProfileType, PropsType>({
+  form: "edit-profile",
+})(ProfileDataForm);
