@@ -3,13 +3,11 @@ import userPhoto from "./../../../assets/img/user.png";
 import { Preloader } from "../../common/preloader/Preloader";
 import React, { ChangeEvent, FC, useState } from "react";
 import { ProfilePropsType } from "../Profile";
-import { ProfileDataForm } from "./ProfileDataForm";
 import { ContactsType, ProfileType } from "../../../redux/profile-reducer";
+import ProfileDataForm from "./ProfileDataForm";
 
 const ProfileInfo: React.FC<ProfilePropsType> = ({
   profile,
-  status,
-  updateStatus,
   isOwner,
   savePhoto,
   saveProfile,
@@ -26,11 +24,9 @@ const ProfileInfo: React.FC<ProfilePropsType> = ({
   };
   const onSubmit = (formData: ProfileType) => {
     // todo: remove then
-    if (saveProfile) {
-      saveProfile(formData).then(() => {
-        setEditMode(false);
-      });
-    }
+    saveProfile(formData).then(() => {
+      setEditMode(false);
+    });
   };
   return (
     <div>
@@ -40,7 +36,7 @@ const ProfileInfo: React.FC<ProfilePropsType> = ({
 
         {editMode ? (
           <ProfileDataForm
-            //@ts-ignore
+            // @ts-ignore
             onSubmit={onSubmit}
             initialValues={profile}
             profile={profile}

@@ -37,15 +37,15 @@ type PropsType = {
   profile: ProfileType;
 };
 type ProfileTypeKeys = GetStringKeys<ProfileType>;
-export const ProfileDataForm: FC<
+const ProfileDataForm: FC<
   InjectedFormProps<ProfileType, PropsType> & PropsType
-> = ({ handleSubmit, error }, profile) => {
+> = ({ handleSubmit, error, profile }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className="">
         <button>Save</button>
       </div>
-      {error && <div className={styles.formSummaryError}>Error</div>}
+      {error && <div className={styles.formSummaryError}>{error}</div>}
 
       <div className="">
         <b>Full Name</b>
@@ -93,24 +93,14 @@ export const ProfileDataForm: FC<
       )}
       <div className="">
         <b>Contacts: </b>
-
         {Object.keys(profile.contacts).map((key) => {
           return (
             <div key={key} className="">
               <b>
-                {key}:
-                {createField(
-                  key,
-                  "contacts" + key, //@TODO: + KEY 97 L needed TS
-                  [],
-                  Input,
-                  {},
-                  ""
-                )}
+                {key}:{createField(key, "contacts." + key, [], Input, {}, "")}
               </b>
             </div>
           );
-          //@TODO: Refactor 97L
         })}
       </div>
     </form>
@@ -120,3 +110,5 @@ export const ProfileDataForm: FC<
 const ProfileDataFormReduxForm = reduxForm<ProfileType, PropsType>({
   form: "edit-profile",
 })(ProfileDataForm);
+
+export default ProfileDataFormReduxForm;

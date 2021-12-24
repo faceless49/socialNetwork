@@ -146,8 +146,12 @@ export const saveProfile =
   async (dispatch, getState: () => AppStateType) => {
     const userId = getState().auth.userId;
     const response = await profileAPI.saveProfile(profile);
-    if (response.resultCode === ResultCodesEnum.Success && userId) {
-      dispatch(getUserProfile(userId));
+    if (response.resultCode === ResultCodesEnum.Success) {
+      if (userId != null) {
+        await dispatch(getUserProfile(userId));
+      } else {
+        throw new Error('userId can"t be null');
+      }
     } else {
       dispatch(stopSubmit("edit-profile", { _error: response.messages[0] }));
       return Promise.reject(response.messages[0]);

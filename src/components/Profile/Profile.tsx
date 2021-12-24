@@ -9,7 +9,7 @@ export type ProfilePropsType = {
   updateStatus: (status: string) => void;
   isOwner: boolean;
   savePhoto: (file: File) => void;
-  saveProfile?: (formData: ProfileType) => Promise<any>;
+  saveProfile: (formData: ProfileType) => Promise<any>;
 };
 const Profile = (props: ProfilePropsType) => {
   return (
