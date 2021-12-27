@@ -10,9 +10,15 @@ import { FC } from "react";
 
 type MapStatePropsType = {
   isAuth: boolean;
+  captchaUrl: string | null;
 };
 type MapDispatchPropsType = {
-  login: (email: string, password: string, rememberMe: boolean) => void;
+  login: (
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: string
+  ) => void;
 };
 type LoginFormOwnPropsType = {
   captchaUrl?: string | null;
@@ -22,17 +28,24 @@ export type LoginFormValuesType = {
   email: string;
   password: string;
   rememberMe: boolean;
+  captcha: string;
 };
 type LoginFormValuesTypeKeys = Extract<keyof LoginFormValuesType, string>;
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => ({
+  captchaUrl: state.auth.captchaUrl,
   isAuth: state.auth.isAuth,
 });
 
 const Login: FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
   const onSubmit = (formData: LoginFormValuesType) => {
     console.log(formData);
-    login(formData.email, formData.password, formData.rememberMe);
+    props.login(
+      formData.email,
+      formData.password,
+      formData.rememberMe,
+      formData.captcha
+    );
   };
 
   if (props.isAuth) {
@@ -42,7 +55,7 @@ const Login: FC<MapStatePropsType & MapDispatchPropsType> = (props) => {
   return (
     <div>
       <h1>LOGIN</h1>
-      <LoginReduxForm onSubmit={onSubmit} />
+      <LoginReduxForm onSubmit={onSubmit} captchaUrl={props.captchaUrl} />
     </div>
   );
 };
@@ -52,7 +65,7 @@ const minLength4 = minLengthCreator(4);
 const LoginForm: FC<
   InjectedFormProps<LoginFormValuesType, LoginFormOwnPropsType> &
     LoginFormOwnPropsType
-> = ({ handleSubmit, error }) => {
+> = ({ handleSubmit, error, captchaUrl }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
@@ -83,6 +96,17 @@ const LoginForm: FC<
           "Remember me"
         )}
       </div>
+      {captchaUrl && <img src={captchaUrl} />}
+      {captchaUrl &&
+        createField<LoginFormValuesTypeKeys>(
+          "Symbols from image",
+          "captcha",
+          [required],
+          Input,
+          {},
+          ""
+        )}
+
       {error && <div className={styles.formSummaryError}>Error</div>}
       <div>
         <button>Login</button>

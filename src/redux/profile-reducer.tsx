@@ -134,7 +134,7 @@ export const updateStatus =
   };
 
 export const savePhoto =
-  (file: any) => async (dispatch: Dispatch<RootActionsTypes>) => {
+  (file: File) => async (dispatch: Dispatch<RootActionsTypes>) => {
     let response = await profileAPI.savePhoto(file);
     if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(actions.savePhotoSuccess(response.data.photos));
