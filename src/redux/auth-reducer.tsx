@@ -1,8 +1,10 @@
 import { ResultCodesEnum } from "../api/api";
 import { stopSubmit } from "redux-form";
-import { ThunkType } from "../types/types";
-import { authApi, securityAPI } from "../api/auth-api";
+import { BaseThunkType } from "../types/types";
+import { authApi } from "../api/auth-api";
 import { InferActionsType } from "./redux-store";
+import { securityAPI } from "../api/security-api";
+import { Action } from "redux";
 
 let authInitialState = {
   userId: null as number | null, // В связи с тем, что мы создали тип с помощью typeof, ТС видит null и не воспринимает
@@ -61,7 +63,7 @@ export const actions = {
 //   });
 // };
 
-// * Async await
+// * Async await thunks
 export const getAuthUserData = (): ThunkType => async (dispatch) => {
   let response = await authApi.me();
 
@@ -109,3 +111,4 @@ export default authReducer;
 
 export type AuthInitialStateType = typeof authInitialState;
 export type AuthActionsType = InferActionsType<typeof actions>;
+type ThunkType = BaseThunkType<AuthActionsType | ReturnType<typeof stopSubmit>>;

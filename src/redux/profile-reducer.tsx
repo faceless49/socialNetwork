@@ -1,15 +1,10 @@
 import { v1 } from "uuid";
-import {
-  AppStateType,
-  InferActionsType,
-  RootActionsTypes,
-} from "./redux-store";
-import { Dispatch } from "redux";
+import { AppStateType, InferActionsType } from "./redux-store";
 import { usersAPI } from "../api/users-api";
 import { profileAPI } from "../api/profile-api";
-import { stopSubmit } from "redux-form";
+import { FormAction, stopSubmit } from "redux-form";
 import { ResultCodesEnum } from "../api/api";
-import { ThunkType } from "../types/types";
+import { BaseThunkType } from "../types/types";
 
 type PhotosType = {
   small: string | null;
@@ -91,7 +86,6 @@ export const profileReducer = (
   }
 };
 
-export type ProfileActionsType = InferActionsType<typeof actions>;
 export const actions = {
   addPostAC: (newPostText: string) =>
     ({ type: "SN/PROFILE/ADD-POST", newPostText } as const),
@@ -114,27 +108,33 @@ export const actions = {
 
 //* Thunks
 export const getUserProfile =
-  (userId: number) => async (dispatch: Dispatch<RootActionsTypes>) => {
+  (userId: number): ThunkType =>
+  async (dispatch) => {
     let response = await usersAPI.getProfile(userId);
     dispatch(actions.setUserProfile(response));
   };
 
 export const getStatus =
-  (userId: number) => async (dispatch: Dispatch<RootActionsTypes>) => {
+  (userId: number): ThunkType =>
+  async (dispatch) => {
     let response = await profileAPI.getStatus(userId);
     dispatch(actions.setStatus(response));
   };
 
 export const updateStatus =
-  (status: string) => async (dispatch: Dispatch<RootActionsTypes>) => {
-    let response = await profileAPI.updateStatus(status);
-    if (response.resultCode === ResultCodesEnum.Success) {
-      dispatch(actions.setStatus(status));
-    }
+  (status: string): ThunkType =>
+  async (dispatch) => {
+    try {
+      let response = await profileAPI.updateStatus(status);
+      if (response.resultCode === ResultCodesEnum.Success) {
+        dispatch(actions.setStatus(status));
+      }
+    } catch (error) {}
   };
 
 export const savePhoto =
-  (file: File) => async (dispatch: Dispatch<RootActionsTypes>) => {
+  (file: File): ThunkType =>
+  async (dispatch) => {
     let response = await profileAPI.savePhoto(file);
     if (response.resultCode === ResultCodesEnum.Success) {
       dispatch(actions.savePhotoSuccess(response.data.photos));
@@ -143,7 +143,7 @@ export const savePhoto =
 
 export const saveProfile =
   (profile: ProfileType): ThunkType =>
-  async (dispatch, getState: () => AppStateType) => {
+  async (dispatch, getState) => {
     const userId = getState().auth.userId;
     const response = await profileAPI.saveProfile(profile);
     if (response.resultCode === ResultCodesEnum.Success) {
@@ -157,3 +157,6 @@ export const saveProfile =
       return Promise.reject(response.messages[0]);
     }
   };
+
+export type ProfileActionsType = InferActionsType<typeof actions>;
+type ThunkType = BaseThunkType<ProfileActionsType | FormAction>;

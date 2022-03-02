@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { ProfileActionsType, profileReducer } from "./profile-reducer";
 import { DialogsActionsType, dialogsReducer } from "./dialogs-reducer";
-import { UsersActionTypes, usersReducer } from "./users-reducer";
+import { UsersActionsType, usersReducer } from "./users-reducer";
 import { reducer as formReducer } from "redux-form";
 import thunkMiddleware from "redux-thunk";
 import authReducer, { AuthActionsType } from "./auth-reducer";
@@ -12,7 +12,7 @@ export type RootActionsTypes =
   | AuthActionsType
   | DialogsActionsType
   | ProfileActionsType
-  | UsersActionTypes;
+  | UsersActionsType;
 
 const rootReducer = combineReducers({
   profilePage: profileReducer,

@@ -14,15 +14,3 @@ export enum ResultCodesEnum {
   Error = 1,
   CaptchaIsRequired = 10,
 }
-
-export type GetItemsType = {
-  items: Array<UserType>;
-  totalCount: number;
-  error: string | null;
-};
-
-export type ResponseType<D = {}, RC = ResultCodesEnum> = {
-  data: D;
-  messages: Array<string>;
-  resultCode: RC;
-};

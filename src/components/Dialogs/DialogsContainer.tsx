@@ -12,9 +12,9 @@ type MapStatePropsType = {
   messages: Array<MessageType>;
 };
 
-type MapDispatchPropsType = {
-  sendMessage: (newMessageBody: string) => void;
-};
+// type MapDispatchPropsType = {
+//   sendMessage: (newMessageBody: string) => void;
+// };
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
@@ -23,19 +23,19 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
   };
 };
 
-let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-  return {
-    sendMessage: (newMessageBody) => {
-      dispatch(actions.sendMessage(newMessageBody));
-    },
-  };
-};
+// let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+//   return {
+//     sendMessage: (newMessageBody) => {
+//       dispatch(actions.sendMessage(newMessageBody));
+//     },
+//   };
+// };
 
 //* connect создает контейнерную, отрисует в ней презентационную
 //* засунет в нее пропсы из объектов в ()
 //* коннектим Диалогс к стору
 
 export default compose<React.ComponentType>(
-  connect(mapStateToProps, mapDispatchToProps),
+  connect(mapStateToProps, { ...actions }),
   withAuthRedirect
 )(Dialogs);

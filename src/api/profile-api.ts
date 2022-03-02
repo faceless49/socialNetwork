@@ -1,7 +1,7 @@
 import { ProfileType } from "../redux/profile-reducer";
 import { instance } from "./api";
-import { ResponseType } from "./api";
 import { PhotosType } from "../types/types";
+import { ResponseType } from "./auth-api";
 
 type SavePhotoResponseDataType = {
   photos: PhotosType;

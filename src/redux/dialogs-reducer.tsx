@@ -20,8 +20,6 @@ let initialState = {
   ] as Array<MessageType>,
 };
 
-export type DialogsInitialStateType = typeof initialState;
-
 export const dialogsReducer = (
   state = initialState,
   action: DialogsActionsType
@@ -39,6 +37,7 @@ export const dialogsReducer = (
   }
 };
 
+export type DialogsInitialStateType = typeof initialState;
 export type DialogsActionsType = InferActionsType<typeof actions>;
 export const actions = {
   sendMessage: (newMessageBody: string) =>

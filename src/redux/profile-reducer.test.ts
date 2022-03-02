@@ -1,16 +1,15 @@
 import {
-  addPostAC,
-  deleteMessage,
+  actions,
   PostType,
   profileReducer,
   ProfileType,
-  setStatus,
 } from "./profile-reducer";
 
 type startStateType = {
   posts: Array<PostType>;
   profile: ProfileType | null;
   status: string;
+  newPostText: string;
 };
 
 let startState: startStateType;
@@ -23,13 +22,14 @@ beforeEach(() => {
       { id: "3", message: "Blala", likesCount: 11 },
       { id: "4", message: "Dada", likesCount: 15 },
     ],
-    profile: null as ProfileType | null,
+    profile: null,
     status: "",
+    newPostText: "",
   };
 });
 
 test("new post should be added with new length of array", () => {
-  let action = addPostAC("it-kamasutra win");
+  let action = actions.addPostAC("it-kamasutra win");
 
   const endState = profileReducer(startState, action);
 
@@ -40,20 +40,20 @@ test("new post should be added with new length of array", () => {
 test("new status should be added", () => {
   const endState = profileReducer(
     startState,
-    setStatus("it-kamasutra the best own")
+    actions.setStatus("it-kamasutra the best own")
   );
 
   expect(endState.status).toBe("it-kamasutra the best own");
 });
 
 test("after deleting length of messages should be decrement", () => {
-  const endState = profileReducer(startState, deleteMessage("1"));
+  const endState = profileReducer(startState, actions.deleteMessage("1"));
 
   expect(endState.posts.length).toBe(3);
 });
 
 test("status profile should be changed", () => {
-  const endState = profileReducer(startState, setStatus("Tesla 1000$"));
+  const endState = profileReducer(startState, actions.setStatus("Tesla 1000$"));
 
   expect(endState.status).toBe("Tesla 1000$");
 });

@@ -1,4 +1,11 @@
-import { instance, ResponseType } from "./api";
+import { instance, ResultCodesEnum } from "./api";
+import { CaptchaResponseDataType } from "./security-api";
+
+export type ResponseType<D = {}, RC = ResultCodesEnum> = {
+  data: D;
+  messages: Array<string>;
+  resultCode: RC;
+};
 
 type MeResponseDataType = {
   id: number;
@@ -8,9 +15,6 @@ type MeResponseDataType = {
 
 type LoginResponseDataType = {
   userId: number;
-};
-type CaptchaResponseDataType = {
-  url: string;
 };
 
 export const authApi = {
@@ -26,7 +30,12 @@ export const authApi = {
     captcha: string | null = null
   ) {
     return instance
-      .post<ResponseType<LoginResponseDataType>>(`auth/login`, {
+      .post<
+        ResponseType<
+          LoginResponseDataType,
+          ResultCodesEnum & CaptchaResponseDataType
+        >
+      >(`auth/login`, {
         email,
         password,
         rememberMe,
@@ -36,13 +45,5 @@ export const authApi = {
   },
   logout() {
     return instance.delete(`auth/login`);
-  },
-};
-
-export const securityAPI = {
-  getCaptcha() {
-    return instance
-      .get<ResponseType<CaptchaResponseDataType>>("/security/get-captcha-url")
-      .then((res) => res.data);
   },
 };

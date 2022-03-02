@@ -1,19 +1,28 @@
 import { Field, reduxForm } from "redux-form";
-import { Textarea } from "../common/FormsControls/FormsControls";
+import {
+  createField,
+  Input,
+  Textarea,
+} from "../common/FormsControls/FormsControls";
 import { maxLengthCreator, required } from "../../utils/validators/validators";
 import React from "react";
+import { NewMessageFormType } from "./Dialogs";
 
 const maxLength50 = maxLengthCreator(50);
+
+type MessageFormValuesTypeKeys = Extract<keyof NewMessageFormType, string>;
 
 const AddMessageForm = (props: any) => {
   return (
     <form onSubmit={props.handleSubmit}>
-      <Field
-        component={Textarea}
-        name="newMessageBody"
-        placeholder="Enter your message"
-        validate={[required, maxLength50]}
-      />
+      {createField<MessageFormValuesTypeKeys>(
+        "Enter your message",
+        "newMessageBody",
+        [required, maxLength50],
+        Textarea,
+        {},
+        ""
+      )}
       <button>Send message</button>
     </form>
   );

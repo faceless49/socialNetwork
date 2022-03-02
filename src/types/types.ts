@@ -1,11 +1,12 @@
 import { ThunkAction } from "redux-thunk";
-import { RootActionsTypes, AppStateType } from "../redux/redux-store";
+import { AppStateType } from "../redux/redux-store";
+import { Action } from "redux";
 
-export type ThunkType = ThunkAction<
-  Promise<void>,
+export type BaseThunkType<A extends Action, R = Promise<void>> = ThunkAction<
+  R,
   AppStateType,
   unknown,
-  RootActionsTypes
+  A
 >;
 
 //* Users

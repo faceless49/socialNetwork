@@ -1,5 +1,12 @@
-import { GetItemsType, instance, ResponseType } from "./api";
+import { instance } from "./api";
 import { profileAPI } from "./profile-api";
+import { UserType } from "../types/types";
+import { ResponseType } from "./auth-api";
+export type GetItemsType = {
+  items: Array<UserType>;
+  totalCount: number;
+  error: string | null;
+};
 
 export const usersAPI = {
   getUsers(currentPage: number, pageSize: number) {
