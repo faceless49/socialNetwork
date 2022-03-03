@@ -129,7 +129,9 @@ export const updateStatus =
       if (response.resultCode === ResultCodesEnum.Success) {
         dispatch(actions.setStatus(status));
       }
-    } catch (error) {}
+    } catch (error) {
+      // dispatch error status
+    }
   };
 
 export const savePhoto =

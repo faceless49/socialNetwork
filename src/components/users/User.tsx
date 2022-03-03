@@ -56,8 +56,8 @@ export const User: React.FC<ClearFuncUsersPropsType> = ({
           <div>{user.status}</div>
         </span>
         <span>
-          <div>{"user.location.country"}</div>
-          <div>{"user.location.city"}</div>
+          <div>{user.location?.country}</div>
+          <div>{user.location?.city}</div>
         </span>
       </span>
     </div>

@@ -15,20 +15,6 @@ import {
 } from "../../redux/user-selectors";
 import { UserType } from "../../types/types";
 
-type PhotosItemResponseType = {
-  small: string;
-  large: string;
-};
-
-type AxiosItemResponseType = {
-  name: string;
-  id: number;
-  uniqueUrlName: string;
-  photos: Array<PhotosItemResponseType>;
-  status: string;
-  followed: boolean;
-};
-
 type OwnPropsType = {
   pageTitle: string;
 };
@@ -43,8 +29,6 @@ type MapStatePropsType = {
 type MapDispatchToPropsType = {
   follow: (userID: number) => void;
   unfollow: (userID: number) => void;
-  // setCurrentPage: (currentPage: number) => void;
-  // toggleFollowingProgress: (isFetching: boolean, userID: number) => void;
   getUsers: (page: number, pageSize: number) => void;
 };
 
@@ -74,7 +58,6 @@ class UsersContainer extends React.Component<UsersPropsType> {
           users={this.props.users}
           follow={this.props.follow}
           unfollow={this.props.unfollow}
-          // toggleFollowingProgress={this.props.toggleFollowingProgress} // В санках
           followingInProgress={this.props.followingInProgress}
         />
       </>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar/Navbar";
 import { HashRouter, Route, withRouter } from "react-router-dom";
@@ -22,14 +22,31 @@ const ProfileContainer = React.lazy(
   () => import("./components/Profile/ProfileContainer")
 );
 
-class App extends React.Component<AppStateType> {
+type MapPropsType = ReturnType<typeof mapStateToProps>;
+type DispatchPropsType = {
+  initializeApp: () => void;
+};
+
+const SuspendedDialogs = withSuspense(DialogsContainer);
+const SuspendedProfile = withSuspense(ProfileContainer);
+
+class App extends React.Component<MapPropsType & DispatchPropsType> {
+  catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
+    alert("some error");
+  };
+
   componentDidMount() {
-    //@ts-ignore
+    window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
     this.props.initializeApp();
+  }
+  componentWillUnmount() {
+    window.removeEventListener(
+      "unhandledrejection",
+      this.catchAllUnhandledErrors
+    );
   }
 
   render() {
-    //@ts-ignore
     if (!this.props.initializeApp) {
       return <Preloader />;
     }
@@ -38,16 +55,9 @@ class App extends React.Component<AppStateType> {
         <HeaderContainer />
         <Navbar />
         <div className="app-wrapper-content">
-          <Route path="/dialogs" render={withSuspense(DialogsContainer)} />
-          <Route
-            path="/profile/:userID?"
-            render={withSuspense(ProfileContainer)}
-          />
-          <Route
-            path="/users"
-            //@ts-ignore
-            render={() => <UsersContainer pageTitle={"Самураи"} />}
-          />
+          <Route path="/dialogs" render={() => <SuspendedDialogs />} />
+          <Route path="/profile/:userID?" render={() => <SuspendedProfile />} />
+          <Route path="/users" render={() => <UsersContainer />} />
 
           <Route path="/news" render={() => <News />} />
           <Route path="/music" render={() => <Music />} />
@@ -63,16 +73,15 @@ const mapStateToProps = (state: AppStateType) => ({
   initialized: state.app.initialized,
 });
 
-let AppContainer = compose(
+let AppContainer = compose<ComponentType>(
   withRouter,
   connect(mapStateToProps, { initializeApp })
 )(App);
 
-const SamuraiJSApp = (props: any) => {
+const SamuraiJSApp: React.FC = () => {
   return (
     <HashRouter>
       <Provider store={store}>
-        {/*// @ts-ignore*/}
         <AppContainer />
       </Provider>
     </HashRouter>
