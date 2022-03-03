@@ -28,6 +28,7 @@ const ProfileInfo: React.FC<ProfilePropsType> = ({
       setEditMode(false);
     });
   };
+
   return (
     <div>
       <div className={s.descriptionBlock}>
@@ -36,7 +37,6 @@ const ProfileInfo: React.FC<ProfilePropsType> = ({
 
         {editMode ? (
           <ProfileDataForm
-            // @ts-ignore
             onSubmit={onSubmit}
             initialValues={profile}
             profile={profile}
@@ -113,7 +113,6 @@ const ProfileData: FC<ProfileDataPropsType> = ({
                 contactValue={profile.contacts[key as keyof ContactsType]}
               />
             );
-            //@TODO: Refactor 97L
           })}
         </b>
       </div>

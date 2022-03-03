@@ -2,12 +2,10 @@ import React from "react";
 import s from "./MyPosts.module.scss";
 import Post from "./Post/Post";
 import { PostType } from "../../../redux/profile-reducer";
-import { Field, reduxForm } from "redux-form";
-import {
-  maxLengthCreator,
-  required,
-} from "../../../utils/validators/validators";
-import { Textarea } from "../../common/FormsControls/FormsControls";
+import { maxLengthCreator } from "../../../utils/validators/validators";
+import AddNewPostForm, {
+  AddPostFormValuesType,
+} from "./AddNewPostForm/AddNewPostForm";
 
 type MyPostsType = {
   posts: Array<PostType>;
@@ -15,14 +13,13 @@ type MyPostsType = {
 };
 
 export const MyPosts = React.memo((props: MyPostsType) => {
-  console.log("render Mypost PC");
-  let postElements = props.posts
-    .map((p: PostType) => (
-      <Post id={p.id} message={p.message} likesCount={p.likesCount} />
-    ))
-    .reverse();
+  let postElements = [...props.posts]
+    .reverse()
+    .map(({ id, message, likesCount }) => (
+      <Post id={id} message={message} likesCount={likesCount} />
+    ));
 
-  const onAddPost = (values: any) => {
+  const onAddPost = (values: AddPostFormValuesType) => {
     props.addPost(values.newPostText);
   };
 
@@ -30,7 +27,7 @@ export const MyPosts = React.memo((props: MyPostsType) => {
     <div className={s.postsBlock}>
       <h3>My posts</h3>
       <div>
-        <AddNewPostFormRedux onSubmit={onAddPost} />
+        <AddNewPostForm onSubmit={onAddPost} />
       </div>
       <div className={s.posts}>{postElements}</div>
     </div>
@@ -38,21 +35,3 @@ export const MyPosts = React.memo((props: MyPostsType) => {
 });
 
 const maxLength10 = maxLengthCreator(10);
-const AddNewPostForm = (props: any) => {
-  return (
-    <form onSubmit={props.handleSubmit}>
-      <Field
-        component={Textarea}
-        name="newPostText"
-        placeholder="it-kamasutra"
-        validate={[required, maxLength10]}
-      />
-      <button>Add post</button>
-    </form>
-  );
-};
-const AddNewPostFormRedux = reduxForm({ form: "ProfileAddNewPostForm" })(
-  AddNewPostForm
-);
-
-export default MyPosts;

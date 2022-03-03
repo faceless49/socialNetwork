@@ -37,6 +37,7 @@ type PropsType = {
   profile: ProfileType;
 };
 type ProfileTypeKeys = GetStringKeys<ProfileType>;
+
 const ProfileDataForm: FC<
   InjectedFormProps<ProfileType, PropsType> & PropsType
 > = ({ handleSubmit, error, profile }) => {
