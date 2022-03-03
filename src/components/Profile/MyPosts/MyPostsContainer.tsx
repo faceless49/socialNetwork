@@ -26,5 +26,13 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
   };
 };
 
-const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
+const MyPostsContainer = connect<
+  MapStatePropsType,
+  MapDispatchToPropsType,
+  {},
+  AppStateType
+>(
+  mapStateToProps,
+  mapDispatchToProps
+)(MyPosts);
 export default MyPostsContainer;

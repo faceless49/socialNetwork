@@ -9,30 +9,6 @@ import { InjectedFormProps, reduxForm } from "redux-form";
 import { ProfileType } from "../../../redux/profile-reducer";
 import styles from "../../common/FormsControls/FormsControls.module.scss";
 
-// export type ProfileDataFormPropsType = {
-//   profile: ProfileType;
-//   status: string;
-//   updateStatus: (status: string) => void;
-//   isOwner?: boolean;
-//   savePhoto: (file: any) => void;
-//   goToEditMode?: () => void;
-//   handleSubmit: () => void;
-// };
-// type ProfileDataFormValuesType = {
-//   profile: ProfileType;
-//   status: string;
-//   isOwner?: boolean;
-// };
-// type ProfileDataFormOwnProps = {
-//   updateStatus: (status: string) => void;
-//   savePhoto: (file: any) => void;
-//   goToEditMode?: () => void;
-//   handleSubmit: () => void;
-// };
-//
-// type ProfileDataFormValuesTypeKeys = Extract<keyof ProfileType, string>;
-// type ContactValuesTypeKeys = Extract<keyof ContactsType, string>;
-
 type PropsType = {
   profile: ProfileType;
 };
