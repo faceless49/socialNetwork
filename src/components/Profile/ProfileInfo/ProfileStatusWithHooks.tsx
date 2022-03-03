@@ -17,25 +17,25 @@ export const ProfileStatusWithHooks = (props: PropsType) => {
     setStatus(e.currentTarget.value);
   };
 
-  const activeEditmode = () => {
+  const activeEditMode = () => {
     setEditmode(!editMode);
   };
-  const deactivateEditmode = () => {
+  const deactivateEditMode = () => {
     setEditmode(false);
     props.updateStatus(status);
   };
-  console.log("render profilestatus");
+
   return (
     <>
       {!editMode && (
         <div>
-          <span onDoubleClick={activeEditmode}>{props.status || "----"}</span>
+          <span onDoubleClick={activeEditMode}>{props.status || "----"}</span>
         </div>
       )}{" "}
       {editMode && (
         <div>
           <input
-            onBlur={deactivateEditmode}
+            onBlur={deactivateEditMode}
             autoFocus
             value={status}
             onChange={onStatusChange}
