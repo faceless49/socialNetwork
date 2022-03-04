@@ -9,9 +9,11 @@ export type GetItemsType = {
 };
 
 export const usersAPI = {
-  getUsers(currentPage: number, pageSize: number) {
+  getUsers(currentPage: number = 1, pageSize: number = 10, term: string = "") {
     return instance
-      .get<GetItemsType>(`users?page=${currentPage}&count=${pageSize}`)
+      .get<GetItemsType>(
+        `users?page=${currentPage}&count=${pageSize}&term=${term}`
+      )
       .then((response) => response.data);
   },
   follow(userId: number) {

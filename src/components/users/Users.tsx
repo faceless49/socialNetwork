@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import { Paginator } from "../common/Paginator/Paginator";
 import { User } from "./User";
 import { UserType } from "../../types/types";
+import { UsersSearchForm } from "./UsersSearchForm";
 
 type ClearFuncUsersPropsType = {
   users: Array<UserType>;
@@ -31,6 +32,7 @@ export const Users: FC<ClearFuncUsersPropsType> = ({
 
   return (
     <div>
+      <UsersSearchForm />
       <Paginator
         totalUsersCount={totalUsersCount}
         currentPage={currentPage}

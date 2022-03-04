@@ -12,6 +12,9 @@ let initialState = {
   currentPage: 2,
   isFetching: false,
   followingInProgress: [] as Array<number>, // array of users id
+  filter: {
+    term: "",
+  },
 };
 
 export const usersReducer = (
@@ -60,6 +63,8 @@ export const usersReducer = (
           ? [...state.followingInProgress, action.userID]
           : state.followingInProgress.filter((id) => id !== action.userID),
       };
+    case "SN/USERS/SET_FILTER":
+      return { ...state, filter: action.payload };
     default:
       return state;
   }
@@ -94,16 +99,23 @@ export const actions = {
       isFetching,
       userID,
     } as const),
+  setFilter: (term: string) =>
+    ({
+      type: "SN/USERS/SET_FILTER",
+      payload: { term },
+    } as const),
 };
 
 // * Thunks
 
 export const requestUsers =
-  (page: number, pageSize: number): ThunkType =>
+  (page: number, pageSize: number, term: string): ThunkType =>
   async (dispatch) => {
     dispatch(actions.toggleIsFetching(true)); // Пошел запрос, запустился фетчинг
     dispatch(actions.setCurrentPage(page));
-    const response = await usersAPI.getUsers(page, pageSize);
+    dispatch(actions.setFilter(term));
+
+    const response = await usersAPI.getUsers(page, pageSize, term);
     dispatch(actions.toggleIsFetching(false)); // When we get answer, toggle is fetching
     dispatch(actions.setUsers(response.items));
     dispatch(actions.setTotalUsersCount(response.totalCount));
