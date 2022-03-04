@@ -172,5 +172,6 @@ export const unfollow =
   };
 
 type InitialStateType = typeof initialState;
+export type FilterType = typeof initialState.filter;
 export type UsersActionsType = InferActionsType<typeof actions>;
 type ThunkType = BaseThunkType<UsersActionsType>;
