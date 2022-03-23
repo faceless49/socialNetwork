@@ -63,6 +63,7 @@ export const actions = {
 //   });
 // };
 
+
 // * Async await thunks
 export const getAuthUserData = (): ThunkType => async (dispatch) => {
   let response = await authApi.me();

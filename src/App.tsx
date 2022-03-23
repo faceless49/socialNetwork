@@ -5,7 +5,7 @@ import { HashRouter, Route, withRouter } from "react-router-dom";
 import News from "./components/News/News";
 import Settings from "./components/Settings/Settings";
 import Music from "./components/Music/Music";
-import Login from "./components/Login/Login";
+import { Login } from "./components/Login/Login";
 import { connect, Provider } from "react-redux";
 import { compose } from "redux";
 import { initializeApp } from "./redux/app-reducer";
@@ -13,7 +13,7 @@ import { AppStateType, store } from "./redux/redux-store";
 import { Preloader } from "./components/common/preloader/Preloader";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import { withSuspense } from "./hoc/withSuspense";
-import UsersContainer from "./components/users/UsersContainer";
+import { UsersPage } from "./components/users/UsersContainer";
 
 const DialogsContainer = React.lazy(
   () => import("./components/Dialogs/DialogsContainer")
@@ -57,7 +57,10 @@ class App extends React.Component<MapPropsType & DispatchPropsType> {
         <div className="app-wrapper-content">
           <Route path="/dialogs" render={() => <SuspendedDialogs />} />
           <Route path="/profile/:userID?" render={() => <SuspendedProfile />} />
-          <Route path="/users" render={() => <UsersContainer />} />
+          <Route
+            path="/users"
+            render={() => <UsersPage pageTitle={"Samurai"} />}
+          />
 
           <Route path="/news" render={() => <News />} />
           <Route path="/music" render={() => <Music />} />
